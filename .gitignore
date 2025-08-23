@@ -37,8 +37,10 @@ next-env.d.ts
 
 # nvim
 tags
+tags*
 
 # devenv
 
 .devenv
 .direnv
+
