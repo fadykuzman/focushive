@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import useTimerStore from "../stores/timerStore";
 import StartButton from "./StartButton";
+import PauseButton from "./PauseButton";
 import ResetButton from "./ResetButton";
 import ModeSwitch from "./ModeSwitch";
 import TimerDisplay from "./TimerDisplay";
@@ -147,11 +148,19 @@ const Timer = () => {
 
 					{/* Timer Controls */}
 					<div className="flex gap-2 mb-6 justify-center">
-						<StartButton
-							isRunning={isActive && !isPaused}
-							startTimer={startTimer}
-							mode={mode}
-						/>
+						{isActive && !isPaused ? (
+							<PauseButton
+								pauseTimer={pauseTimer}
+								mode={mode}
+							/>
+						) : (
+							<StartButton
+								startTimer={startTimer}
+								resumeTimer={resumeTimer}
+								isPaused={isPaused}
+								mode={mode}
+							/>
+						)}
 						<ResetButton
 							resetTimer={resetTimer}
 							isRunning={isActive && !isPaused}
