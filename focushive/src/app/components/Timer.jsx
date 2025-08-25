@@ -153,6 +153,7 @@ const Timer = () => {
 						<ResetButton
 							resetTimer={resetTimer}
 							isRunning={isActive && !isPaused}
+							mode={mode}
 						/>
 					</div>
 				</div>
