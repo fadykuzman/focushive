@@ -19,6 +19,19 @@ const ZustandTimer = () => {
     tick,
   } = useTimerStore();
 
+
+  useEffect(() => {
+    // Update document title with time
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.title = `${minutes}:${seconds.toString().padStart(2, "0")} - Focus Timer`;
+
+    // Check if timer completed
+    if (timeLeft === 0 && isActive) {
+      handleTimerComplete();
+    }
+  }, [timeLeft, isActive]);
+
   // Handle timer tick
   useEffect(() => {
     let interval = null;
