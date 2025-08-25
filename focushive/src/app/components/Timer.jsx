@@ -54,7 +54,7 @@ const Timer = () => {
 	const getModeDisplayName = (mode) => {
 		switch (mode) {
 			case "focus":
-				return "Focus Time";
+				return "Focus";
 			case "shortBreak":
 				return "Short Break";
 			case "longBreak":
