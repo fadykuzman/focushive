@@ -60,9 +60,10 @@ const useTimerStore = create(
     const { mode, focusDuration, shortBreakDuration, longBreakDuration } =
       get();
     let newTime;
-    if (mode === "focus") newTime = focusDuration;
-    else if (mode === "shortBreak") newTime = shortBreakDuration;
-    else newTime = longBreakDuration;
+	newTime = focusDuration;
+    // if (mode === "focus") newTime = focusDuration;
+    // else if (mode === "shortBreak") newTime = shortBreakDuration;
+    // else newTime = longBreakDuration;
 
     set({
       isActive: false,
