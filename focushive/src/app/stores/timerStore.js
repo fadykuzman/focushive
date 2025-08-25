@@ -148,12 +148,55 @@ const useTimerStore = create(
         });
       },
 
-      // Settings
+      // Live duration update with proportional scaling
+      updateDuration: (durationType, newDurationInSeconds) => {
+        const state = get();
+        const { mode, timeLeft, isActive } = state;
+        
+        // Map duration types to store properties
+        const durationMap = {
+          focus: 'focusDuration',
+          shortBreak: 'shortBreakDuration', 
+          longBreak: 'longBreakDuration'
+        };
+        
+        const storeProperty = durationMap[durationType];
+        if (!storeProperty) return;
+        
+        const oldDuration = state[storeProperty];
+        
+        // Update the duration in store
+        set({ [storeProperty]: newDurationInSeconds });
+        
+        // If timer is active and we're updating the current mode's duration
+        const currentModeType = mode === 'focus' ? 'focus' : 
+                               mode === 'shortBreak' ? 'shortBreak' : 'longBreak';
+        
+        if (isActive && durationType === currentModeType) {
+          // Calculate progress ratio (how much time has elapsed)
+          const elapsedTime = oldDuration - timeLeft;
+          const progressRatio = elapsedTime / oldDuration;
+          
+          // Apply proportional scaling - maintain the same progress ratio
+          const newElapsedTime = Math.floor(newDurationInSeconds * progressRatio);
+          const newTimeLeft = newDurationInSeconds - newElapsedTime;
+          
+          // Ensure we don't go below 0 or above the new duration
+          const adjustedTimeLeft = Math.max(0, Math.min(newDurationInSeconds, newTimeLeft));
+          
+          set({ 
+            timeLeft: adjustedTimeLeft,
+            lastTick: Date.now() // Update last tick to prevent time drift
+          });
+        }
+      },
+
+      // Settings (keeping for compatibility)
       updateSettings: (settings) => {
         set({
-          focusTime: settings.focusTime * 60,
-          // shortBreakTime: settings.shortBreakTime * 60,
-          // longBreakTime: settings.longBreakTime * 60,
+          focusDuration: settings.focusTime * 60,
+          shortBreakDuration: settings.shortBreakTime * 60,
+          longBreakDuration: settings.longBreakTime * 60,
           totalRounds: settings.totalRounds,
         });
 

@@ -5,7 +5,7 @@
 - [x] Add reset button to reset the timer to 25 minutes.
 - [x] Switch mode between focus, short and long breaks.
 - [x] Add pause and resume functionality.
-- [ ] Add option to customize the timer duration (e.g., 15, 30, 45 minutes).
+- [x] Add option to customize the timer duration (e.g., 15, 30, 45 minutes).
 - [ ] Add sound alert when the timer reaches zero.
 - [ ] Add notification when the timer reaches zero.
 - [ ] Use IndexedDB to store the start time of the timer.
