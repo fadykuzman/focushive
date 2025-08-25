@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import useTimerStore from "../stores/timerStore";
 import StartButton from "./StartButton";
+import ResetButton from "./ResetButton";
 import TimerDisplay from "./TimerDisplay";
 
 const Timer = () => {
@@ -148,6 +149,10 @@ const Timer = () => {
 						<StartButton
 							isRunning={isActive && !isPaused}
 							startTimer={startTimer}
+						/>
+						<ResetButton
+							resetTimer={resetTimer}
+							isRunning={isActive && !isPaused}
 						/>
 					</div>
 				</div>
