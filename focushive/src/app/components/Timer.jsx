@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useTimerStore from "../stores/timerStore";
 import StartButton from "./StartButton";
 import TimerDisplay from "./TimerDisplay";
 
 const Timer = () => {
+	const [isHydrated, setIsHydrated] = useState(false);
+	
 	const {
 		timeLeft,
 		isActive,
@@ -20,7 +22,15 @@ const Timer = () => {
 		resetTimer,
 		switchMode,
 		tick,
+		restoreTimer,
+		completeTimer,
 	} = useTimerStore();
+
+	// Restore timer on component mount and mark as hydrated
+	useEffect(() => {
+		restoreTimer();
+		setIsHydrated(true);
+	}, [restoreTimer]);
 
 	useEffect(() => {
 		// Update document title with time
@@ -30,7 +40,7 @@ const Timer = () => {
 
 		// Check if timer completed
 		if (timeLeft === 0 && isActive) {
-			handleTimerComplete();
+			completeTimer();
 		}
 	}, [timeLeft, isActive]);
 
@@ -96,6 +106,24 @@ const Timer = () => {
 	};
 
 	const colorScheme = getColorScheme(mode);
+
+	// Show loading state until hydrated
+	if (!isHydrated) {
+		return (
+			<div className="min-h-screen bg-gray-500 flex items-center justify-center">
+				<div className="text-center">
+					<div className="bg-gray-600 rounded-lg p-8 shadow-2xl max-w-md mx-auto">
+						<h1 className="text-white text-2xl font-bold mb-8">Loading Timer...</h1>
+						<div className="relative w-64 h-64 mx-auto mb-8">
+							<div className="absolute inset-0 flex items-center justify-center">
+								<span className="text-white text-6xl font-mono font-bold">--:--</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div

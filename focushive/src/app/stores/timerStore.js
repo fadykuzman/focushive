@@ -1,6 +1,9 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const useTimerStore = create((set, get) => ({
+const useTimerStore = create(
+  persist(
+    (set, get) => ({
   // Timer state
   timeLeft: 25 * 60, // 25 minutes in seconds
   isActive: false,
@@ -8,6 +11,7 @@ const useTimerStore = create((set, get) => ({
   mode: "focus", // 'focus', 'shortBreak', 'longBreak'
   round: 1,
   totalRounds: 4,
+  lastTick: null, // Track when timer was last updated
 
   // Timer settings
   focusDuration: 25 * 60,
@@ -16,7 +20,7 @@ const useTimerStore = create((set, get) => ({
 
   // Timer controls
   startTimer: () => {
-    set({ isActive: true, isPaused: false });
+    set({ isActive: true, isPaused: false, lastTick: Date.now() });
   },
 
   pauseTimer: () => {
@@ -24,7 +28,7 @@ const useTimerStore = create((set, get) => ({
   },
 
   resumeTimer: () => {
-    set({ isPaused: false });
+    set({ isPaused: false, lastTick: Date.now() });
   },
 
   stopTimer: () => {
@@ -32,6 +36,7 @@ const useTimerStore = create((set, get) => ({
       isActive: false,
       isPaused: false,
       timeLeft: get().focusDuration,
+      lastTick: null,
     });
   },
 
@@ -47,6 +52,7 @@ const useTimerStore = create((set, get) => ({
       isActive: false,
       isPaused: false,
       timeLeft: newTime,
+      lastTick: null,
     });
   },
 
@@ -70,9 +76,27 @@ const useTimerStore = create((set, get) => ({
     const { timeLeft, isActive, isPaused } = get();
 
     if (isActive && !isPaused && timeLeft > 0) {
-      set({ timeLeft: timeLeft - 1 });
+      set({ timeLeft: timeLeft - 1, lastTick: Date.now() });
     } else if (timeLeft === 0) {
       get().completeTimer();
+    }
+  },
+
+  // Restore timer after page reload
+  restoreTimer: () => {
+    const state = get();
+    const { isActive, isPaused, lastTick, timeLeft } = state;
+    
+    if (isActive && !isPaused && lastTick) {
+      const now = Date.now();
+      const elapsed = Math.floor((now - lastTick) / 1000);
+      const newTimeLeft = Math.max(0, timeLeft - elapsed);
+      
+      if (newTimeLeft <= 0) {
+        get().completeTimer();
+      } else {
+        set({ timeLeft: newTimeLeft, lastTick: now });
+      }
     }
   },
 
@@ -148,6 +172,23 @@ const useTimerStore = create((set, get) => ({
       get().resetTimer();
     }
   },
-}));
+}),
+{
+  name: 'focushive-timer',
+  partialize: (state) => ({
+    timeLeft: state.timeLeft,
+    isActive: state.isActive,
+    isPaused: state.isPaused,
+    mode: state.mode,
+    round: state.round,
+    totalRounds: state.totalRounds,
+    lastTick: state.lastTick,
+    focusDuration: state.focusDuration,
+    shortBreakDuration: state.shortBreakDuration,
+    longBreakDuration: state.longBreakDuration,
+  }),
+}
+)
+);
 
 export default useTimerStore;
