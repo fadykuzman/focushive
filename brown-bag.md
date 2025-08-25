@@ -10,4 +10,6 @@
 - [ ] Add notification when the timer reaches zero.
 - [ ] Use IndexedDB to store the start time of the timer.
 - [ ] Add a task to a focus session.
+- [ ] Fluid transitions between modes
+- [ ] when a timer is runnin,if tried to switch mode, ask confirmation
 - [ ] Add toggle at the bottom for local/connected(cloud)
