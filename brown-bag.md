@@ -10,3 +10,4 @@
 - [ ] Add notification when the timer reaches zero.
 - [ ] Use IndexedDB to store the start time of the timer.
 - [ ] Add a task to a focus session.
+- [ ] Add toggle at the bottom for local/connected(cloud)
