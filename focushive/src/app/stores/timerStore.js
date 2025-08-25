@@ -15,8 +15,8 @@ const useTimerStore = create(
 
       // Timer settings
       focusDuration: 25 * 60,
-      // shortBreakDuration: 5 * 60,
-      // longBreakDuration: 15 * 60,
+      shortBreakDuration: 5 * 60,
+      longBreakDuration: 15 * 60,
 
       // Timer controls
       startTimer: () => {
@@ -44,10 +44,9 @@ const useTimerStore = create(
         const { mode, focusDuration, shortBreakDuration, longBreakDuration } =
           get();
         let newTime;
-        newTime = focusDuration;
-        // if (mode === "focus") newTime = focusDuration;
-        // else if (mode === "shortBreak") newTime = shortBreakDuration;
-        // else newTime = longBreakDuration;
+        if (mode === "focus") newTime = focusDuration;
+        else if (mode === "shortBreak") newTime = shortBreakDuration;
+        else newTime = longBreakDuration;
 
         set({
           isActive: false,
@@ -124,28 +123,25 @@ const useTimerStore = create(
 
       // Mode switching
       switchMode: (newMode) => {
-        const { focusTime, shortBreakTime, longBreakTime } = get();
+        const { focusDuration, shortBreakDuration, longBreakDuration } = get();
         let newTimeLeft;
 
-        newTimeLeft = focusTime;
-
-        // switch (newMode) {
-        // 	case "focus":
-        // 		newTimeLeft = focusTime;
-        // 		break;
-        // 	case "shortBreak":
-        // 		newTimeLeft = shortBreakTime;
-        // 		break;
-        // 	case "longBreak":
-        // 		newTimeLeft = longBreakTime;
-        // 		break;
-        // 	default:
-        // 		newTimeLeft = focusTime;
-        // }
+        switch (newMode) {
+        	case "focus":
+        		newTimeLeft = focusDuration;
+        		break;
+        	case "shortBreak":
+        		newTimeLeft = shortBreakDuration;
+        		break;
+        	case "longBreak":
+        		newTimeLeft = longBreakDuration;
+        		break;
+        	default:
+        		newTimeLeft = focusDuration;
+        }
 
         set({
-          // mode: newMode,
-		  mode: "focus",
+          mode: newMode,
           timeLeft: newTimeLeft,
           isActive: false,
           isPaused: false,
@@ -178,8 +174,8 @@ const useTimerStore = create(
         totalRounds: state.totalRounds,
         lastTick: state.lastTick,
         focusDuration: state.focusDuration,
-        // shortBreakDuration: state.shortBreakDuration,
-        // longBreakDuration: state.longBreakDuration,
+        shortBreakDuration: state.shortBreakDuration,
+        longBreakDuration: state.longBreakDuration,
       }),
     },
   ),
