@@ -8,7 +8,7 @@ const useTimerStore = create(
       timeLeft: 25 * 60, // 25 minutes in seconds
       isActive: false,
       isPaused: false,
-      mode: "focus", // 'focus', 'shortBreak', 'longBreak'
+      mode: "focus", 
       round: 1,
       totalRounds: 4,
       lastTick: null, // Track when timer was last updated
@@ -94,7 +94,8 @@ const useTimerStore = create(
         set({
           mode: "focus",
           timeLeft: get().focusTime,
-          round: mode === "shortBreak" ? round + 1 : round,
+          // round: mode === "shortBreak" ? round + 1 : round,
+          round: round + 1 ,
         });
 
         // 	if (round >= totalRounds) {
@@ -143,7 +144,8 @@ const useTimerStore = create(
         // }
 
         set({
-          mode: newMode,
+          // mode: newMode,
+		  mode: "focus",
           timeLeft: newTimeLeft,
           isActive: false,
           isPaused: false,
