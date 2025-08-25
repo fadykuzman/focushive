@@ -1,26 +1,27 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { TimerLogic, TIMER_MODES, DEFAULT_DURATIONS, DEFAULT_SETTINGS } from "../utils/timerLogic";
 
 const useTimerStore = create(
   persist(
     (set, get) => ({
-      // Timer state
-      timeLeft: 25 * 60, // 25 minutes in seconds
+      timeLeft: DEFAULT_DURATIONS.FOCUS,
       isActive: false,
       isPaused: false,
-      mode: "focus", 
+      mode: "focus",
       round: 1,
-      totalRounds: 4,
-      lastTick: null, // Track when timer was last updated
+      totalRounds: DEFAULT_SETTINGS.TOTAL_ROUNDS,
+      lastTick: null,
+      focusDuration: DEFAULT_DURATIONS.FOCUS,
+      shortBreakDuration: DEFAULT_DURATIONS.SHORT_BREAK,
+      longBreakDuration: DEFAULT_DURATIONS.LONG_BREAK,
 
-      // Timer settings
-      focusDuration: 25 * 60,
-      shortBreakDuration: 5 * 60,
-      longBreakDuration: 15 * 60,
-
-      // Timer controls
       startTimer: () => {
-        set({ isActive: true, isPaused: false, lastTick: Date.now() });
+        set({ 
+          isActive: true, 
+          isPaused: false, 
+          lastTick: Date.now() 
+        });
       },
 
       pauseTimer: () => {
@@ -28,132 +29,110 @@ const useTimerStore = create(
       },
 
       resumeTimer: () => {
-        set({ isPaused: false, lastTick: Date.now() });
+        set({ 
+          isPaused: false, 
+          lastTick: Date.now() 
+        });
       },
 
       stopTimer: () => {
+        const currentState = get();
+        const timeLeft = TimerLogic.getDurationForMode(currentState.mode, {
+          focusDuration: currentState.focusDuration,
+          shortBreakDuration: currentState.shortBreakDuration,
+          longBreakDuration: currentState.longBreakDuration
+        });
+        
         set({
           isActive: false,
           isPaused: false,
-          timeLeft: get().focusDuration,
+          timeLeft,
           lastTick: null,
         });
       },
 
       resetTimer: () => {
-        const { mode, focusDuration, shortBreakDuration, longBreakDuration } =
-          get();
-        let newTime;
-        if (mode === "focus") newTime = focusDuration;
-        else if (mode === "shortBreak") newTime = shortBreakDuration;
-        else newTime = longBreakDuration;
+        const currentState = get();
+        const timeLeft = TimerLogic.getDurationForMode(currentState.mode, {
+          focusDuration: currentState.focusDuration,
+          shortBreakDuration: currentState.shortBreakDuration,
+          longBreakDuration: currentState.longBreakDuration
+        });
 
         set({
           isActive: false,
           isPaused: false,
-          timeLeft: newTime,
+          timeLeft,
           lastTick: null,
         });
       },
 
-      // Timer progression
       tick: () => {
-        const { timeLeft, isActive, isPaused } = get();
+        const currentState = get();
+        const { timeLeft, isActive, isPaused } = currentState;
 
         if (isActive && !isPaused && timeLeft > 0) {
-          set({ timeLeft: timeLeft - 1, lastTick: Date.now() });
+          set({ 
+            timeLeft: timeLeft - 1, 
+            lastTick: Date.now() 
+          });
         } else if (timeLeft === 0) {
-          get().completeTimer();
+          const transitionState = TimerLogic.completeTimerTransition(currentState);
+          set(transitionState);
         }
       },
 
-      // Restore timer after page reload
       restoreTimer: () => {
-        const state = get();
-        const { isActive, isPaused, lastTick, timeLeft } = state;
+        const currentState = get();
+        const { isActive, isPaused, lastTick, timeLeft } = currentState;
 
         if (isActive && !isPaused && lastTick) {
-          const now = Date.now();
-          const elapsed = Math.floor((now - lastTick) / 1000);
+          const elapsed = TimerLogic.calculateElapsedTime(lastTick);
           const newTimeLeft = Math.max(0, timeLeft - elapsed);
 
           if (newTimeLeft <= 0) {
-            get().completeTimer();
+            const transitionState = TimerLogic.completeTimerTransition(currentState);
+            set(transitionState);
           } else {
-            set({ timeLeft: newTimeLeft, lastTick: now });
+            set({ 
+              timeLeft: newTimeLeft, 
+              lastTick: Date.now() 
+            });
           }
         }
       },
 
       completeTimer: () => {
-        const { mode, round, totalRounds } = get();
-
-        set({ isActive: false });
-
-        set({
-          mode: "focus",
-          timeLeft: get().focusTime,
-          // round: mode === "shortBreak" ? round + 1 : round,
-          round: round + 1 ,
-        });
-
-        // 	if (round >= totalRounds) {
-        // 		// Long break after completing all rounds
-        // 		set({
-        // 			mode: "longBreak",
-        // 			timeLeft: get().longBreakTime,
-        // 			round: 1,
-        // 		});
-        // 	} else {
-        // 		// Short break
-        // 		set({
-        // 			mode: "shortBreak",
-        // 			timeLeft: get().shortBreakTime,
-        // 		});
-        // 	}
-        // } else {
-        // 	// Back to focus mode
-        // 	set({
-        // 		mode: "focus",
-        // 		timeLeft: get().focusTime,
-        // 		round: mode === "shortBreak" ? round + 1 : round,
-        // 	});
-        // }
+        const currentState = get();
+        const transitionState = TimerLogic.completeTimerTransition(currentState);
+        set(transitionState);
       },
 
-      // Mode switching
       switchMode: (newMode) => {
-        const { focusDuration, shortBreakDuration, longBreakDuration } = get();
-        let newTimeLeft;
-
-        switch (newMode) {
-        	case "focus":
-        		newTimeLeft = focusDuration;
-        		break;
-        	case "shortBreak":
-        		newTimeLeft = shortBreakDuration;
-        		break;
-        	case "longBreak":
-        		newTimeLeft = longBreakDuration;
-        		break;
-        	default:
-        		newTimeLeft = focusDuration;
-        }
+        if (!TimerLogic.validateMode(newMode)) return;
+        
+        const currentState = get();
+        const timeLeft = TimerLogic.getDurationForMode(newMode, {
+          focusDuration: currentState.focusDuration,
+          shortBreakDuration: currentState.shortBreakDuration,
+          longBreakDuration: currentState.longBreakDuration
+        });
 
         set({
           mode: newMode,
-          timeLeft: newTimeLeft,
+          timeLeft,
           isActive: false,
           isPaused: false,
+          lastTick: null
         });
       },
 
-      // Live duration update with proportional scaling
       updateDuration: (durationType, newDurationInSeconds) => {
-        const state = get();
-        const { mode, timeLeft, isActive } = state;
+        if (!TimerLogic.validateDuration(newDurationInSeconds)) return;
         
-        // Map duration types to store properties
+        const currentState = get();
+        const { mode, timeLeft, isActive } = currentState;
+        
         const durationMap = {
           focus: 'focusDuration',
           shortBreak: 'shortBreakDuration', 
@@ -163,35 +142,27 @@ const useTimerStore = create(
         const storeProperty = durationMap[durationType];
         if (!storeProperty) return;
         
-        const oldDuration = state[storeProperty];
+        const oldDuration = currentState[storeProperty];
         
-        // Update the duration in store
         set({ [storeProperty]: newDurationInSeconds });
         
-        // If timer is active and we're updating the current mode's duration
         const currentModeType = mode === 'focus' ? 'focus' : 
                                mode === 'shortBreak' ? 'shortBreak' : 'longBreak';
         
         if (isActive && durationType === currentModeType) {
-          // Calculate progress ratio (how much time has elapsed)
-          const elapsedTime = oldDuration - timeLeft;
-          const progressRatio = elapsedTime / oldDuration;
-          
-          // Apply proportional scaling - maintain the same progress ratio
-          const newElapsedTime = Math.floor(newDurationInSeconds * progressRatio);
-          const newTimeLeft = newDurationInSeconds - newElapsedTime;
-          
-          // Ensure we don't go below 0 or above the new duration
-          const adjustedTimeLeft = Math.max(0, Math.min(newDurationInSeconds, newTimeLeft));
+          const adjustedTimeLeft = TimerLogic.calculateProportionalTime(
+            oldDuration, 
+            newDurationInSeconds, 
+            timeLeft
+          );
           
           set({ 
             timeLeft: adjustedTimeLeft,
-            lastTick: Date.now() // Update last tick to prevent time drift
+            lastTick: Date.now()
           });
         }
       },
 
-      // Settings (keeping for compatibility)
       updateSettings: (settings) => {
         set({
           focusDuration: settings.focusTime * 60,
@@ -200,11 +171,22 @@ const useTimerStore = create(
           totalRounds: settings.totalRounds,
         });
 
-        // Update current timeLeft if not active
-        if (!get().isActive) {
-          get().resetTimer();
+        const currentState = get();
+        if (!currentState.isActive) {
+          const timeLeft = TimerLogic.getDurationForMode(currentState.mode, {
+            focusDuration: currentState.focusDuration,
+            shortBreakDuration: currentState.shortBreakDuration,
+            longBreakDuration: currentState.longBreakDuration
+          });
+          
+          set({
+            isActive: false,
+            isPaused: false,
+            timeLeft,
+            lastTick: null,
+          });
         }
-      },
+      }
     }),
     {
       name: "focushive-timer",
@@ -220,8 +202,8 @@ const useTimerStore = create(
         shortBreakDuration: state.shortBreakDuration,
         longBreakDuration: state.longBreakDuration,
       }),
-    },
-  ),
+    }
+  )
 );
 
 export default useTimerStore;
