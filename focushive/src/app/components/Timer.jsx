@@ -63,16 +63,17 @@ const Timer = () => {
 
 	// Get mode display name
 	const getModeDisplayName = (mode) => {
-		switch (mode) {
-			case "focus":
-				return "Focus";
-			case "shortBreak":
-				return "Short Break";
-			case "longBreak":
-				return "Long Break";
-			default:
-				return "Focus Time";
-		}
+		return "Focus";
+		// switch (mode) {
+		// 	case "focus":
+		// 		return "Focus";
+		// 	case "shortBreak":
+		// 		return "Short Break";
+		// 	case "longBreak":
+		// 		return "Long Break";
+		// 	default:
+		// 		return "Focus Time";
+		// }
 	};
 
 	const progress =
@@ -80,30 +81,32 @@ const Timer = () => {
 
 	// Get duration for current mode
 	function getModeDuration(currentMode) {
-		switch (currentMode) {
-			case "focus":
-				return 25 * 60; // 25 minutes
-			case "shortBreak":
-				return 5 * 60; // 5 minutes
-			case "longBreak":
-				return 15 * 60; // 15 minutes
-			default:
-				return 25 * 60;
-		}
+		return 25 * 60;
+		// switch (currentMode) {
+		// 	case "focus":
+		// 		return 25 * 60; // 25 minutes
+		// 	case "shortBreak":
+		// 		return 5 * 60; // 5 minutes
+		// 	case "longBreak":
+		// 		return 15 * 60; // 15 minutes
+		// 	default:
+		// 		return 25 * 60;
+		// }
 	}
 
 	// Get color scheme based on mode
 	const getColorScheme = (currentMode) => {
-		switch (currentMode) {
-			case "focus":
-				return "black";
-			case "shortBreak":
-				return "green";
-			case "longBreak":
-				return "blue";
-			default:
-				return "red";
-		}
+		return "black";
+		// switch (currentMode) {
+		// 	case "focus":
+		// 		return "black";
+		// 	case "shortBreak":
+		// 		return "green";
+		// 	case "longBreak":
+		// 		return "blue";
+		// 	default:
+		// 		return "red";
+		// }
 	};
 
 	const colorScheme = getColorScheme(mode);
