@@ -85,7 +85,7 @@ const Timer = () => {
 	const getColorScheme = (currentMode) => {
 		switch (currentMode) {
 			case "focus":
-				return "red";
+				return "black";
 			case "shortBreak":
 				return "green";
 			case "longBreak":
