@@ -1,6 +1,14 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { TimerLogic, TIMER_MODES, DEFAULT_DURATIONS, DEFAULT_SETTINGS } from "../utils/timerLogic";
+import { 
+  getDurationForMode, 
+  calculateProportionalTime, 
+  completeTimerTransition, 
+  validateMode, 
+  validateDuration,
+  DEFAULT_DURATIONS, 
+  DEFAULT_SETTINGS 
+} from '../utils/timer';
 
 const useTimerStore = create(
   persist(
@@ -37,7 +45,7 @@ const useTimerStore = create(
 
       stopTimer: () => {
         const currentState = get();
-        const timeLeft = TimerLogic.getDurationForMode(currentState.mode, {
+        const timeLeft = getDurationForMode(currentState.mode, {
           focusDuration: currentState.focusDuration,
           shortBreakDuration: currentState.shortBreakDuration,
           longBreakDuration: currentState.longBreakDuration
@@ -53,7 +61,7 @@ const useTimerStore = create(
 
       resetTimer: () => {
         const currentState = get();
-        const timeLeft = TimerLogic.getDurationForMode(currentState.mode, {
+        const timeLeft = getDurationForMode(currentState.mode, {
           focusDuration: currentState.focusDuration,
           shortBreakDuration: currentState.shortBreakDuration,
           longBreakDuration: currentState.longBreakDuration
@@ -77,42 +85,30 @@ const useTimerStore = create(
             lastTick: Date.now() 
           });
         } else if (timeLeft === 0) {
-          const transitionState = TimerLogic.completeTimerTransition(currentState);
+          const transitionState = completeTimerTransition(currentState);
           set(transitionState);
         }
       },
 
-      restoreTimer: () => {
-        const currentState = get();
-        const { isActive, isPaused, lastTick, timeLeft } = currentState;
-
-        if (isActive && !isPaused && lastTick) {
-          const elapsed = TimerLogic.calculateElapsedTime(lastTick);
-          const newTimeLeft = Math.max(0, timeLeft - elapsed);
-
-          if (newTimeLeft <= 0) {
-            const transitionState = TimerLogic.completeTimerTransition(currentState);
-            set(transitionState);
-          } else {
-            set({ 
-              timeLeft: newTimeLeft, 
-              lastTick: Date.now() 
-            });
-          }
-        }
-      },
+      // restoreTimer: () => {
+      //   const currentState = get();
+      //   const restorationResult = TimerLogic.restoreTimer(currentState);
+      //   if (restorationResult) {
+      //     set(restorationResult);
+      //   }
+      // },
 
       completeTimer: () => {
         const currentState = get();
-        const transitionState = TimerLogic.completeTimerTransition(currentState);
+        const transitionState = completeTimerTransition(currentState);
         set(transitionState);
       },
 
       switchMode: (newMode) => {
-        if (!TimerLogic.validateMode(newMode)) return;
+        if (!validateMode(newMode)) return;
         
         const currentState = get();
-        const timeLeft = TimerLogic.getDurationForMode(newMode, {
+        const timeLeft = getDurationForMode(newMode, {
           focusDuration: currentState.focusDuration,
           shortBreakDuration: currentState.shortBreakDuration,
           longBreakDuration: currentState.longBreakDuration
@@ -128,7 +124,7 @@ const useTimerStore = create(
       },
 
       updateDuration: (durationType, newDurationInSeconds) => {
-        if (!TimerLogic.validateDuration(newDurationInSeconds)) return;
+        if (!validateDuration(newDurationInSeconds)) return;
         
         const currentState = get();
         const { mode, timeLeft, isActive } = currentState;
@@ -150,7 +146,7 @@ const useTimerStore = create(
                                mode === 'shortBreak' ? 'shortBreak' : 'longBreak';
         
         if (isActive && durationType === currentModeType) {
-          const adjustedTimeLeft = TimerLogic.calculateProportionalTime(
+          const adjustedTimeLeft = calculateProportionalTime(
             oldDuration, 
             newDurationInSeconds, 
             timeLeft
@@ -173,7 +169,7 @@ const useTimerStore = create(
 
         const currentState = get();
         if (!currentState.isActive) {
-          const timeLeft = TimerLogic.getDurationForMode(currentState.mode, {
+          const timeLeft = getDurationForMode(currentState.mode, {
             focusDuration: currentState.focusDuration,
             shortBreakDuration: currentState.shortBreakDuration,
             longBreakDuration: currentState.longBreakDuration

@@ -27,7 +27,7 @@ const Timer = () => {
 		pauseTimer,
 		resumeTimer,
 		stopTimer,
-		resetTimer,
+		// resetTimer,
 		switchMode,
 		tick,
 		restoreTimer,
@@ -37,7 +37,7 @@ const Timer = () => {
 
 	// Restore timer on component mount and mark as hydrated
 	useEffect(() => {
-		restoreTimer();
+		// restoreTimer();
 		setIsHydrated(true);
 	}, [restoreTimer]);
 
@@ -196,7 +196,7 @@ const Timer = () => {
 							/>
 						)}
 						<ResetButton
-							resetTimer={resetTimer}
+							// resetTimer={resetTimer}
 							isRunning={isActive && !isPaused}
 							mode={mode}
 						/>
