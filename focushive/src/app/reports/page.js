@@ -37,7 +37,7 @@ export default function TestReports() {
             Test reports haven&apos;t been generated yet. Run the following command to generate them:
           </p>
           <code className="bg-gray-100 px-4 py-2 rounded text-sm">
-            npm run test:report
+            pnpm test:report
           </code>
         </div>
       </div>
