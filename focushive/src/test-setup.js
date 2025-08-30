@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
-import { act } from 'react';
+import * as React from 'react';
 
-// Make React.act available globally for testing-library
-global.React = { act };
+// Make React available globally for testing-library
+globalThis.React = React;
+global.React = React;
 
 // Mock IntersectionObserver for jsdom
 global.IntersectionObserver = class IntersectionObserver {
