@@ -1,18 +1,14 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
   "framework": "nextjs",
   "functions": {
-    "src/app/**": {
+    "api/*.js": {
       "runtime": "nodejs22.x"
     }
   },
   "env": {
-    "NODE_ENV": "production",
-    "IS_REACT_ACT_ENVIRONMENT": "true"
-  },
-  "buildEnv": {
-    "NODE_ENV": "test",
     "IS_REACT_ACT_ENVIRONMENT": "true"
   }
 }
