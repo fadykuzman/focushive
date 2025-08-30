@@ -1,7 +1,7 @@
 import { TIMER_MODES } from "./constants.js";
 
 export function validateDuration(duration) {
-  return typeof duration === 'number' && duration > 0;
+  return typeof duration === 'number' && duration > 0 && isFinite(duration);
 }
 
 export function validateMode(mode) {
