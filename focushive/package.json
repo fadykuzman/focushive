@@ -9,7 +9,9 @@
     "lint": "eslint",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "test:report": "vitest run --reporter=html --reporter=junit --reporter=json --outputFile.html=public/reports/index.html --outputFile.junit=reports/junit.xml --outputFile.json=reports/results.json"
   },
   "dependencies": {
     "next": "15.5.0",
@@ -20,6 +22,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@vitest/ui": "^3.2.4",
     "eslint": "^9",
     "eslint-config-next": "15.5.0",
     "tailwindcss": "^4",
