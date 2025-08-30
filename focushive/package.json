@@ -11,7 +11,8 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "test:report": "vitest run --reporter=html --reporter=junit --reporter=json --outputFile.html=public/reports/index.html --outputFile.junit=reports/junit.xml --outputFile.json=reports/results.json"
+    "test:report": "vitest run --reporter=html --reporter=junit --reporter=json --outputFile.html=public/reports/index.html --outputFile.junit=reports/junit.xml --outputFile.json=reports/results.json",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "15.5.0",
@@ -25,7 +26,15 @@
     "@vitest/ui": "^3.2.4",
     "eslint": "^9",
     "eslint-config-next": "15.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
     "tailwindcss": "^4",
     "vitest": "^3.2.4"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "pnpm test:run --passWithNoTests"
+    ]
   }
 }

@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# Change to project directory for monorepo structure
+cd focushive
+
+# Run lint-staged for smart file processing
+pnpm lint-staged
+
+# Run full test suite to ensure nothing is broken
+echo "Running full test suite..."
+pnpm test:run
+
+# Verify build still works
+echo "Verifying production build..."
+pnpm build

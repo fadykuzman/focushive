@@ -34,7 +34,7 @@ export default function TestReports() {
         <div className="text-center max-w-md">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Test Reports Not Available</h1>
           <p className="text-gray-600 mb-6">
-            Test reports haven't been generated yet. Run the following command to generate them:
+            Test reports haven&apos;t been generated yet. Run the following command to generate them:
           </p>
           <code className="bg-gray-100 px-4 py-2 rounded text-sm">
             npm run test:report
