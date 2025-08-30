@@ -22,14 +22,14 @@ describe('SettingsModal Component', () => {
     test('should render when isOpen is true', () => {
       render(<SettingsModal {...defaultProps} isOpen={true} />);
       
-      expect(screen.getByText('Settings')).toBeInTheDocument();
+      expect(document.getElementById('settings-modal-title')).toHaveTextContent('Settings');
       expect(screen.getByText('Timer Durations')).toBeInTheDocument();
     });
 
     test('should not render when isOpen is false', () => {
       render(<SettingsModal {...defaultProps} isOpen={false} />);
       
-      expect(screen.queryByText('Settings')).not.toBeInTheDocument();
+      expect(document.getElementById('settings-modal-title')).not.toBeInTheDocument();
     });
   });
 
@@ -37,22 +37,22 @@ describe('SettingsModal Component', () => {
     test('should display focus duration in minutes', () => {
       render(<SettingsModal {...defaultProps} />);
       
-      const focusInput = screen.getByDisplayValue('25'); // 1500 seconds = 25 minutes
-      expect(focusInput).toBeInTheDocument();
+      const focusInput = document.getElementById('focus-duration-input');
+      expect(focusInput).toHaveValue(25); // 1500 seconds = 25 minutes
     });
 
     test('should display short break duration in minutes', () => {
       render(<SettingsModal {...defaultProps} />);
       
-      const shortBreakInput = screen.getByDisplayValue('5'); // 300 seconds = 5 minutes
-      expect(shortBreakInput).toBeInTheDocument();
+      const shortBreakInput = document.getElementById('short-break-duration-input');
+      expect(shortBreakInput).toHaveValue(5); // 300 seconds = 5 minutes
     });
 
     test('should display long break duration in minutes', () => {
       render(<SettingsModal {...defaultProps} />);
       
-      const longBreakInput = screen.getByDisplayValue('15'); // 900 seconds = 15 minutes
-      expect(longBreakInput).toBeInTheDocument();
+      const longBreakInput = document.getElementById('long-break-duration-input');
+      expect(longBreakInput).toHaveValue(15); // 900 seconds = 15 minutes
     });
   });
 
@@ -60,7 +60,7 @@ describe('SettingsModal Component', () => {
     test('should call onDurationChange when focus duration is modified', async () => {
       render(<SettingsModal {...defaultProps} />);
       
-      const focusInput = screen.getByDisplayValue('25');
+      const focusInput = document.getElementById('focus-duration-input');
       fireEvent.change(focusInput, { target: { value: '30' } });
       
       expect(defaultProps.onDurationChange).toHaveBeenCalledWith('focus', 1800); // 30 * 60
@@ -69,7 +69,7 @@ describe('SettingsModal Component', () => {
     test('should call onDurationChange when short break duration is modified', async () => {
       render(<SettingsModal {...defaultProps} />);
       
-      const shortBreakInput = screen.getByDisplayValue('5');
+      const shortBreakInput = document.getElementById('short-break-duration-input');
       fireEvent.change(shortBreakInput, { target: { value: '10' } });
       
       expect(defaultProps.onDurationChange).toHaveBeenCalledWith('shortBreak', 600); // 10 * 60
@@ -78,7 +78,7 @@ describe('SettingsModal Component', () => {
     test('should call onDurationChange when long break duration is modified', async () => {
       render(<SettingsModal {...defaultProps} />);
       
-      const longBreakInput = screen.getByDisplayValue('15');
+      const longBreakInput = document.getElementById('long-break-duration-input');
       fireEvent.change(longBreakInput, { target: { value: '20' } });
       
       expect(defaultProps.onDurationChange).toHaveBeenCalledWith('longBreak', 1200); // 20 * 60
@@ -127,7 +127,7 @@ describe('SettingsModal Component', () => {
     test('should call onClose when close button (×) is clicked', () => {
       render(<SettingsModal {...defaultProps} />);
       
-      const closeButton = screen.getByText('×');
+      const closeButton = document.getElementById('settings-close-button');
       fireEvent.click(closeButton);
       
       expect(defaultProps.onClose).toHaveBeenCalledOnce();
@@ -136,7 +136,7 @@ describe('SettingsModal Component', () => {
     test('should call onClose when Done button is clicked', () => {
       render(<SettingsModal {...defaultProps} />);
       
-      const doneButton = screen.getByText('Done');
+      const doneButton = document.getElementById('settings-done-button');
       fireEvent.click(doneButton);
       
       expect(defaultProps.onClose).toHaveBeenCalledOnce();
@@ -206,16 +206,14 @@ describe('SettingsModal Component', () => {
     test('should render modal overlay', () => {
       render(<SettingsModal {...defaultProps} />);
       
-      // Check for modal overlay by finding the overlay div
-      const overlay = screen.getByText('Settings').closest('.fixed');
+      const overlay = document.getElementById('settings-modal-overlay');
       expect(overlay).toHaveClass('fixed', 'inset-0', 'bg-black', 'bg-opacity-50');
     });
 
     test('should render modal content with proper styling', () => {
       render(<SettingsModal {...defaultProps} />);
       
-      // Find the modal content container (the white box, not just Settings heading container)
-      const modalContent = screen.getByText('Settings').closest('.bg-white');
+      const modalContent = document.getElementById('settings-modal-content');
       expect(modalContent).toHaveClass('bg-white', 'rounded-lg', 'p-6');
     });
   });

@@ -24,11 +24,12 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-96 max-w-90vw shadow-xl">
+    <div id="settings-modal-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div id="settings-modal-content" className="bg-white rounded-lg p-6 w-96 max-w-90vw shadow-xl">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Settings</h2>
+          <h2 id="settings-modal-title" className="text-2xl font-bold text-gray-800">Settings</h2>
           <button
+            id="settings-close-button"
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100"
           >
@@ -45,6 +46,7 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
               <label className="text-gray-900 font-medium">Focus</label>
               <div className="flex items-center space-x-2">
                 <input
+                  id="focus-duration-input"
                   type="number"
                   min="1"
                   max="120"
@@ -61,6 +63,7 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
               <label className="text-gray-600 font-medium">Short Break</label>
               <div className="flex items-center space-x-2">
                 <input
+                  id="short-break-duration-input"
                   type="number"
                   min="1"
                   max="120"
@@ -77,6 +80,7 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
               <label className="text-gray-600 font-medium">Long Break</label>
               <div className="flex items-center space-x-2">
                 <input
+                  id="long-break-duration-input"
                   type="number"
                   min="1"
                   max="120"
@@ -91,6 +95,7 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
 
           <div className="pt-4 border-t">
             <button
+              id="settings-done-button"
               onClick={onClose}
               className="w-full bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-900 transition-colors font-medium"
             >

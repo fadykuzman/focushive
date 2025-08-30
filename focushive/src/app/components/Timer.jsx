@@ -161,6 +161,7 @@ const Timer = () => {
 				>
 					{/* Settings Button */}
 					<button
+						id="settings-button"
 						onClick={() => setIsSettingsOpen(true)}
 						className="absolute top-4 right-4 w-8 h-8 text-white/70 hover:text-white transition-colors"
 						title="Settings"
@@ -170,10 +171,10 @@ const Timer = () => {
 						</svg>
 					</button>
 
-					<h1 className="text-white text-2xl font-bold mb-2">
+					<h1 id="timer-mode-title" className="text-white text-2xl font-bold mb-2">
 						{getModeDisplayName(mode)}
 					</h1>
-					<p className="text-white/80 mb-8">
+					<p id="timer-round-display" className="text-white/80 mb-8">
 						Round {round} of {totalRounds}
 					</p>
 
@@ -181,7 +182,7 @@ const Timer = () => {
 					<TimerDisplay timeLeft={timeLeft} progress={progress} />
 
 					{/* Timer Controls */}
-					<div className="flex gap-2 mb-6 justify-center">
+					<div id="timer-controls" className="flex gap-2 mb-6 justify-center">
 						{isActive && !isPaused ? (
 							<PauseButton
 								pauseTimer={pauseTimer}
@@ -203,7 +204,7 @@ const Timer = () => {
 					</div>
 
 					{/* Mode Switch */}
-					<div className="mb-4">
+					<div id="mode-switch-container" className="mb-4">
 						<ModeSwitch
 							mode={mode}
 							switchMode={switchMode}

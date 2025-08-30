@@ -25,7 +25,7 @@ const mockTimerStore = {
 };
 
 // Mock the store hook
-vi.mock('../stores/timerStore', () => ({
+vi.mock('../../stores/timerStore', () => ({
   default: () => mockTimerStore
 }));
 
@@ -85,6 +85,18 @@ describe('Timer Component', () => {
     vi.clearAllMocks();
     // Reset document title
     document.title = '';
+    // Reset mock store to default values
+    Object.assign(mockTimerStore, {
+      timeLeft: 1500,
+      isActive: false,
+      isPaused: false,
+      mode: 'focus',
+      round: 1,
+      totalRounds: 4,
+      focusDuration: 1500,
+      shortBreakDuration: 300,
+      longBreakDuration: 900,
+    });
   });
 
   afterEach(() => {
@@ -96,20 +108,21 @@ describe('Timer Component', () => {
       render(<Timer />);
       
       await waitFor(() => {
-        expect(screen.getByText('Focus')).toBeInTheDocument();
+        expect(screen.getByTestId('timer-display')).toBeInTheDocument();
       });
       
-      expect(screen.getByText('Round 1 of 4')).toBeInTheDocument();
-      expect(screen.getByTestId('timer-display')).toBeInTheDocument();
+      expect(document.getElementById('timer-mode-title')).toHaveTextContent('Focus');
+      expect(document.getElementById('timer-round-display')).toHaveTextContent('Round 1 of 4');
     });
   });
 
   describe('Mode Display', () => {
     test('should display correct mode name for focus', async () => {
+      mockTimerStore.mode = 'focus';
       render(<Timer />);
       
       await waitFor(() => {
-        expect(screen.getByText('Focus')).toBeInTheDocument();
+        expect(document.getElementById('timer-mode-title')).toHaveTextContent('Focus');
       });
     });
 
@@ -118,7 +131,7 @@ describe('Timer Component', () => {
       render(<Timer />);
       
       await waitFor(() => {
-        expect(screen.getByText('Short Break')).toBeInTheDocument();
+        expect(document.getElementById('timer-mode-title')).toHaveTextContent('Short Break');
       });
     });
 
@@ -127,7 +140,7 @@ describe('Timer Component', () => {
       render(<Timer />);
       
       await waitFor(() => {
-        expect(screen.getByText('Long Break')).toBeInTheDocument();
+        expect(document.getElementById('timer-mode-title')).toHaveTextContent('Long Break');
       });
     });
   });
@@ -139,7 +152,7 @@ describe('Timer Component', () => {
       render(<Timer />);
       
       await waitFor(() => {
-        expect(screen.getByText('Round 3 of 4')).toBeInTheDocument();
+        expect(document.getElementById('timer-round-display')).toHaveTextContent('Round 3 of 4');
       });
     });
   });
@@ -184,7 +197,7 @@ describe('Timer Component', () => {
       render(<Timer />);
       
       await waitFor(() => {
-        const settingsButton = screen.getByRole('button', { name: 'Settings' });
+        const settingsButton = document.getElementById('settings-button');
         fireEvent.click(settingsButton);
         expect(screen.getByTestId('settings-modal')).toBeInTheDocument();
       });
@@ -194,7 +207,7 @@ describe('Timer Component', () => {
       render(<Timer />);
       
       await waitFor(() => {
-        const settingsButton = screen.getByRole('button', { name: 'Settings' });
+        const settingsButton = document.getElementById('settings-button');
         fireEvent.click(settingsButton);
         
         const changeFocusButton = screen.getByText('Change Focus');
