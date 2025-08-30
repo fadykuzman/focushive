@@ -1,4 +1,4 @@
-export default function TimeDisply({ timeLeft }) {
+export default function TimeDisplay({ timeLeft }) {
 	// Format time display
 	const formatTime = (seconds) => {
 		const minutes = Math.floor(seconds / 60);
