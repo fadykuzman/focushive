@@ -3,11 +3,6 @@
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
   "framework": "nextjs",
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs22.x"
-    }
-  },
   "env": {
     "IS_REACT_ACT_ENVIRONMENT": "true"
   }
