@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
+import { act } from 'react';
 
-// Official React Testing Library fix for act function detection
+// Make React.act available for React Testing Library
+global.React = { act };
 global.IS_REACT_ACT_ENVIRONMENT = true;
 
 // Mock IntersectionObserver for jsdom
