@@ -56,6 +56,17 @@ FocusHive follows a comprehensive testing pyramid approach:
 - **UI**: Interactive test dashboard via `@vitest/ui`
 - **Dependencies**: React Testing Library ecosystem for component testing
 
+#### React 19 Compatibility Fix
+**Issue**: `React.act is not a function` error in CI pipeline  
+**Root Cause**: @testing-library/react@16.3.0 hasn't been updated for React 19.1.0 compatibility  
+**Solution**: Added official React Testing Library fix in `src/test-setup.js`:
+
+```javascript
+global.IS_REACT_ACT_ENVIRONMENT = true;
+```
+
+This tells React Testing Library it's in a testing environment where `act` should be used, resolving compatibility issues until official React 19 support is released.
+
 ### Test Scripts
 ```bash
 pnpm test          # Interactive test watcher
