@@ -37,6 +37,7 @@
                 pkgs.nodePackages.postcss
                 pkgs.nodePackages.autoprefixer
                 pkgs.nodePackages.eslint
+                pkgs.nodePackages.vercel
               ];
 
               languages = {
