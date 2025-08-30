@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
-import { act } from 'react';
+import * as React from 'react';
 
-// Make React.act available for React Testing Library
-global.React = { act };
+// Make React and React.act available for React Testing Library
+global.React = React;
 global.IS_REACT_ACT_ENVIRONMENT = true;
 
 // Mock IntersectionObserver for jsdom

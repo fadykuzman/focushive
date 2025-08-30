@@ -34,9 +34,15 @@ jobs:
         
       - name: Run tests
         run: pnpm test:run
+        env:
+          NODE_ENV: test
+          IS_REACT_ACT_ENVIRONMENT: true
         
       - name: Generate test reports
         run: pnpm test:report
+        env:
+          NODE_ENV: test
+          IS_REACT_ACT_ENVIRONMENT: true
         
       - name: Upload test reports as artifacts
         uses: actions/upload-artifact@v4
@@ -106,6 +112,9 @@ jobs:
         
       - name: Generate test reports for deployment
         run: pnpm test:report
+        env:
+          NODE_ENV: test
+          IS_REACT_ACT_ENVIRONMENT: true
         
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
