@@ -39,6 +39,8 @@
                 pkgs.nodePackages.eslint
                 pkgs.nodePackages.vercel
                 pkgs.husky
+                pkgs.semantic-release
+                  pkgs.commitlint
               ];
 
               languages = {

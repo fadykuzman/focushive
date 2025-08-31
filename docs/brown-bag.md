@@ -19,3 +19,6 @@
 - [ ] Add toggle at the bottom for local/connected(cloud)
 - [ ] use React native for mobile app
 - [ ] check the pipeline config for testing
+- [ ] Pro: Change the peep sound
+- [ ] Pro: Dark mode
+- [ ] Pro: Different themes (Clown, dog, cat, plant, fish, custom?)
