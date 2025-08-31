@@ -1,41 +1,70 @@
 'use client';
 
-import { useState } from 'react';
-import ToggleSwitch from './ToggleSwitch';
-import ComingSoonPill from './ComingSoonPill';
-import useTimerStore from '../stores/timerStore';
+import { useSettingsForm } from '../hooks/useSettingsForm';
+import { useClickOutside, useEscapeKey } from '../utils/modalUtils';
+import DurationInputGroup from './DurationInputGroup';
+import AutomationSection from './AutomationSection';
+import ModalButtons from './ModalButtons';
 
 export default function SettingsModal({ isOpen, onClose, durations, onDurationChange }) {
-  const { autoTimerStart, toggleAutoTimerStart } = useTimerStore();
-  
-  const [localDurations, setLocalDurations] = useState({
-    focus: Math.floor(durations.focus / 60),
-    shortBreak: Math.floor(durations.shortBreak / 60),
-    longBreak: Math.floor(durations.longBreak / 60),
+  const {
+    localDurations,
+    localAutoTimerStart,
+    handleDurationChange,
+    handleAutoTimerStartChange,
+    handleSave,
+    handleCancel,
+    isDirty
+  } = useSettingsForm(durations, onDurationChange);
+
+  const modalRef = useClickOutside(() => {
+    if (isOpen) {
+      handleCancel();
+      onClose();
+    }
   });
 
-  const handleChange = (type, value) => {
-    const newValue = Math.max(1, Math.min(120, parseInt(value) || 1)); // Min 1, Max 120 minutes
-    const newDurations = {
-      ...localDurations,
-      [type]: newValue
-    };
-    setLocalDurations(newDurations);
-    
-    // Live update - convert to seconds and apply immediately
-    onDurationChange(type, newValue * 60);
+  useEscapeKey(() => {
+    if (isOpen) {
+      handleCancel();
+      onClose();
+    }
+  });
+
+  const onSave = () => {
+    handleSave();
+    onClose();
+  };
+
+  const onCancel = () => {
+    handleCancel();
+    onClose();
+  };
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onCancel();
+    }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div id="settings-modal-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div id="settings-modal-content" className="bg-white rounded-lg p-6 w-[480px] max-w-90vw shadow-xl">
+    <div 
+      id="settings-modal-overlay" 
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
+      onClick={handleOverlayClick}
+    >
+      <div 
+        ref={modalRef}
+        id="settings-modal-content" 
+        className="bg-white rounded-lg p-6 w-[480px] max-w-90vw shadow-xl"
+      >
         <div className="flex justify-between items-center mb-6">
           <h2 id="settings-modal-title" className="text-2xl font-bold text-gray-800">Settings</h2>
           <button
             id="settings-close-button"
-            onClick={onClose}
+            onClick={onCancel}
             className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100"
           >
             ×
@@ -43,85 +72,47 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
         </div>
 
         <div className="space-y-6">
+          {/* Timer Durations Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-700">Timer Durations</h3>
             
-            {/* Focus Duration */}
-            <div className="flex items-center justify-between">
-              <label className="text-gray-900 font-medium">Focus</label>
-              <div className="flex items-center space-x-2">
-                <input
-                  id="focus-duration-input"
-                  type="number"
-                  min="1"
-                  max="120"
-                  value={localDurations.focus}
-                  onChange={(e) => handleChange('focus', e.target.value)}
-                  className="w-16 px-2 py-1 text-gray-700 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <span className="text-gray-500 text-sm">min</span>
-              </div>
-            </div>
+            <DurationInputGroup
+              label="Focus"
+              value={localDurations.focus}
+              onChange={(value) => handleDurationChange('focus', value)}
+              inputId="focus-duration-input"
+              focusColor="blue"
+            />
 
-            {/* Short Break Duration */}
-            <div className="flex items-center justify-between">
-              <label className="text-gray-600 font-medium">Short Break</label>
-              <div className="flex items-center space-x-2">
-                <input
-                  id="short-break-duration-input"
-                  type="number"
-                  min="1"
-                  max="120"
-                  value={localDurations.shortBreak}
-                  onChange={(e) => handleChange('shortBreak', e.target.value)}
-                  className="w-16 px-2 py-1 text-gray-700  border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-green-500"
-                />
-                <span className="text-gray-500 text-sm">min</span>
-              </div>
-            </div>
+            <DurationInputGroup
+              label="Short Break"
+              value={localDurations.shortBreak}
+              onChange={(value) => handleDurationChange('shortBreak', value)}
+              inputId="short-break-duration-input"
+              focusColor="green"
+            />
 
-            {/* Long Break Duration */}
-            <div className="flex items-center justify-between">
-              <label className="text-gray-600 font-medium">Long Break</label>
-              <div className="flex items-center space-x-2">
-                <input
-                  id="long-break-duration-input"
-                  type="number"
-                  min="1"
-                  max="120"
-                  value={localDurations.longBreak}
-                  onChange={(e) => handleChange('longBreak', e.target.value)}
-                  className="w-16 px-2 py-1 text-gray-700  border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <span className="text-gray-500 text-sm">min</span>
-              </div>
-            </div>
+            <DurationInputGroup
+              label="Long Break"
+              value={localDurations.longBreak}
+              onChange={(value) => handleDurationChange('longBreak', value)}
+              inputId="long-break-duration-input"
+              focusColor="blue"
+            />
           </div>
 
-          {/* Automation Settings */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-700">Automation</h3>
-            
-            <div className="flex items-center justify-between">
-              <label className="text-gray-600 font-medium">Auto Timer Start</label>
-              <ToggleSwitch 
-                enabled={autoTimerStart}
-                disabled={false}
-                label="Automatically start next timer after mode switch"
-                onChange={toggleAutoTimerStart}
-              />
-            </div>
-          </div>
+          {/* Automation Section */}
+          <AutomationSection 
+            autoTimerStart={localAutoTimerStart}
+            onToggle={handleAutoTimerStartChange}
+          />
 
-          <div className="pt-4 border-t">
-            <button
-              id="settings-done-button"
-              onClick={onClose}
-              className="w-full bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-900 transition-colors font-medium"
-            >
-              Done
-            </button>
-          </div>
+          {/* Save/Cancel Buttons */}
+          <ModalButtons 
+            onSave={onSave}
+            onCancel={onCancel}
+            isDirty={isDirty}
+          />
         </div>
       </div>
     </div>

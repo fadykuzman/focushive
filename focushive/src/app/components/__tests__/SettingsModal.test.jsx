@@ -69,51 +69,56 @@ describe('SettingsModal Component', () => {
   });
 
   describe('Duration Changes', () => {
-    test('should call onDurationChange when focus duration is modified', async () => {
+    test('should update local state when focus duration is modified', async () => {
       render(<SettingsModal {...defaultProps} />);
       
       const focusInput = document.getElementById('focus-duration-input');
       fireEvent.change(focusInput, { target: { value: '30' } });
       
-      expect(defaultProps.onDurationChange).toHaveBeenCalledWith('focus', 1800); // 30 * 60
+      expect(focusInput).toHaveValue(30);
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
     });
 
-    test('should call onDurationChange when short break duration is modified', async () => {
+    test('should update local state when short break duration is modified', async () => {
       render(<SettingsModal {...defaultProps} />);
       
       const shortBreakInput = document.getElementById('short-break-duration-input');
       fireEvent.change(shortBreakInput, { target: { value: '10' } });
       
-      expect(defaultProps.onDurationChange).toHaveBeenCalledWith('shortBreak', 600); // 10 * 60
+      expect(shortBreakInput).toHaveValue(10);
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
     });
 
-    test('should call onDurationChange when long break duration is modified', async () => {
+    test('should update local state when long break duration is modified', async () => {
       render(<SettingsModal {...defaultProps} />);
       
       const longBreakInput = document.getElementById('long-break-duration-input');
       fireEvent.change(longBreakInput, { target: { value: '20' } });
       
-      expect(defaultProps.onDurationChange).toHaveBeenCalledWith('longBreak', 1200); // 20 * 60
+      expect(longBreakInput).toHaveValue(20);
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
     });
   });
 
   describe('Input Validation', () => {
-    test('should enforce minimum value of 1 minute', () => {
+    test('should enforce minimum value of 1 minute locally', () => {
       render(<SettingsModal {...defaultProps} />);
       
       const focusInput = screen.getByDisplayValue('25');
       fireEvent.change(focusInput, { target: { value: '0' } });
       
-      expect(defaultProps.onDurationChange).toHaveBeenCalledWith('focus', 60); // 1 * 60 (minimum)
+      expect(focusInput).toHaveValue(1); // Minimum enforced locally
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
     });
 
-    test('should enforce maximum value of 120 minutes', () => {
+    test('should enforce maximum value of 120 minutes locally', () => {
       render(<SettingsModal {...defaultProps} />);
       
       const focusInput = screen.getByDisplayValue('25');
       fireEvent.change(focusInput, { target: { value: '150' } });
       
-      expect(defaultProps.onDurationChange).toHaveBeenCalledWith('focus', 7200); // 120 * 60 (maximum)
+      expect(focusInput).toHaveValue(120); // Maximum enforced locally
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
     });
 
     test('should handle invalid input gracefully', () => {
@@ -122,7 +127,8 @@ describe('SettingsModal Component', () => {
       const focusInput = screen.getByDisplayValue('25');
       fireEvent.change(focusInput, { target: { value: 'invalid' } });
       
-      expect(defaultProps.onDurationChange).toHaveBeenCalledWith('focus', 60); // 1 * 60 (fallback)
+      expect(focusInput).toHaveValue(1); // Default to 1 minute locally
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
     });
 
     test('should handle empty input', () => {
@@ -131,7 +137,8 @@ describe('SettingsModal Component', () => {
       const focusInput = screen.getByDisplayValue('25');
       fireEvent.change(focusInput, { target: { value: '' } });
       
-      expect(defaultProps.onDurationChange).toHaveBeenCalledWith('focus', 60); // 1 * 60 (fallback)
+      expect(focusInput).toHaveValue(1); // Default to 1 minute locally
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
     });
   });
 
@@ -145,11 +152,24 @@ describe('SettingsModal Component', () => {
       expect(defaultProps.onClose).toHaveBeenCalledOnce();
     });
 
-    test('should call onClose when Done button is clicked', () => {
+    test('should call onClose when Cancel button is clicked', () => {
       render(<SettingsModal {...defaultProps} />);
       
-      const doneButton = document.getElementById('settings-done-button');
-      fireEvent.click(doneButton);
+      const cancelButton = document.getElementById('settings-cancel-button');
+      fireEvent.click(cancelButton);
+      
+      expect(defaultProps.onClose).toHaveBeenCalledOnce();
+    });
+
+    test('should call onClose when Save button is clicked with changes', () => {
+      render(<SettingsModal {...defaultProps} />);
+      
+      // Make a change to enable save button
+      const focusInput = screen.getByDisplayValue('25');
+      fireEvent.change(focusInput, { target: { value: '30' } });
+      
+      const saveButton = document.getElementById('settings-save-button');
+      fireEvent.click(saveButton);
       
       expect(defaultProps.onClose).toHaveBeenCalledOnce();
     });
@@ -187,8 +207,8 @@ describe('SettingsModal Component', () => {
     });
   });
 
-  describe('Live Updates', () => {
-    test('should update local state and call onDurationChange immediately', () => {
+  describe('Local State Updates', () => {
+    test('should update local state without calling onDurationChange immediately', () => {
       render(<SettingsModal {...defaultProps} />);
       
       const focusInput = screen.getByDisplayValue('25');
@@ -196,11 +216,11 @@ describe('SettingsModal Component', () => {
       
       // Local state should update immediately
       expect(focusInput).toHaveValue(45);
-      // Parent should be notified immediately
-      expect(defaultProps.onDurationChange).toHaveBeenCalledWith('focus', 2700); // 45 * 60
+      // Parent should NOT be notified until save
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
     });
 
-    test('should handle rapid input changes', () => {
+    test('should handle rapid input changes without calling onDurationChange', () => {
       render(<SettingsModal {...defaultProps} />);
       
       const focusInput = screen.getByDisplayValue('25');
@@ -209,8 +229,8 @@ describe('SettingsModal Component', () => {
       fireEvent.change(focusInput, { target: { value: '3' } });
       fireEvent.change(focusInput, { target: { value: '30' } });
       
-      expect(defaultProps.onDurationChange).toHaveBeenCalledTimes(2);
-      expect(defaultProps.onDurationChange).toHaveBeenLastCalledWith('focus', 1800); // 30 * 60
+      expect(focusInput).toHaveValue(30);
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
     });
   });
 
@@ -275,13 +295,64 @@ describe('SettingsModal Component', () => {
       expect(toggle).toHaveAttribute('aria-checked', 'false');
     });
 
-    test('should call toggleAutoTimerStart when toggle is clicked', () => {
+    test('should only apply toggle change when save is clicked', () => {
       render(<SettingsModal {...defaultProps} />);
       
       const toggle = screen.getByRole('switch');
       fireEvent.click(toggle);
       
+      // Should not call store function yet
+      expect(mockTimerStore.toggleAutoTimerStart).not.toHaveBeenCalled();
+      
+      const saveButton = document.getElementById('settings-save-button');
+      fireEvent.click(saveButton);
+      
+      // Should call store function when saving
       expect(mockTimerStore.toggleAutoTimerStart).toHaveBeenCalledTimes(1);
+    });
+
+    test('should not apply changes when cancel is clicked', () => {
+      render(<SettingsModal {...defaultProps} />);
+      
+      const toggle = screen.getByRole('switch');
+      fireEvent.click(toggle);
+      
+      const cancelButton = document.getElementById('settings-cancel-button');
+      fireEvent.click(cancelButton);
+      
+      // Should not call store function when cancelling
+      expect(mockTimerStore.toggleAutoTimerStart).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Save/Cancel Behavior', () => {
+    test('should apply duration changes only when save is clicked', () => {
+      render(<SettingsModal {...defaultProps} />);
+      
+      const focusInput = document.getElementById('focus-duration-input');
+      fireEvent.change(focusInput, { target: { value: '30' } });
+      
+      // Should not call onDurationChange yet
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
+      
+      const saveButton = document.getElementById('settings-save-button');
+      fireEvent.click(saveButton);
+      
+      // Should call onDurationChange when saving
+      expect(defaultProps.onDurationChange).toHaveBeenCalledWith('focus', 1800);
+    });
+
+    test('should reset duration changes when cancel is clicked', () => {
+      render(<SettingsModal {...defaultProps} />);
+      
+      const focusInput = document.getElementById('focus-duration-input');
+      fireEvent.change(focusInput, { target: { value: '30' } });
+      
+      const cancelButton = document.getElementById('settings-cancel-button');
+      fireEvent.click(cancelButton);
+      
+      // Should not call onDurationChange when cancelling
+      expect(defaultProps.onDurationChange).not.toHaveBeenCalled();
     });
   });
 });
