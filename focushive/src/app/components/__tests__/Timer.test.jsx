@@ -29,6 +29,24 @@ vi.mock('../../stores/timerStore', () => ({
   default: () => mockTimerStore
 }));
 
+// Mock the statistics hook
+vi.mock('../../hooks/useSessionStats', () => ({
+  useTodayStats: vi.fn(() => ({
+    focusTime: 3600, // 1 hour
+    sessions: 3,
+    completionRate: 85,
+    loading: false
+  }))
+}));
+
+// Mock session database
+vi.mock('../../utils/sessionDatabase', () => ({
+  sessionDatabase: {
+    getAllSessions: vi.fn(() => Promise.resolve([])),
+    addSession: vi.fn(() => Promise.resolve()),
+  }
+}));
+
 // Mock child components to isolate Timer component logic
 vi.mock('../StartButton', () => ({
   default: ({ startTimer, resumeTimer, isPaused }) => (
@@ -75,6 +93,16 @@ vi.mock('../SettingsModal', () => ({
       <div data-testid="settings-modal">
         <button onClick={onClose}>Close</button>
         <button onClick={() => onDurationChange('focus', 1800)}>Change Focus</button>
+      </div>
+    ) : null
+  )
+}));
+
+vi.mock('../StatsDashboard', () => ({
+  default: ({ isOpen, onClose }) => (
+    isOpen ? (
+      <div data-testid="stats-dashboard">
+        <button onClick={onClose}>Close Stats</button>
       </div>
     ) : null
   )
@@ -272,6 +300,35 @@ describe('Timer Component', () => {
 
       // Just verify the component renders with inactive state
       expect(screen.getByTestId('start-button')).toBeInTheDocument();
+    });
+  });
+
+  describe('Statistics Integration', () => {
+    test('should show statistics button', async () => {
+      render(<Timer />);
+      
+      await waitFor(() => {
+        expect(document.getElementById('stats-button')).toBeInTheDocument();
+      });
+    });
+
+    test('should show today stats preview when focus time > 0', async () => {
+      render(<Timer />);
+      
+      await waitFor(() => {
+        expect(document.getElementById('timer-stats-preview')).toBeInTheDocument();
+        expect(document.getElementById('timer-stats-preview-text')).toBeInTheDocument();
+      });
+    });
+
+    test('should open statistics dashboard when stats button is clicked', async () => {
+      render(<Timer />);
+      
+      await waitFor(() => {
+        const statsButton = document.getElementById('stats-button');
+        fireEvent.click(statsButton);
+        expect(screen.getByTestId('stats-dashboard')).toBeInTheDocument();
+      });
     });
   });
 

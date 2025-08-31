@@ -11,6 +11,7 @@ import {
 } from '../utils/timer';
 import { soundAlert } from '../utils/soundAlerts';
 import { browserNotifications } from '../utils/notifications';
+import { sessionRecorder } from '../services/sessionRecorder';
 
 const useTimerStore = create(
   persist(
@@ -29,6 +30,15 @@ const useTimerStore = create(
 
       startTimer: () => {
         browserNotifications.requestPermission();
+        const currentState = get();
+        const plannedDuration = getDurationForMode(currentState.mode, {
+          focusDuration: currentState.focusDuration,
+          shortBreakDuration: currentState.shortBreakDuration,
+          longBreakDuration: currentState.longBreakDuration
+        });
+        
+        sessionRecorder.startSession(currentState.mode, plannedDuration, currentState.round);
+        
         set({ 
           isActive: true, 
           isPaused: false, 
@@ -49,6 +59,11 @@ const useTimerStore = create(
 
       stopTimer: () => {
         const currentState = get();
+        
+        if (sessionRecorder.isSessionActive()) {
+          sessionRecorder.interruptSession('manual_stop');
+        }
+        
         const timeLeft = getDurationForMode(currentState.mode, {
           focusDuration: currentState.focusDuration,
           shortBreakDuration: currentState.shortBreakDuration,
@@ -65,6 +80,11 @@ const useTimerStore = create(
 
       resetTimer: () => {
         const currentState = get();
+        
+        if (sessionRecorder.isSessionActive()) {
+          sessionRecorder.interruptSession('manual_reset');
+        }
+        
         const timeLeft = getDurationForMode(currentState.mode, {
           focusDuration: currentState.focusDuration,
           shortBreakDuration: currentState.shortBreakDuration,
@@ -106,9 +126,24 @@ const useTimerStore = create(
 
       completeTimer: () => {
         const currentState = get();
+        
+        if (sessionRecorder.isSessionActive()) {
+          sessionRecorder.endSession(true);
+        }
+        
         soundAlert.playModeAlert(currentState.mode);
         browserNotifications.showNotification(currentState.mode);
         const transitionState = completeTimerTransition(currentState);
+        
+        if (transitionState.isActive && sessionRecorder) {
+          const plannedDuration = getDurationForMode(transitionState.mode, {
+            focusDuration: currentState.focusDuration,
+            shortBreakDuration: currentState.shortBreakDuration,
+            longBreakDuration: currentState.longBreakDuration
+          });
+          sessionRecorder.startSession(transitionState.mode, plannedDuration, transitionState.round);
+        }
+        
         set(transitionState);
       },
 
@@ -116,6 +151,11 @@ const useTimerStore = create(
         if (!validateMode(newMode)) return;
         
         const currentState = get();
+        
+        if (sessionRecorder.isSessionActive()) {
+          sessionRecorder.interruptSession('manual_mode_switch');
+        }
+        
         const timeLeft = getDurationForMode(newMode, {
           focusDuration: currentState.focusDuration,
           shortBreakDuration: currentState.shortBreakDuration,

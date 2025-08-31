@@ -8,12 +8,15 @@ import ResetRoundsButton from "./ResetRoundsButton";
 import ModeSwitch from "./ModeSwitch";
 import TimerDisplay from "./TimerDisplay";
 import SettingsModal from "./SettingsModal";
+import StatsDashboard from "./StatsDashboard";
 import GitHubLink from "./GitHubLink";
+import { useTodayStats } from "../hooks/useSessionStats";
 import packageJson from '../../../package.json';
 
 const Timer = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+	const [isStatsOpen, setIsStatsOpen] = useState(false);
 	const [smoothProgress, setSmoothProgress] = useState(0);
 	
 	const {
@@ -39,6 +42,8 @@ const Timer = () => {
 		updateDuration,
 		resetRounds,
 	} = useTimerStore();
+
+	const { focusTime, sessions, completionRate } = useTodayStats();
 
 	// Restore timer on component mount and mark as hydrated
 	useEffect(() => {
@@ -186,22 +191,37 @@ const Timer = () => {
 					className={`${styles.container} rounded-lg p-8 shadow-2xl max-w-md mx-auto relative`}
 				>
 
-					{/* Settings Button */}
-					<button
-						id="settings-button"
-						onClick={() => setIsSettingsOpen(true)}
-						className="absolute top-4 right-4 w-8 h-8 text-white/70 hover:text-white transition-colors"
-						title="Settings"
-					>
-						<svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-							<path d="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66Z"/>
-						</svg>
-					</button>
+					{/* Top Controls */}
+					<div className="absolute top-4 right-4 flex gap-2">
+						{/* Statistics Button */}
+						<button
+							id="stats-button"
+							onClick={() => setIsStatsOpen(true)}
+							className="w-8 h-8 text-white/70 hover:text-white transition-colors"
+							title="Statistics"
+						>
+							<svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+								<path d="M5 12h2v7H5v-7zm6-4h2v11h-2V8zm6-6h2v17h-2V2z"/>
+							</svg>
+						</button>
+						
+						{/* Settings Button */}
+						<button
+							id="settings-button"
+							onClick={() => setIsSettingsOpen(true)}
+							className="w-8 h-8 text-white/70 hover:text-white transition-colors"
+							title="Settings"
+						>
+							<svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+								<path d="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66Z"/>
+							</svg>
+						</button>
+					</div>
 
 					<h1 id="timer-mode-title" className="text-white text-2xl font-bold mb-2">
 						{getModeDisplayName(mode)}
 					</h1>
-					<div className="flex items-center justify-center gap-3 mb-8">
+					<div className="flex items-center justify-center gap-3 mb-4">
 						<p id="timer-round-display" className="text-white/80">
 							Round {round} of {totalRounds}
 						</p>
@@ -210,6 +230,15 @@ const Timer = () => {
 							mode={mode}
 						/>
 					</div>
+
+					{/* Today's Stats Preview */}
+					{focusTime > 0 && (
+						<div id="timer-stats-preview" className="text-center mb-4">
+							<div id="timer-stats-preview-text" className="text-white/60 text-sm">
+								Today: {Math.floor(focusTime / 60)}m focus • {sessions} sessions • {completionRate}% rate
+							</div>
+						</div>
+					)}
 
 					{/* Timer Display */}
 					<TimerDisplay 
@@ -257,6 +286,12 @@ const Timer = () => {
 					longBreak: longBreakDuration,
 				}}
 				onDurationChange={handleDurationChange}
+			/>
+
+			{/* Statistics Dashboard */}
+			<StatsDashboard
+				isOpen={isStatsOpen}
+				onClose={() => setIsStatsOpen(false)}
 			/>
 			
 			{/* Bottom right info panel */}

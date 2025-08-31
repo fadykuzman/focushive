@@ -10,11 +10,10 @@
 - [x] Add notification when the timer reaches zero.
 - [ ] Count how many unique visitors
 - [x] Reset rounds manually
-- [ ] Change number of rounds before a long break.
 - [ ] Bug: when timer is not running, and the duration is changed, the timer doesn't reflect the new duration. The corresponding mode button has to be clicked to reflect the new duration.
 - [ ] Use IndexedDB to store the start time of the timer.
 - [ ] Add a task to a focus session.
-- [ ] Fluid transitions between modes
+- [x] Fluid transitions between modes
 - [ ] when a timer is runnin,if tried to switch mode, ask confirmation
 - [ ] Add toggle at the bottom for local/connected(cloud)
 - [ ] use React native for mobile app
@@ -22,3 +21,7 @@
 - [ ] Pro: Change the peep sound
 - [ ] Pro: Dark mode
 - [ ] Pro: Different themes (Clown, dog, cat, plant, fish, custom?)
+- [ ] Pro: Change number of rounds before a long break.
+- [ ] Pro: Different profiles (e.g., work, study, exercise) with different default durations and settings.
+- [ ] Pro: Integrate with calendar apps to schedule focus sessions.
+- [ ] Pro: Integrate with task management apps to link focus sessions with specific tasks.
