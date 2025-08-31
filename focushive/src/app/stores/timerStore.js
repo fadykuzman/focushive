@@ -10,6 +10,7 @@ import {
   DEFAULT_SETTINGS 
 } from '../utils/timer';
 import { soundAlert } from '../utils/soundAlerts';
+import { browserNotifications } from '../utils/notifications';
 
 const useTimerStore = create(
   persist(
@@ -26,6 +27,7 @@ const useTimerStore = create(
       longBreakDuration: DEFAULT_DURATIONS.LONG_BREAK,
 
       startTimer: () => {
+        browserNotifications.requestPermission();
         set({ 
           isActive: true, 
           isPaused: false, 
@@ -87,6 +89,7 @@ const useTimerStore = create(
           });
         } else if (timeLeft === 0) {
           soundAlert.playModeAlert(mode);
+          browserNotifications.showNotification(mode);
           const transitionState = completeTimerTransition(currentState);
           set(transitionState);
         }
@@ -103,6 +106,7 @@ const useTimerStore = create(
       completeTimer: () => {
         const currentState = get();
         soundAlert.playModeAlert(currentState.mode);
+        browserNotifications.showNotification(currentState.mode);
         const transitionState = completeTimerTransition(currentState);
         set(transitionState);
       },
