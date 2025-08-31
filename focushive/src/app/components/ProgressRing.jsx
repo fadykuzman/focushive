@@ -18,7 +18,6 @@ export default function ProgressRing({ progress }) {
 				fill="none"
 				strokeDasharray={`${2 * Math.PI * 120}`}
 				strokeDashoffset={`${2 * Math.PI * 120 * (1 - progress / 100)}`}
-				className="transition-all duration-1000 ease-linear"
 			/>
 		</svg>
 	);

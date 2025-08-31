@@ -3,8 +3,11 @@
 import { useState } from 'react';
 import ToggleSwitch from './ToggleSwitch';
 import ComingSoonPill from './ComingSoonPill';
+import useTimerStore from '../stores/timerStore';
 
 export default function SettingsModal({ isOpen, onClose, durations, onDurationChange }) {
+  const { autoTimerStart, toggleAutoTimerStart } = useTimerStore();
+  
   const [localDurations, setLocalDurations] = useState({
     focus: Math.floor(durations.focus / 60),
     shortBreak: Math.floor(durations.shortBreak / 60),
@@ -100,15 +103,12 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
             <h3 className="text-lg font-semibold text-gray-700">Automation</h3>
             
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <label className="text-gray-600 font-medium">Auto Mode Switch & Timer Start</label>
-                <ComingSoonPill />
-              </div>
+              <label className="text-gray-600 font-medium">Auto Timer Start</label>
               <ToggleSwitch 
-                enabled={false}
-                disabled={true}
-                label="Automatic mode switching and timer start"
-                onChange={() => {}}
+                enabled={autoTimerStart}
+                disabled={false}
+                label="Automatically start next timer after mode switch"
+                onChange={toggleAutoTimerStart}
               />
             </div>
           </div>

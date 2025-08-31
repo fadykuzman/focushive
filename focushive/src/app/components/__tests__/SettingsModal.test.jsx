@@ -2,6 +2,16 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import SettingsModal from '../SettingsModal';
 
+// Mock the timer store
+const mockTimerStore = {
+  autoTimerStart: false,
+  toggleAutoTimerStart: vi.fn()
+};
+
+vi.mock('../../stores/timerStore', () => ({
+  default: () => mockTimerStore
+}));
+
 describe('SettingsModal Component', () => {
   const defaultProps = {
     isOpen: true,
@@ -16,6 +26,7 @@ describe('SettingsModal Component', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mockTimerStore.autoTimerStart = false;
   });
 
   describe('Modal Visibility', () => {
@@ -248,30 +259,29 @@ describe('SettingsModal Component', () => {
   });
 
   describe('Automation Section', () => {
-    test('should render automation section with toggle and coming soon pill', () => {
+    test('should render automation section with toggle', () => {
       render(<SettingsModal {...defaultProps} />);
       
       expect(screen.getByText('Automation')).toBeInTheDocument();
-      expect(screen.getByText('Auto Mode Switch & Timer Start')).toBeInTheDocument();
-      expect(screen.getByText('Coming Soon')).toBeInTheDocument();
+      expect(screen.getByText('Auto Timer Start')).toBeInTheDocument();
       expect(screen.getByRole('switch')).toBeInTheDocument();
     });
 
-    test('should render disabled toggle switch', () => {
+    test('should render functional toggle switch', () => {
       render(<SettingsModal {...defaultProps} />);
       
       const toggle = screen.getByRole('switch');
-      expect(toggle).toBeDisabled();
+      expect(toggle).not.toBeDisabled();
       expect(toggle).toHaveAttribute('aria-checked', 'false');
     });
 
-    test('should not respond to toggle clicks when disabled', () => {
+    test('should call toggleAutoTimerStart when toggle is clicked', () => {
       render(<SettingsModal {...defaultProps} />);
       
       const toggle = screen.getByRole('switch');
       fireEvent.click(toggle);
       
-      expect(toggle).toHaveAttribute('aria-checked', 'false');
+      expect(mockTimerStore.toggleAutoTimerStart).toHaveBeenCalledTimes(1);
     });
   });
 });

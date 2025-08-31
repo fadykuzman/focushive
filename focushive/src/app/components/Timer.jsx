@@ -14,6 +14,7 @@ import packageJson from '../../../package.json';
 const Timer = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+	const [smoothProgress, setSmoothProgress] = useState(0);
 	
 	const {
 		timeLeft,
@@ -25,6 +26,7 @@ const Timer = () => {
 		focusDuration,
 		shortBreakDuration,
 		longBreakDuration,
+		autoTimerStart,
 		startTimer,
 		pauseTimer,
 		resumeTimer,
@@ -76,6 +78,30 @@ const Timer = () => {
 		return () => clearInterval(interval);
 	}, [isActive, isPaused, tick]);
 
+	// Handle smooth progress interpolation
+	useEffect(() => {
+		let animationFrame = null;
+		const startTime = Date.now();
+		const targetProgress = ((getModeDuration(mode) - timeLeft) / getModeDuration(mode)) * 100;
+
+		const updateSmoothProgress = () => {
+			if (isActive && !isPaused && timeLeft > 0) {
+				const elapsed = (Date.now() - startTime) / 1000;
+				const interpolatedProgress = targetProgress + (elapsed / getModeDuration(mode)) * 100;
+				setSmoothProgress(Math.min(interpolatedProgress, 100));
+				animationFrame = requestAnimationFrame(updateSmoothProgress);
+			} else {
+				setSmoothProgress(targetProgress);
+			}
+		};
+
+		updateSmoothProgress();
+		return () => {
+			if (animationFrame) {
+				cancelAnimationFrame(animationFrame);
+			}
+		};
+	}, [timeLeft, isActive, isPaused, mode, focusDuration, shortBreakDuration, longBreakDuration]);
 
 	// Get mode display name
 	const getModeDisplayName = (mode) => {
@@ -90,9 +116,6 @@ const Timer = () => {
 				return "Focus Time";
 		}
 	};
-
-	const progress =
-		((getModeDuration(mode) - timeLeft) / getModeDuration(mode)) * 100;
 
 	// Get duration for current mode from store
 	function getModeDuration(currentMode) {
@@ -191,7 +214,7 @@ const Timer = () => {
 					{/* Timer Display */}
 					<TimerDisplay 
 						timeLeft={timeLeft} 
-						progress={progress} 
+						progress={smoothProgress} 
 						resetTimer={resetTimer}
 						isRunning={isActive && !isPaused}
 						mode={mode}

@@ -25,6 +25,7 @@ const useTimerStore = create(
       focusDuration: DEFAULT_DURATIONS.FOCUS,
       shortBreakDuration: DEFAULT_DURATIONS.SHORT_BREAK,
       longBreakDuration: DEFAULT_DURATIONS.LONG_BREAK,
+      autoTimerStart: false,
 
       startTimer: () => {
         browserNotifications.requestPermission();
@@ -207,6 +208,11 @@ const useTimerStore = create(
             lastTick: null,
           });
         }
+      },
+
+      toggleAutoTimerStart: () => {
+        const currentState = get();
+        set({ autoTimerStart: !currentState.autoTimerStart });
       }
     }),
     {
@@ -222,6 +228,7 @@ const useTimerStore = create(
         focusDuration: state.focusDuration,
         shortBreakDuration: state.shortBreakDuration,
         longBreakDuration: state.longBreakDuration,
+        autoTimerStart: state.autoTimerStart,
       }),
     }
   )

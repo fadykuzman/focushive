@@ -46,7 +46,7 @@ describe('ToggleSwitch Component', () => {
       render(<ToggleSwitch disabled={true} />);
       
       const toggle = screen.getByRole('switch');
-      expect(toggle).toHaveClass('opacity-50');
+      expect(toggle).toHaveClass('bg-gray-200');
       expect(toggle).toHaveClass('cursor-not-allowed');
     });
 

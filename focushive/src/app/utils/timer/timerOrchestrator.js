@@ -3,19 +3,22 @@ import { getDurationForMode } from "./durationUtils.js";
 import { TimerRestoration } from "../timerRestoration.js";
 
 export function completeTimerTransition(currentState) {
-  const { mode, round, totalRounds, focusDuration, shortBreakDuration, longBreakDuration } = currentState;
+  const { mode, round, totalRounds, focusDuration, shortBreakDuration, longBreakDuration, autoTimerStart } = currentState;
   const durations = { focusDuration, shortBreakDuration, longBreakDuration };
   
   const nextMode = getNextMode(mode, round, totalRounds);
   const newRound = calculateNextRound(mode, round, totalRounds);
+  
+  // Auto-start next timer if enabled, but not after long break
+  const shouldAutoStart = autoTimerStart && mode !== 'longBreak';
 
   return {
     mode: nextMode,
     timeLeft: getDurationForMode(nextMode, durations),
     round: newRound,
-    isActive: false,
+    isActive: shouldAutoStart,
     isPaused: false,
-    lastTick: null
+    lastTick: shouldAutoStart ? Date.now() : null
   };
 }
 
