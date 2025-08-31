@@ -9,6 +9,7 @@ import {
   DEFAULT_DURATIONS, 
   DEFAULT_SETTINGS 
 } from '../utils/timer';
+import { soundAlert } from '../utils/soundAlerts';
 
 const useTimerStore = create(
   persist(
@@ -77,7 +78,7 @@ const useTimerStore = create(
 
       tick: () => {
         const currentState = get();
-        const { timeLeft, isActive, isPaused } = currentState;
+        const { timeLeft, isActive, isPaused, mode } = currentState;
 
         if (isActive && !isPaused && timeLeft > 0) {
           set({ 
@@ -85,6 +86,7 @@ const useTimerStore = create(
             lastTick: Date.now() 
           });
         } else if (timeLeft === 0) {
+          soundAlert.playModeAlert(mode);
           const transitionState = completeTimerTransition(currentState);
           set(transitionState);
         }
@@ -100,6 +102,7 @@ const useTimerStore = create(
 
       completeTimer: () => {
         const currentState = get();
+        soundAlert.playModeAlert(currentState.mode);
         const transitionState = completeTimerTransition(currentState);
         set(transitionState);
       },

@@ -6,7 +6,7 @@
 - [x] Switch mode between focus, short and long breaks.
 - [x] Add pause and resume functionality.
 - [x] Add option to customize the timer duration (e.g., 15, 30, 45 minutes).
-- [ ] Add sound alert when the timer reaches zero.
+- [x] Add sound alert when the timer reaches zero.
 - [ ] Add notification when the timer reaches zero.
 - [ ] Count how many unique visitors
 - [ ] Reset rounds manually
@@ -18,3 +18,4 @@
 - [ ] when a timer is runnin,if tried to switch mode, ask confirmation
 - [ ] Add toggle at the bottom for local/connected(cloud)
 - [ ] use React native for mobile app
+- [ ] check the pipeline config for testing
