@@ -66,7 +66,7 @@ describe('ModeSwitch Component', () => {
       render(<ModeSwitch {...defaultProps} mode="shortBreak" />);
       
       const focusButton = document.getElementById('focus-mode-button');
-      expect(focusButton).toHaveClass('bg-black-700', 'text-gray-300');
+      expect(focusButton).toHaveClass('bg-transparent', 'text-white/70');
       expect(focusButton).not.toHaveClass('bg-white');
     });
 
@@ -74,7 +74,7 @@ describe('ModeSwitch Component', () => {
       render(<ModeSwitch {...defaultProps} mode="focus" />);
       
       const shortBreakButton = document.getElementById('short-break-mode-button');
-      expect(shortBreakButton).toHaveClass('bg-green-700', 'text-green-300');
+      expect(shortBreakButton).toHaveClass('bg-transparent', 'text-white/70');
       expect(shortBreakButton).not.toHaveClass('bg-white');
     });
 
@@ -82,7 +82,7 @@ describe('ModeSwitch Component', () => {
       render(<ModeSwitch {...defaultProps} mode="focus" />);
       
       const longBreakButton = document.getElementById('long-break-mode-button');
-      expect(longBreakButton).toHaveClass('bg-blue-700', 'text-blue-300');
+      expect(longBreakButton).toHaveClass('bg-transparent', 'text-white/70');
       expect(longBreakButton).not.toHaveClass('bg-white');
     });
   });
