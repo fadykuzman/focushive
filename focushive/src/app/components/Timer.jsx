@@ -8,6 +8,7 @@ import ResetButton from "./ResetButton";
 import ModeSwitch from "./ModeSwitch";
 import TimerDisplay from "./TimerDisplay";
 import SettingsModal from "./SettingsModal";
+import GitHubLink from "./GitHubLink";
 
 const Timer = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
@@ -159,6 +160,8 @@ const Timer = () => {
 				<div
 					className={`${styles.container} rounded-lg p-8 shadow-2xl max-w-md mx-auto relative`}
 				>
+					<GitHubLink />
+
 					{/* Settings Button */}
 					<button
 						id="settings-button"
