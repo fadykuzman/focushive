@@ -44,7 +44,7 @@ vi.mock('../PauseButton', () => ({
   )
 }));
 
-vi.mock('../ResetButton', () => ({
+vi.mock('../ResetTimerButton', () => ({
   default: ({ resetTimer }) => (
     <button data-testid="reset-button" onClick={resetTimer}>Reset</button>
   )

@@ -53,32 +53,32 @@ describe('ResetRoundsButton Component', () => {
       render(<ResetRoundsButton resetRounds={mockResetRounds} mode="focus" />);
       
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-transparent');
       expect(button).toHaveClass('text-white/70');
+      expect(button).toHaveClass('hover:text-white');
     });
 
     it('should apply short break mode styling', () => {
       render(<ResetRoundsButton resetRounds={mockResetRounds} mode="shortBreak" />);
       
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-transparent');
       expect(button).toHaveClass('text-white/70');
+      expect(button).toHaveClass('hover:text-white');
     });
 
     it('should apply long break mode styling', () => {
       render(<ResetRoundsButton resetRounds={mockResetRounds} mode="longBreak" />);
       
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-transparent');
       expect(button).toHaveClass('text-white/70');
+      expect(button).toHaveClass('hover:text-white');
     });
 
     it('should apply default styling for unknown mode', () => {
       render(<ResetRoundsButton resetRounds={mockResetRounds} mode="unknown" />);
       
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-transparent');
       expect(button).toHaveClass('text-white/70');
+      expect(button).toHaveClass('hover:text-white');
     });
   });
 
