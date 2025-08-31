@@ -166,6 +166,24 @@ const useTimerStore = create(
         }
       },
 
+      resetRounds: () => {
+        const currentState = get();
+        const timeLeft = getDurationForMode('focus', {
+          focusDuration: currentState.focusDuration,
+          shortBreakDuration: currentState.shortBreakDuration,
+          longBreakDuration: currentState.longBreakDuration
+        });
+        
+        set({
+          round: 1,
+          mode: 'focus',
+          timeLeft,
+          isActive: false,
+          isPaused: false,
+          lastTick: null,
+        });
+      },
+
       updateSettings: (settings) => {
         set({
           focusDuration: settings.focusTime * 60,

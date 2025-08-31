@@ -7,9 +7,9 @@
 - [x] Add pause and resume functionality.
 - [x] Add option to customize the timer duration (e.g., 15, 30, 45 minutes).
 - [x] Add sound alert when the timer reaches zero.
-- [ ] Add notification when the timer reaches zero.
+- [x] Add notification when the timer reaches zero.
 - [ ] Count how many unique visitors
-- [ ] Reset rounds manually
+- [x] Reset rounds manually
 - [ ] Change number of rounds before a long break.
 - [ ] Bug: when timer is not running, and the duration is changed, the timer doesn't reflect the new duration. The corresponding mode button has to be clicked to reflect the new duration.
 - [ ] Use IndexedDB to store the start time of the timer.

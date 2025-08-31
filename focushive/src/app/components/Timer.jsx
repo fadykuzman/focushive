@@ -5,6 +5,7 @@ import useTimerStore from "../stores/timerStore";
 import StartButton from "./StartButton";
 import PauseButton from "./PauseButton";
 import ResetButton from "./ResetButton";
+import ResetRoundsButton from "./ResetRoundsButton";
 import ModeSwitch from "./ModeSwitch";
 import TimerDisplay from "./TimerDisplay";
 import SettingsModal from "./SettingsModal";
@@ -35,6 +36,7 @@ const Timer = () => {
 		restoreTimer,
 		completeTimer,
 		updateDuration,
+		resetRounds,
 	} = useTimerStore();
 
 	// Restore timer on component mount and mark as hydrated
@@ -177,9 +179,15 @@ const Timer = () => {
 					<h1 id="timer-mode-title" className="text-white text-2xl font-bold mb-2">
 						{getModeDisplayName(mode)}
 					</h1>
-					<p id="timer-round-display" className="text-white/80 mb-8">
-						Round {round} of {totalRounds}
-					</p>
+					<div className="flex items-center justify-center gap-3 mb-8">
+						<p id="timer-round-display" className="text-white/80">
+							Round {round} of {totalRounds}
+						</p>
+						<ResetRoundsButton
+							resetRounds={resetRounds}
+							mode={mode}
+						/>
+					</div>
 
 					{/* Timer Display */}
 					<TimerDisplay timeLeft={timeLeft} progress={progress} />
