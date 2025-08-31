@@ -15,6 +15,7 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "test:report": "vitest run --reporter=html --reporter=junit --reporter=json --outputFile.html=public/reports/index.html --outputFile.junit=reports/junit.xml --outputFile.json=reports/results.json",
+    "semantic-release": "semantic-release",
     "prepare": "husky"
   },
   "dependencies": {
@@ -24,7 +25,11 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@eslint/eslintrc": "^3",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
@@ -35,6 +40,7 @@
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "lint-staged": "^16.1.5",
+    "semantic-release": "^24.2.7",
     "tailwindcss": "^4",
     "vitest": "^3.2.4"
   },
