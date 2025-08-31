@@ -9,7 +9,7 @@ import ModeSwitch from "./ModeSwitch";
 import TimerDisplay from "./TimerDisplay";
 import SettingsModal from "./SettingsModal";
 import GitHubLink from "./GitHubLink";
-import VersionDisplay from "./VersionDisplay";
+import packageJson from '../../../package.json';
 
 const Timer = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
@@ -161,7 +161,6 @@ const Timer = () => {
 				<div
 					className={`${styles.container} rounded-lg p-8 shadow-2xl max-w-md mx-auto relative`}
 				>
-					<GitHubLink />
 
 					{/* Settings Button */}
 					<button
@@ -229,7 +228,13 @@ const Timer = () => {
 				onDurationChange={handleDurationChange}
 			/>
 			
-			<VersionDisplay />
+			{/* Bottom right info panel */}
+			<div className="absolute bottom-4 right-4 flex flex-col gap-2 items-end">
+				<GitHubLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
+				<div className="text-white/50 text-sm font-mono">
+					v{packageJson.version}
+				</div>
+			</div>
 		</div>
 	);
 };
