@@ -193,17 +193,23 @@ const useTimerStore = create(
         const currentModeType = mode === 'focus' ? 'focus' : 
                                mode === 'shortBreak' ? 'shortBreak' : 'longBreak';
         
-        if (isActive && durationType === currentModeType) {
-          const adjustedTimeLeft = calculateProportionalTime(
-            oldDuration, 
-            newDurationInSeconds, 
-            timeLeft
-          );
-          
-          set({ 
-            timeLeft: adjustedTimeLeft,
-            lastTick: Date.now()
-          });
+        if (durationType === currentModeType) {
+          if (isActive) {
+            const adjustedTimeLeft = calculateProportionalTime(
+              oldDuration, 
+              newDurationInSeconds, 
+              timeLeft
+            );
+            
+            set({ 
+              timeLeft: adjustedTimeLeft,
+              lastTick: Date.now()
+            });
+          } else {
+            set({ 
+              timeLeft: newDurationInSeconds
+            });
+          }
         }
       },
 
