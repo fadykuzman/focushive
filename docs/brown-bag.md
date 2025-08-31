@@ -10,7 +10,7 @@
 - [x] Add notification when the timer reaches zero.
 - [ ] Count how many unique visitors
 - [x] Reset rounds manually
-- [ ] Bug: when timer is not running, and the duration is changed, the timer doesn't reflect the new duration. The corresponding mode button has to be clicked to reflect the new duration.
+- [x] Bug: when timer is not running, and the duration is changed, the timer doesn't reflect the new duration. The corresponding mode button has to be clicked to reflect the new duration.
 - [ ] Use IndexedDB to store the start time of the timer.
 - [ ] Add a task to a focus session.
 - [x] Fluid transitions between modes
