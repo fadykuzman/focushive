@@ -24,6 +24,7 @@ describe('SettingsModal Component', () => {
       
       expect(document.getElementById('settings-modal-title')).toHaveTextContent('Settings');
       expect(screen.getByText('Timer Durations')).toBeInTheDocument();
+      expect(screen.getByText('Automation')).toBeInTheDocument();
     });
 
     test('should not render when isOpen is false', () => {
@@ -243,6 +244,34 @@ describe('SettingsModal Component', () => {
       };
       
       expect(() => render(<SettingsModal {...propsWithoutCallback} />)).not.toThrow();
+    });
+  });
+
+  describe('Automation Section', () => {
+    test('should render automation section with toggle and coming soon pill', () => {
+      render(<SettingsModal {...defaultProps} />);
+      
+      expect(screen.getByText('Automation')).toBeInTheDocument();
+      expect(screen.getByText('Auto Mode Switch & Timer Start')).toBeInTheDocument();
+      expect(screen.getByText('Coming Soon')).toBeInTheDocument();
+      expect(screen.getByRole('switch')).toBeInTheDocument();
+    });
+
+    test('should render disabled toggle switch', () => {
+      render(<SettingsModal {...defaultProps} />);
+      
+      const toggle = screen.getByRole('switch');
+      expect(toggle).toBeDisabled();
+      expect(toggle).toHaveAttribute('aria-checked', 'false');
+    });
+
+    test('should not respond to toggle clicks when disabled', () => {
+      render(<SettingsModal {...defaultProps} />);
+      
+      const toggle = screen.getByRole('switch');
+      fireEvent.click(toggle);
+      
+      expect(toggle).toHaveAttribute('aria-checked', 'false');
     });
   });
 });

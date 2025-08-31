@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import ToggleSwitch from './ToggleSwitch';
+import ComingSoonPill from './ComingSoonPill';
 
 export default function SettingsModal({ isOpen, onClose, durations, onDurationChange }) {
   const [localDurations, setLocalDurations] = useState({
@@ -25,7 +27,7 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
 
   return (
     <div id="settings-modal-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div id="settings-modal-content" className="bg-white rounded-lg p-6 w-96 max-w-90vw shadow-xl">
+      <div id="settings-modal-content" className="bg-white rounded-lg p-6 w-[480px] max-w-90vw shadow-xl">
         <div className="flex justify-between items-center mb-6">
           <h2 id="settings-modal-title" className="text-2xl font-bold text-gray-800">Settings</h2>
           <button
@@ -90,6 +92,24 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
                 />
                 <span className="text-gray-500 text-sm">min</span>
               </div>
+            </div>
+          </div>
+
+          {/* Automation Settings */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-700">Automation</h3>
+            
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <label className="text-gray-600 font-medium">Auto Mode Switch & Timer Start</label>
+                <ComingSoonPill />
+              </div>
+              <ToggleSwitch 
+                enabled={false}
+                disabled={true}
+                label="Automatic mode switching and timer start"
+                onChange={() => {}}
+              />
             </div>
           </div>
 
