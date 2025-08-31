@@ -9,6 +9,7 @@ import ModeSwitch from "./ModeSwitch";
 import TimerDisplay from "./TimerDisplay";
 import SettingsModal from "./SettingsModal";
 import GitHubLink from "./GitHubLink";
+import VersionDisplay from "./VersionDisplay";
 
 const Timer = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
@@ -227,6 +228,8 @@ const Timer = () => {
 				}}
 				onDurationChange={handleDurationChange}
 			/>
+			
+			<VersionDisplay />
 		</div>
 	);
 };
