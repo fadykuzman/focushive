@@ -38,6 +38,7 @@
                 pkgs.nodePackages.autoprefixer
                 pkgs.nodePackages.eslint
                 pkgs.nodePackages.vercel
+                pkgs.husky
               ];
 
               languages = {
