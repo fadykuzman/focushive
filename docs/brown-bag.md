@@ -11,8 +11,8 @@
 - [ ] Count how many unique visitors
 - [x] Reset rounds manually
 - [x] Bug: when timer is not running, and the duration is changed, the timer doesn't reflect the new duration. The corresponding mode button has to be clicked to reflect the new duration.
-- [ ] Use IndexedDB to store the start time of the timer.
-- [ ] Add a task to a focus session.
+- [x] Use IndexedDB to store the start time of the timer.
+- [x] Add a task to a focus session.
 - [x] Fluid transitions between modes
 - [ ] when a timer is runnin,if tried to switch mode, ask confirmation
 - [ ] Add toggle at the bottom for local/connected(cloud)
@@ -25,3 +25,5 @@
 - [ ] Pro: Different profiles (e.g., work, study, exercise) with different default durations and settings.
 - [ ] Pro: Integrate with calendar apps to schedule focus sessions.
 - [ ] Pro: Integrate with task management apps to link focus sessions with specific tasks.
+- [ ] Pro: Sync devices (e.g., start a session on your phone and have it reflected on your computer).
+- [ ] Pro: Wearables to track heart rate and adjust focus session lengths based on stress levels.
