@@ -76,6 +76,7 @@ When writing or modifying code:
 - Follow SOLID principles and clean code practices
 - Prefer pure functions and avoid side effects when possible
 - Structure code for easy debugging and modification
+- **Add `id` attributes to components and DOM elements when appropriate for testing, debugging, and accessibility**
 
 Testable and maintainable code is a higher priority than quick implementation.
 

@@ -1,59 +1,76 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock the useSessionStats hook
-const mockStats = {
-  daily: {
-    date: '2025-08-31',
-    totalSessions: 3,
-    completedSessions: 3,
-    totalFocusTime: 4500,
-    completionRate: 100,
-    focusSessions: 2,
-    shortBreaks: 1,
-    longBreaks: 0
-  },
-  weekly: {
-    weekStart: '2025-08-25',
-    weekEnd: '2025-08-31',
-    totalWeeklyFocusTime: 15000,
-    totalWeeklySessions: 10,
-    averageDailyFocusTime: 2142,
-    weeklyCompletionRate: 85,
-    dailyStats: [
-      { date: '2025-08-25', totalSessions: 1, totalFocusTime: 1500, completionRate: 100 },
-      { date: '2025-08-26', totalSessions: 0, totalFocusTime: 0, completionRate: 0 },
-      { date: '2025-08-27', totalSessions: 2, totalFocusTime: 3000, completionRate: 100 },
-      { date: '2025-08-28', totalSessions: 1, totalFocusTime: 1200, completionRate: 50 },
-      { date: '2025-08-29', totalSessions: 3, totalFocusTime: 4500, completionRate: 67 },
-      { date: '2025-08-30', totalSessions: 1, totalFocusTime: 300, completionRate: 0 },
-      { date: '2025-08-31', totalSessions: 3, totalFocusTime: 4500, completionRate: 100 }
-    ]
-  },
-  streaks: {
-    currentStreak: 5,
-    longestStreak: 12,
-    lastSessionDate: '2025-08-31'
-  },
-  overall: {
-    totalSessions: 50,
-    totalFocusTime: 75000,
-    totalCompletedSessions: 42,
-    overallCompletionRate: 84,
-    averageSessionLength: 1500,
-    firstSessionDate: '2025-08-01',
-    totalActiveDays: 25
-  },
-  trends: [
-    { date: '2025-08-30', focusTime: 1800, sessions: 2, completionRate: 100 },
-    { date: '2025-08-31', focusTime: 4500, sessions: 3, completionRate: 100 }
-  ],
-  loading: false,
-  error: null,
-  formatDuration: vi.fn((seconds) => `${Math.floor(seconds / 60)}m`),
-  formatTime: vi.fn((seconds) => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`),
-  refreshStats: vi.fn()
+// Mock the useSessionStats hook with dynamic dates
+const createMockStats = () => {
+  const today = new Date().toISOString().split('T')[0];
+  const todayDate = new Date(today);
+  
+  // Generate week of dates ending with today
+  const dailyStats = [];
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(todayDate);
+    date.setDate(date.getDate() - i);
+    const dateStr = date.toISOString().split('T')[0];
+    
+    dailyStats.push({
+      date: dateStr,
+      totalSessions: i === 0 ? 3 : Math.floor(Math.random() * 4), // Today has 3 sessions
+      totalFocusTime: i === 0 ? 4500 : Math.floor(Math.random() * 5000),
+      completionRate: i === 0 ? 100 : Math.floor(Math.random() * 100)
+    });
+  }
+  
+  const weekStart = dailyStats[0].date;
+  const weekEnd = today;
+  
+  return {
+    daily: {
+      date: today,
+      totalSessions: 3,
+      completedSessions: 3,
+      totalFocusTime: 4500,
+      completionRate: 100,
+      focusSessions: 2,
+      shortBreaks: 1,
+      longBreaks: 0
+    },
+    weekly: {
+      weekStart,
+      weekEnd,
+      totalWeeklyFocusTime: 15000,
+      totalWeeklySessions: 10,
+      averageDailyFocusTime: 2142,
+      weeklyCompletionRate: 85,
+      dailyStats
+    },
+    streaks: {
+      currentStreak: 5,
+      longestStreak: 12,
+      lastSessionDate: today
+    },
+    overall: {
+      totalSessions: 50,
+      totalFocusTime: 75000,
+      totalCompletedSessions: 42,
+      overallCompletionRate: 84,
+      averageSessionLength: 1500,
+      firstSessionDate: '2025-08-01',
+      totalActiveDays: 25
+    },
+    trends: [
+      { date: dailyStats[5].date, focusTime: 1800, sessions: 2, completionRate: 100 },
+      { date: today, focusTime: 4500, sessions: 3, completionRate: 100 }
+    ],
+    loading: false,
+    error: null,
+    formatDuration: vi.fn((seconds) => `${Math.floor(seconds / 60)}m`),
+    formatTime: vi.fn((seconds) => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`),
+    refreshStats: vi.fn()
+  };
 };
+
+const mockStats = createMockStats();
 
 vi.mock('../../hooks/useSessionStats', () => ({
   useSessionStats: vi.fn(() => mockStats)
@@ -67,8 +84,9 @@ describe('StatsDashboard', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    // Reset mock to default stats with data
-    vi.mocked(useSessionStats).mockReturnValue(mockStats);
+    // Reset mock to default stats with fresh dynamic dates
+    const freshMockStats = createMockStats();
+    vi.mocked(useSessionStats).mockReturnValue(freshMockStats);
   });
 
   it('should not render when isOpen is false', () => {
@@ -160,12 +178,15 @@ describe('StatsDashboard', () => {
   });
 
   it('should handle refresh button click', () => {
+    const testMockStats = createMockStats();
+    vi.mocked(useSessionStats).mockReturnValue(testMockStats);
+    
     render(<StatsDashboard isOpen={true} onClose={mockOnClose} />);
     
     const refreshButton = document.getElementById('stats-dashboard-refresh-btn');
     fireEvent.click(refreshButton);
     
-    expect(mockStats.refreshStats).toHaveBeenCalledOnce();
+    expect(testMockStats.refreshStats).toHaveBeenCalledOnce();
   });
 
   it('should not close when clicking inside modal content', () => {

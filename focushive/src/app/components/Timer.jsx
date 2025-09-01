@@ -10,6 +10,9 @@ import TimerDisplay from "./TimerDisplay";
 import SettingsModal from "./SettingsModal";
 import StatsDashboard from "./StatsDashboard";
 import GitHubLink from "./GitHubLink";
+import TaskSelector from "./TaskSelector";
+import TaskManager from "./TaskManager";
+import PomofocusTaskList from "./PomofocusTaskList";
 import { useTodayStats } from "../hooks/useSessionStats";
 import packageJson from '../../../package.json';
 
@@ -17,6 +20,7 @@ const Timer = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 	const [isStatsOpen, setIsStatsOpen] = useState(false);
+	const [isTasksOpen, setIsTasksOpen] = useState(false);
 	const [smoothProgress, setSmoothProgress] = useState(0);
 	
 	const {
@@ -30,6 +34,7 @@ const Timer = () => {
 		shortBreakDuration,
 		longBreakDuration,
 		autoTimerStart,
+		linkedTaskId,
 		startTimer,
 		pauseTimer,
 		resumeTimer,
@@ -41,6 +46,8 @@ const Timer = () => {
 		completeTimer,
 		updateDuration,
 		resetRounds,
+		setLinkedTask,
+		clearLinkedTask,
 	} = useTimerStore();
 
 	const { focusTime, sessions, completionRate } = useTodayStats();
@@ -54,6 +61,24 @@ const Timer = () => {
 	// Handle duration changes from settings modal
 	const handleDurationChange = (durationType, newDurationInSeconds) => {
 		updateDuration(durationType, newDurationInSeconds);
+	};
+
+	// Handle task selection
+	const handleTaskSelect = (task) => {
+		if (task) {
+			setLinkedTask(task.id);
+			// Auto-set task to in_progress when selected for focus
+			if (task.status === 'pending') {
+				// Note: This could be handled by the task list component
+			}
+		} else {
+			clearLinkedTask();
+		}
+	};
+
+	// Handle start timer with task
+	const handleStartTimer = () => {
+		startTimer(linkedTaskId);
 	};
 
 	useEffect(() => {
@@ -193,6 +218,18 @@ const Timer = () => {
 
 					{/* Top Controls */}
 					<div className="absolute top-4 right-4 flex gap-2">
+						{/* Tasks Button */}
+						<button
+							id="tasks-button"
+							onClick={() => setIsTasksOpen(true)}
+							className="w-8 h-8 text-white/70 hover:text-white transition-colors"
+							title="Tasks"
+						>
+							<svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+								<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+							</svg>
+						</button>
+
 						{/* Statistics Button */}
 						<button
 							id="stats-button"
@@ -258,13 +295,23 @@ const Timer = () => {
 							/>
 						) : (
 							<StartButton
-								startTimer={startTimer}
+								startTimer={handleStartTimer}
 								resumeTimer={resumeTimer}
 								isPaused={isPaused}
 								mode={mode}
 							/>
 						)}
 					</div>
+
+					{/* Pomofocus-style Task List - Only show for focus mode when not active */}
+					{mode === 'focus' && !isActive && (
+						<div className="mb-6 px-4">
+							<PomofocusTaskList 
+								onTaskSelect={handleTaskSelect}
+								selectedTaskId={linkedTaskId}
+							/>
+						</div>
+					)}
 
 					{/* Mode Switch */}
 					<div id="mode-switch-container" className="mb-4">
@@ -293,6 +340,28 @@ const Timer = () => {
 				isOpen={isStatsOpen}
 				onClose={() => setIsStatsOpen(false)}
 			/>
+
+			{/* Task Management Modal */}
+			{isTasksOpen && (
+				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+					<div className="bg-white rounded-lg max-w-4xl max-h-[90vh] overflow-auto w-full">
+						<div className="p-6">
+							<div className="flex items-center justify-between mb-4">
+								<h2 className="text-2xl font-bold">Task Management</h2>
+								<button
+									onClick={() => setIsTasksOpen(false)}
+									className="text-gray-500 hover:text-gray-700"
+								>
+									<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+									</svg>
+								</button>
+							</div>
+							<TaskManager />
+						</div>
+					</div>
+				</div>
+			)}
 			
 			{/* Bottom right info panel */}
 			<div className="absolute bottom-4 right-4 flex flex-col gap-2 items-end">

@@ -1,6 +1,9 @@
 export default function ProgressRing({ progress }) {
+	const circumference = 2 * Math.PI * 120;
+	const strokeDashoffset = circumference * (1 - progress / 100);
+
 	return (
-		<svg className="transform -rotate-90 w-64 h-64">
+		<svg className="transform -rotate-90 w-64 h-64" viewBox="0 0 256 256">
 			<circle
 				cx="128"
 				cy="128"
@@ -16,8 +19,9 @@ export default function ProgressRing({ progress }) {
 				stroke="white"
 				strokeWidth="12"
 				fill="none"
-				strokeDasharray={`${2 * Math.PI * 120}`}
-				strokeDashoffset={`${2 * Math.PI * 120 * (1 - progress / 100)}`}
+				strokeDasharray={circumference}
+				strokeDashoffset={strokeDashoffset}
+				className="transition-all duration-300 ease-out"
 			/>
 		</svg>
 	);

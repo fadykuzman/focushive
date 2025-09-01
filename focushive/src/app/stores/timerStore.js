@@ -27,8 +27,9 @@ const useTimerStore = create(
       shortBreakDuration: DEFAULT_DURATIONS.SHORT_BREAK,
       longBreakDuration: DEFAULT_DURATIONS.LONG_BREAK,
       autoTimerStart: false,
+      linkedTaskId: null,
 
-      startTimer: () => {
+      startTimer: (taskId = null) => {
         browserNotifications.requestPermission();
         const currentState = get();
         const plannedDuration = getDurationForMode(currentState.mode, {
@@ -37,12 +38,13 @@ const useTimerStore = create(
           longBreakDuration: currentState.longBreakDuration
         });
         
-        sessionRecorder.startSession(currentState.mode, plannedDuration, currentState.round);
+        sessionRecorder.startSession(currentState.mode, plannedDuration, currentState.round, taskId);
         
         set({ 
           isActive: true, 
           isPaused: false, 
-          lastTick: Date.now() 
+          lastTick: Date.now(),
+          linkedTaskId: taskId
         });
       },
 
@@ -75,6 +77,7 @@ const useTimerStore = create(
           isPaused: false,
           timeLeft,
           lastTick: null,
+          linkedTaskId: null,
         });
       },
 
@@ -96,6 +99,7 @@ const useTimerStore = create(
           isPaused: false,
           timeLeft,
           lastTick: null,
+          linkedTaskId: null,
         });
       },
 
@@ -141,7 +145,9 @@ const useTimerStore = create(
             shortBreakDuration: currentState.shortBreakDuration,
             longBreakDuration: currentState.longBreakDuration
           });
-          sessionRecorder.startSession(transitionState.mode, plannedDuration, transitionState.round);
+          const taskIdForNextSession = transitionState.mode === 'focus' ? currentState.linkedTaskId : null;
+          sessionRecorder.startSession(transitionState.mode, plannedDuration, transitionState.round, taskIdForNextSession);
+          transitionState.linkedTaskId = taskIdForNextSession;
         }
         
         set(transitionState);
@@ -259,6 +265,14 @@ const useTimerStore = create(
       toggleAutoTimerStart: () => {
         const currentState = get();
         set({ autoTimerStart: !currentState.autoTimerStart });
+      },
+
+      setLinkedTask: (taskId) => {
+        set({ linkedTaskId: taskId });
+      },
+
+      clearLinkedTask: () => {
+        set({ linkedTaskId: null });
       }
     }),
     {
@@ -275,6 +289,7 @@ const useTimerStore = create(
         shortBreakDuration: state.shortBreakDuration,
         longBreakDuration: state.longBreakDuration,
         autoTimerStart: state.autoTimerStart,
+        linkedTaskId: state.linkedTaskId,
       }),
     }
   )

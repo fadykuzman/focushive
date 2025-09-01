@@ -1,23 +1,27 @@
 import { sessionDatabase } from '../utils/sessionDatabase.js';
+import { taskDatabase } from '../utils/taskDatabase.js';
 
 class SessionRecorder {
   constructor() {
     this.currentSession = null;
     this.sessionStartTime = null;
+    this.linkedTaskId = null;
   }
 
-  startSession(mode, plannedDuration, round) {
+  startSession(mode, plannedDuration, round, taskId = null) {
     if (this.currentSession) {
       this.endSession(false);
     }
 
     this.sessionStartTime = new Date();
+    this.linkedTaskId = taskId;
     this.currentSession = {
       type: mode,
       startTime: this.sessionStartTime,
       plannedDuration: plannedDuration,
       round: round,
-      completed: false
+      completed: false,
+      taskId: taskId
     };
   }
 
@@ -39,13 +43,29 @@ class SessionRecorder {
 
     try {
       const savedSession = await sessionDatabase.addSession(sessionRecord);
+      
+      if (this.linkedTaskId && savedSession && actualDuration > 0) {
+        try {
+          await taskDatabase.linkTaskToSession(
+            this.linkedTaskId, 
+            savedSession.id, 
+            actualDuration
+          );
+          await taskDatabase.updateTaskProductivityScore(this.linkedTaskId);
+        } catch (taskError) {
+          console.error('Failed to link session to task:', taskError);
+        }
+      }
+      
       this.currentSession = null;
       this.sessionStartTime = null;
+      this.linkedTaskId = null;
       return savedSession;
     } catch (error) {
       console.error('Failed to save session:', error);
       this.currentSession = null;
       this.sessionStartTime = null;
+      this.linkedTaskId = null;
       return null;
     }
   }
