@@ -274,7 +274,7 @@ const Timer = () => {
 						</button>
 					</div>
 
-					<h1 id="timer-mode-title" className="text-white text-2xl font-bold mb-2">
+					<h1 id="timer-mode-title" className="text-white text-2xl font-bold mb-2 mt-12 sm:mt-8">
 						{getModeDisplayName(mode)}
 					</h1>
 					<div className="flex items-center justify-center gap-3 mb-4">
