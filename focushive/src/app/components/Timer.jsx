@@ -303,23 +303,23 @@ const Timer = () => {
 						)}
 					</div>
 
+					{/* Mode Switch */}
+					<div id="mode-switch-container" className="mb-6">
+						<ModeSwitch
+							mode={mode}
+							switchMode={switchMode}
+						/>
+					</div>
+
 					{/* Pomofocus-style Task List - Only show for focus mode when not active */}
 					{mode === 'focus' && !isActive && (
-						<div className="mb-6 px-4">
+						<div className="mb-4 px-4">
 							<PomofocusTaskList 
 								onTaskSelect={handleTaskSelect}
 								selectedTaskId={linkedTaskId}
 							/>
 						</div>
 					)}
-
-					{/* Mode Switch */}
-					<div id="mode-switch-container" className="mb-4">
-						<ModeSwitch
-							mode={mode}
-							switchMode={switchMode}
-						/>
-					</div>
 				</div>
 			</div>
 
