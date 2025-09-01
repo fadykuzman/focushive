@@ -39,9 +39,7 @@ export default function NotesSearch({
           className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
         />
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-          <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+          <img src="/icons/search.svg" alt="Search" className="h-5 w-5 text-gray-400" />
         </div>
       </div>
 
@@ -55,13 +53,9 @@ export default function NotesSearch({
               onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
               className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg hover:border-gray-400 transition-colors text-gray-700"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-              </svg>
+              <img src="/icons/tag.svg" alt="Tag" className="w-4 h-4" />
               <span>Tags {selectedTags.length > 0 && `(${selectedTags.length})`}</span>
-              <svg className={`w-4 h-4 transition-transform ${isTagDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              <img src="/icons/chevron-down.svg" alt="Dropdown" className={`w-4 h-4 transition-transform ${isTagDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {isTagDropdownOpen && (

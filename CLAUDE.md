@@ -102,5 +102,31 @@ Before starting any implementation:
 
 Use `pnpm test:run` to run tests once or `pnpm test` for watch mode during development.
 
+## SVG Asset Management
+
+**IMPORTANT: Never embed SVG elements directly in .js, .jsx, .ts, or .tsx files.**
+
+SVG icons and graphics must be:
+- Stored as separate `.svg` files in the `public/icons/` directory
+- Referenced using `<img>` tags or `<use>` elements pointing to the file path
+- Named descriptively (e.g., `settings.svg`, `task-list.svg`, `check.svg`)
+
+**Examples:**
+```jsx
+// ❌ Don't do this - inline SVG
+<svg viewBox="0 0 24 24">
+  <path d="..."/>
+</svg>
+
+// ✅ Do this - reference SVG file
+<img src="/icons/settings.svg" alt="Settings" className="w-6 h-6" />
+```
+
+This approach:
+- Keeps components clean and focused on logic
+- Makes SVG assets reusable across components
+- Enables easier maintenance and updates of icons
+- Improves bundle size by avoiding duplicate inline SVG code
+
 ## Reason
 This project has pnpm workspace configuration (`pnpm-workspace.yaml`) and Vercel deployment expects pnpm lockfile consistency. Using npm creates lockfile conflicts that break deployment.
