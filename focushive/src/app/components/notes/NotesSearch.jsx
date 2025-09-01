@@ -36,7 +36,7 @@ export default function NotesSearch({
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search notes by title, content, or tags..."
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
         />
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
           <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -53,7 +53,7 @@ export default function NotesSearch({
             <button
               id="tag-filter-button"
               onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
-              className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg hover:border-gray-400 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg hover:border-gray-400 transition-colors text-gray-700"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -69,7 +69,7 @@ export default function NotesSearch({
                 {availableTags.map((tag) => (
                   <label
                     key={tag}
-                    className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50 cursor-pointer"
+                    className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50 cursor-pointer text-gray-700"
                   >
                     <input
                       type="checkbox"
@@ -77,7 +77,7 @@ export default function NotesSearch({
                       onChange={() => handleTagToggle(tag)}
                       className="rounded"
                     />
-                    <span className="text-sm">{tag}</span>
+                    <span className="text-sm text-gray-700">{tag}</span>
                   </label>
                 ))}
               </div>
@@ -90,7 +90,7 @@ export default function NotesSearch({
           <button
             id="clear-filters-button"
             onClick={clearFilters}
-            className="px-3 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors"
+            className="px-3 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors font-medium"
           >
             Clear filters
           </button>

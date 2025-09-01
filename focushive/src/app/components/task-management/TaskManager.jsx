@@ -112,7 +112,7 @@ const TaskManager = () => {
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
-            <h3 className={`font-medium ${task.status === 'completed' ? 'line-through text-gray-500' : ''}`}>
+            <h3 className={`font-medium ${task.status === 'completed' ? 'line-through text-gray-500' : 'text-gray-800'}`}>
               {task.title}
             </h3>
             <span className={`px-2 py-1 text-xs rounded-full ${getPriorityColor(task.priority)}`}>
@@ -124,10 +124,10 @@ const TaskManager = () => {
           </div>
           
           {task.description && (
-            <p className="text-sm text-gray-600 mb-2">{task.description}</p>
+            <p className="text-sm text-gray-700 mb-2">{task.description}</p>
           )}
           
-          <div className="flex items-center gap-4 text-xs text-gray-500">
+          <div className="flex items-center gap-4 text-xs text-gray-600">
             <span>Time: {formatDuration(task.totalTimeSpent)}</span>
             {task.estimatedDuration && (
               <span>Est: {formatDuration(task.estimatedDuration)}</span>
@@ -179,13 +179,13 @@ const TaskManager = () => {
   );
 
   if (loading) {
-    return <div className="text-center py-4">Loading tasks...</div>;
+    return <div className="text-center py-4 text-gray-600">Loading tasks...</div>;
   }
 
   return (
     <div id="task-manager" className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Tasks</h2>
+        <h2 className="text-xl font-semibold text-gray-800">Tasks</h2>
         <button
           onClick={() => setShowAddForm(!showAddForm)}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
@@ -208,7 +208,7 @@ const TaskManager = () => {
               placeholder="Task title"
               value={newTask.title}
               onChange={(e) => setNewTask(prev => ({ ...prev, title: e.target.value }))}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               required
             />
           </div>
@@ -218,7 +218,7 @@ const TaskManager = () => {
               placeholder="Description (optional)"
               value={newTask.description}
               onChange={(e) => setNewTask(prev => ({ ...prev, description: e.target.value }))}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               rows={2}
             />
           </div>
@@ -228,7 +228,7 @@ const TaskManager = () => {
               <select
                 value={newTask.priority}
                 onChange={(e) => setNewTask(prev => ({ ...prev, priority: e.target.value }))}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               >
                 <option value="low">Low Priority</option>
                 <option value="medium">Medium Priority</option>
@@ -242,7 +242,7 @@ const TaskManager = () => {
                 placeholder="Est. duration (min)"
                 value={newTask.estimatedDuration}
                 onChange={(e) => setNewTask(prev => ({ ...prev, estimatedDuration: e.target.value }))}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
                 min="1"
               />
             </div>
@@ -253,7 +253,7 @@ const TaskManager = () => {
               type="date"
               value={newTask.dueDate}
               onChange={(e) => setNewTask(prev => ({ ...prev, dueDate: e.target.value }))}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
             />
           </div>
           
@@ -310,7 +310,7 @@ const TaskManager = () => {
               <TaskItem key={task.id} task={task} />
             ))}
             {getCompletedTasks().length > 5 && (
-              <p className="text-sm text-gray-500 text-center">
+              <p className="text-sm text-gray-600 text-center">
                 ... and {getCompletedTasks().length - 5} more completed tasks
               </p>
             )}
@@ -319,7 +319,7 @@ const TaskManager = () => {
       </div>
 
       {tasks.length === 0 && !loading && (
-        <div className="text-center py-8 text-gray-500">
+        <div className="text-center py-8 text-gray-600">
           <p>No tasks yet. Add your first task to get started!</p>
         </div>
       )}

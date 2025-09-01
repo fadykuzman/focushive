@@ -86,7 +86,7 @@ export default function NotesEditor({
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder={titlePlaceholder}
-          className="w-full text-lg font-semibold mb-3 p-2 border-0 border-b-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+          className="w-full text-lg font-semibold mb-3 p-2 border-0 border-b-2 border-gray-200 focus:border-blue-500 focus:outline-none text-gray-800"
           onKeyDown={handleKeyDown}
         />
 
@@ -97,7 +97,7 @@ export default function NotesEditor({
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={placeholder}
-          className="w-full h-48 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-vertical"
+          className="w-full h-48 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-vertical text-gray-700"
           onKeyDown={handleKeyDown}
         />
 
@@ -127,10 +127,10 @@ export default function NotesEditor({
               onKeyDown={handleTagKeyDown}
               onBlur={addTag}
               placeholder="Add tags..."
-              className="text-sm border-0 focus:outline-none min-w-20 flex-1"
+              className="text-sm border-0 focus:outline-none min-w-20 flex-1 text-gray-700"
             />
           </div>
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-gray-600">
             Press Enter or comma to add tags
           </div>
         </div>
@@ -140,7 +140,7 @@ export default function NotesEditor({
           <button
             id="note-cancel-button"
             onClick={onCancel}
-            className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+            className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors font-medium"
             disabled={isSaving}
           >
             Cancel
@@ -156,7 +156,7 @@ export default function NotesEditor({
         </div>
 
         {/* Keyboard Shortcuts Help */}
-        <div className="mt-4 text-xs text-gray-500 text-center">
+        <div className="mt-4 text-xs text-gray-600 text-center">
           <kbd>Cmd+Enter</kbd> to save • <kbd>Esc</kbd> to cancel
         </div>
       </div>
