@@ -23,7 +23,6 @@ const Timer = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 	const [isStatsOpen, setIsStatsOpen] = useState(false);
-	const [isTasksOpen, setIsTasksOpen] = useState(false);
 	const [isTaskSidebarExpanded, setIsTaskSidebarExpanded] = useState(false);
 	const [isNotesOpen, setIsNotesOpen] = useState(false);
 	const [smoothProgress, setSmoothProgress] = useState(0);
@@ -227,29 +226,7 @@ const Timer = () => {
 
 					{/* Top Controls */}
 					<div className="absolute top-4 right-4 flex gap-2">
-						{/* Notes Button */}
-						<button
-							id="notes-button"
-							onClick={() => setIsNotesOpen(true)}
-							className="w-8 h-8 text-white/70 hover:text-white transition-colors"
-							title="Notes"
-						>
-							<svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-								<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-							</svg>
-						</button>
 
-						{/* Tasks Button */}
-						<button
-							id="tasks-button"
-							onClick={() => setIsTasksOpen(true)}
-							className="w-8 h-8 text-white/70 hover:text-white transition-colors"
-							title="Tasks"
-						>
-							<svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-								<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-							</svg>
-						</button>
 
 						{/* Statistics Button */}
 						<button
@@ -373,6 +350,10 @@ const Timer = () => {
 							<FocusTaskList 
 								onTaskSelect={handleTaskSelect}
 								selectedTaskId={linkedTaskId}
+								onOpenNotes={(taskId) => {
+									setLinkedTask(taskId);
+									setIsNotesOpen(true);
+								}}
 							/>
 						</div>
 					)}
@@ -398,34 +379,6 @@ const Timer = () => {
 				onClose={() => setIsStatsOpen(false)}
 			/>
 
-			{/* Task Management Modal */}
-			{isTasksOpen && (
-				<div 
-					className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4"
-					onClick={(e) => {
-						if (e.target === e.currentTarget) {
-							setIsTasksOpen(false);
-						}
-					}}
-				>
-					<div className="bg-white rounded-lg max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-auto w-full">
-						<div className="p-4 sm:p-6">
-							<div className="flex items-center justify-between mb-3 sm:mb-4">
-								<h2 className="text-xl sm:text-2xl font-bold text-gray-800">Task Management</h2>
-								<button
-									onClick={() => setIsTasksOpen(false)}
-									className="text-gray-500 hover:text-gray-700 text-xl sm:text-2xl font-bold"
-								>
-									<svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-									</svg>
-								</button>
-							</div>
-							<TaskManager />
-						</div>
-					</div>
-				</div>
-			)}
 
 			{/* Notes Modal */}
 			<NotesModal
@@ -441,6 +394,10 @@ const Timer = () => {
 				mode={mode}
 				isExpanded={isTaskSidebarExpanded}
 				onToggle={setIsTaskSidebarExpanded}
+				onOpenNotes={(taskId) => {
+					setLinkedTask(taskId);
+					setIsNotesOpen(true);
+				}}
 			/>
 			
 			{/* Bottom right info panel */}

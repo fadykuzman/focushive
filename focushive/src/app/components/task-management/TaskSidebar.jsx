@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import FocusTaskList from './FocusTaskList';
 
-export default function TaskSidebar({ onTaskSelect, selectedTaskId, mode, isExpanded, onToggle }) {
+export default function TaskSidebar({ onTaskSelect, selectedTaskId, mode, isExpanded, onToggle, onOpenNotes }) {
   return (
     <div className={`hidden sm:block fixed left-4 top-1/2 transform -translate-y-1/2 z-40 transition-all duration-300 ${isExpanded ? 'w-80' : 'w-0'}`}>
       {isExpanded && (
@@ -17,6 +17,7 @@ export default function TaskSidebar({ onTaskSelect, selectedTaskId, mode, isExpa
                 onTaskSelect={onTaskSelect}
                 selectedTaskId={selectedTaskId}
                 isInSidebar={true}
+                onOpenNotes={onOpenNotes}
               />
             </div>
           </div>
