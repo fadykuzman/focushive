@@ -15,9 +15,9 @@ export default function StatsDashboard({ isOpen, onClose }) {
 
   if (loading) {
     return (
-      <div id="stats-dashboard-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={handleOverlayClick}>
-        <div id="stats-dashboard-modal" className="bg-white rounded-lg p-6 w-[800px] max-w-90vw shadow-xl">
-          <div className="text-center py-8">
+      <div id="stats-dashboard-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={handleOverlayClick}>
+        <div id="stats-dashboard-modal" className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] flex flex-col shadow-xl">
+          <div className="flex justify-center items-center p-6 flex-1">
             <div id="stats-loading-message" className="text-lg text-gray-600">Loading statistics...</div>
           </div>
         </div>
@@ -27,13 +27,13 @@ export default function StatsDashboard({ isOpen, onClose }) {
 
   if (error) {
     return (
-      <div id="stats-dashboard-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={handleOverlayClick}>
-        <div id="stats-dashboard-modal" className="bg-white rounded-lg p-6 w-[800px] max-w-90vw shadow-xl">
-          <div className="flex justify-between items-center mb-4">
+      <div id="stats-dashboard-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={handleOverlayClick}>
+        <div id="stats-dashboard-modal" className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] flex flex-col shadow-xl">
+          <div className="flex justify-between items-center p-6 border-b border-gray-200 flex-shrink-0">
             <h2 id="stats-dashboard-title" className="text-2xl font-bold text-gray-800">Statistics</h2>
             <button id="stats-dashboard-close-btn" onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl font-bold">×</button>
           </div>
-          <div className="text-center py-8">
+          <div className="flex-1 flex flex-col justify-center items-center p-6">
             <div id="stats-error-message" className="text-red-600 mb-4">{error}</div>
             <button 
               id="stats-retry-btn"
@@ -51,9 +51,9 @@ export default function StatsDashboard({ isOpen, onClose }) {
   const hasData = daily && daily.totalSessions > 0;
 
   return (
-    <div id="stats-dashboard-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={handleOverlayClick}>
-      <div id="stats-dashboard-modal" className="bg-white rounded-lg p-6 w-[900px] max-w-95vw max-h-90vh overflow-y-auto shadow-xl">
-        <div className="flex justify-between items-center mb-6">
+    <div id="stats-dashboard-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={handleOverlayClick}>
+      <div id="stats-dashboard-modal" className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] flex flex-col shadow-xl">
+        <div className="flex justify-between items-center p-6 border-b border-gray-200 flex-shrink-0">
           <h2 id="stats-dashboard-title" className="text-2xl font-bold text-gray-800">Productivity Statistics</h2>
           <div className="flex gap-2">
             <button 
@@ -67,13 +67,14 @@ export default function StatsDashboard({ isOpen, onClose }) {
           </div>
         </div>
 
-        {!hasData ? (
-          <div id="stats-no-data-section" className="text-center py-12">
-            <div id="stats-no-data-message" className="text-gray-500 text-lg mb-4">No session data yet</div>
-            <div id="stats-no-data-subtitle" className="text-gray-400">Complete some focus sessions to see your productivity statistics!</div>
-          </div>
-        ) : (
-          <div className="space-y-6">
+        <div className="flex-1 overflow-y-auto p-6">
+          {!hasData ? (
+            <div id="stats-no-data-section" className="text-center py-12">
+              <div id="stats-no-data-message" className="text-gray-500 text-lg mb-4">No session data yet</div>
+              <div id="stats-no-data-subtitle" className="text-gray-400">Complete some focus sessions to see your productivity statistics!</div>
+            </div>
+          ) : (
+            <div className="space-y-6">
             {/* Quick Stats Overview */}
             <div id="stats-quick-overview" className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div id="stats-today-focus-card" className="bg-blue-50 p-4 rounded-lg text-center">
@@ -138,13 +139,18 @@ export default function StatsDashboard({ isOpen, onClose }) {
               <div id="stats-daily-list" className="space-y-2">
                 {weekly.dailyStats.map((day, index) => {
                   const dayName = new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' });
+                  const dayDate = new Date(day.date).toLocaleDateString('en-GB', { 
+                    day: '2-digit', 
+                    month: '2-digit', 
+                    year: '2-digit' 
+                  });
                   const isToday = day.date === new Date().toISOString().split('T')[0];
                   
                   return (
                     <div key={day.date} id={`stats-day-${day.date}`} className={`flex justify-between items-center p-2 rounded ${isToday ? 'bg-blue-100' : 'bg-white'}`}>
                       <div className="flex items-center gap-3">
                         <span className={`font-medium ${isToday ? 'text-blue-800' : 'text-gray-700'}`}>
-                          {dayName}
+                          {dayName} {dayDate}
                         </span>
                         {isToday && <span id="stats-today-marker" className="text-xs bg-blue-200 text-blue-800 px-2 py-1 rounded">Today</span>}
                       </div>
@@ -221,8 +227,9 @@ export default function StatsDashboard({ isOpen, onClose }) {
                 </div>
               </div>
             )}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
