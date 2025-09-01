@@ -13,6 +13,7 @@ import GitHubLink from "./GitHubLink";
 import TaskSelector from "./task-management/TaskSelector";
 import TaskManager from "./task-management/TaskManager";
 import FocusTaskList from "./task-management/FocusTaskList";
+import NotesModal from "./notes/NotesModal";
 import { useTodayStats } from "../hooks/useSessionStats";
 import { useTaskManager } from "../hooks/useTaskManager";
 import packageJson from '../../../package.json';
@@ -22,6 +23,7 @@ const Timer = () => {
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 	const [isStatsOpen, setIsStatsOpen] = useState(false);
 	const [isTasksOpen, setIsTasksOpen] = useState(false);
+	const [isNotesOpen, setIsNotesOpen] = useState(false);
 	const [smoothProgress, setSmoothProgress] = useState(0);
 	
 	const {
@@ -223,6 +225,18 @@ const Timer = () => {
 
 					{/* Top Controls */}
 					<div className="absolute top-4 right-4 flex gap-2">
+						{/* Notes Button */}
+						<button
+							id="notes-button"
+							onClick={() => setIsNotesOpen(true)}
+							className="w-8 h-8 text-white/70 hover:text-white transition-colors"
+							title="Notes"
+						>
+							<svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+								<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+							</svg>
+						</button>
+
 						{/* Tasks Button */}
 						<button
 							id="tasks-button"
@@ -379,6 +393,13 @@ const Timer = () => {
 					</div>
 				</div>
 			)}
+
+			{/* Notes Modal */}
+			<NotesModal
+				isOpen={isNotesOpen}
+				onClose={() => setIsNotesOpen(false)}
+				taskId={linkedTaskId}
+			/>
 			
 			{/* Bottom right info panel */}
 			<div className="absolute bottom-4 right-4 flex flex-col gap-2 items-end">
