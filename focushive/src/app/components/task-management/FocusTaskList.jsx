@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTaskManager } from '../../hooks/useTaskManager';
 import TaskTemplates from './TaskTemplates';
 
-const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
+const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) => {
   const {
     tasks,
     addTask,
@@ -104,9 +104,13 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
     <div 
       id={`focus-task-${task.id}`}
       className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors ${
-        isSelected 
-          ? 'border-white bg-white/10 text-white' 
-          : 'border-white/20 hover:border-white/40 text-white/80 hover:text-white'
+        isInSidebar
+          ? (isSelected 
+              ? 'border-blue-500 bg-blue-50 text-gray-800' 
+              : 'border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-800')
+          : (isSelected 
+              ? 'border-white bg-white/10 text-white' 
+              : 'border-white/20 hover:border-white/40 text-white/80 hover:text-white')
       }`}
       onClick={() => onTaskSelect?.(task)}
     >
@@ -116,7 +120,11 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
             e.stopPropagation();
             handleTaskComplete(task.id);
           }}
-          className="w-6 h-6 rounded-full border-2 border-white/40 hover:border-white flex items-center justify-center"
+          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+            isInSidebar 
+              ? 'border-gray-300 hover:border-gray-400' 
+              : 'border-white/40 hover:border-white'
+          }`}
         >
           {task.status === 'completed' && (
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -129,7 +137,9 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
           <div className={`font-medium ${task.status === 'completed' ? 'line-through opacity-60' : ''}`}>
             {task.title}
           </div>
-          <div className="text-sm opacity-60">
+          <div className={`text-sm ${
+            isInSidebar ? 'text-gray-500' : 'opacity-60'
+          }`}>
             {Math.floor((task.totalTimeSpent || 0) / 1500)} / {task.estimatedSessions || 1} sessions
           </div>
         </div>
@@ -141,12 +151,18 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
             e.stopPropagation();
             decrementSessions(task.id);
           }}
-          className="w-6 h-6 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white"
+          className={`w-6 h-6 rounded flex items-center justify-center ${
+            isInSidebar 
+              ? 'hover:bg-gray-100 text-gray-500 hover:text-gray-700' 
+              : 'hover:bg-white/10 text-white/60 hover:text-white'
+          }`}
         >
           −
         </button>
         
-        <span className="text-sm font-medium min-w-[20px] text-center">
+        <span className={`text-sm font-medium min-w-[20px] text-center ${
+          isInSidebar ? 'text-gray-700' : 'text-white'
+        }`}>
           {task.estimatedSessions || 1}
         </span>
         
@@ -155,7 +171,11 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
             e.stopPropagation();
             incrementSessions(task.id);
           }}
-          className="w-6 h-6 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white"
+          className={`w-6 h-6 rounded flex items-center justify-center ${
+            isInSidebar 
+              ? 'hover:bg-gray-100 text-gray-500 hover:text-gray-700' 
+              : 'hover:bg-white/10 text-white/60 hover:text-white'
+          }`}
         >
           +
         </button>
@@ -165,7 +185,11 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
             e.stopPropagation();
             handleTaskDelete(task.id);
           }}
-          className="w-6 h-6 rounded hover:bg-white/10 flex items-center justify-center text-white/40 hover:text-red-400 ml-2"
+          className={`w-6 h-6 rounded flex items-center justify-center ml-2 ${
+            isInSidebar 
+              ? 'hover:bg-gray-100 text-gray-400 hover:text-red-500' 
+              : 'hover:bg-white/10 text-white/40 hover:text-red-400'
+          }`}
         >
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
@@ -178,10 +202,14 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
   return (
     <div id="focus-task-list" className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-white font-medium">Tasks</h3>
+        <h3 className={`font-medium ${
+          isInSidebar ? 'text-gray-800' : 'text-white'
+        }`}>Tasks</h3>
         <button
           onClick={() => setShowAddForm(true)}
-          className="text-white/60 hover:text-white text-sm"
+          className={`text-sm ${
+            isInSidebar ? 'text-gray-600 hover:text-gray-800' : 'text-white/60 hover:text-white'
+          }`}
         >
           + Add Task
         </button>
@@ -195,12 +223,18 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
               placeholder="What are you working on?"
               value={newTaskTitle}
               onChange={(e) => setNewTaskTitle(e.target.value)}
-              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-white/50 focus:outline-none focus:border-white/50"
+              className={`w-full px-3 py-2 rounded focus:outline-none ${
+                isInSidebar 
+                  ? 'bg-gray-50 border border-gray-300 text-gray-700 placeholder-gray-400 focus:border-blue-500' 
+                  : 'bg-white/10 border border-white/20 text-white placeholder-white/50 focus:border-white/50'
+              }`}
               autoFocus
             />
             
             <div className="flex items-center gap-3">
-              <span className="text-white/60 text-sm">Est Sessions:</span>
+              <span className={`text-sm ${
+                isInSidebar ? 'text-gray-600' : 'text-white/60'
+              }`}>Est Sessions:</span>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
@@ -209,7 +243,9 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
                 >
                   −
                 </button>
-                <span className="text-white font-medium min-w-[20px] text-center">
+                <span className={`font-medium min-w-[20px] text-center ${
+                  isInSidebar ? 'text-gray-700' : 'text-white'
+                }`}>
                   {newTaskSessions}
                 </span>
                 <button
@@ -225,7 +261,11 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="px-4 py-2 bg-white/20 text-white rounded hover:bg-white/30 text-sm"
+                className={`px-4 py-2 rounded text-sm ${
+                  isInSidebar 
+                    ? 'bg-blue-500 text-white hover:bg-blue-600' 
+                    : 'bg-white/20 text-white hover:bg-white/30'
+                }`}
               >
                 Save
               </button>
@@ -236,7 +276,11 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
                   setNewTaskTitle('');
                   setNewTaskSessions(1);
                 }}
-                className="px-4 py-2 text-white/60 hover:text-white text-sm"
+                className={`px-4 py-2 text-sm ${
+                  isInSidebar 
+                    ? 'text-gray-600 hover:text-gray-800' 
+                    : 'text-white/60 hover:text-white'
+                }`}
               >
                 Cancel
               </button>
@@ -256,23 +300,29 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
       </div>
 
       {todayTasks.length === 0 && !showAddForm && (
-        <div className="text-center py-4 text-white/40">
+        <div className={`text-center py-4 ${
+          isInSidebar ? 'text-gray-500' : 'text-white/40'
+        }`}>
           <p className="text-sm">Add tasks to work on today</p>
         </div>
       )}
 
-      <TaskTemplates onTemplateSelect={handleTemplateSelect} />
+      <TaskTemplates onTemplateSelect={handleTemplateSelect} isInSidebar={isInSidebar} />
 
       {completedTasks.length > 0 && (
         <div className="mt-6 pt-4 border-t border-white/20">
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-white/60 text-sm font-medium">
+            <h4 className={`text-sm font-medium ${
+              isInSidebar ? 'text-gray-600' : 'text-white/60'
+            }`}>
               Completed ({completedTasks.length})
             </h4>
           </div>
           <div className="space-y-1">
             {completedTasks.slice(0, 3).map(task => (
-              <div key={task.id} className="flex items-center gap-3 py-2 text-white/40 text-sm">
+              <div key={task.id} className={`flex items-center gap-3 py-2 text-sm ${
+                isInSidebar ? 'text-gray-400' : 'text-white/40'
+              }`}>
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
@@ -283,7 +333,9 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
               </div>
             ))}
             {completedTasks.length > 3 && (
-              <div className="text-center text-white/30 text-xs py-1">
+              <div className={`text-center text-xs py-1 ${
+                isInSidebar ? 'text-gray-400' : 'text-white/30'
+              }`}>
                 ... and {completedTasks.length - 3} more
               </div>
             )}
