@@ -10,17 +10,17 @@ export const getModeButtonStyles = (buttonMode, currentMode, isActive = false) =
     case 'focus':
       return activeState 
         ? `bg-white text-black font-bold border-2 border-white ${baseStyles}`
-        : `bg-transparent text-white/70 hover:text-white border-2 border-white/30 hover:border-white/50 ${baseStyles}`;
+        : `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
     case 'shortBreak':
       return activeState 
         ? `bg-white text-green-600 font-bold border-2 border-white ${baseStyles}`
-        : `bg-transparent text-white/70 hover:text-white border-2 border-white/30 hover:border-white/50 ${baseStyles}`;
+        : `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
     case 'longBreak':
       return activeState 
         ? `bg-white text-blue-600 font-bold border-2 border-white ${baseStyles}`
-        : `bg-transparent text-white/70 hover:text-white border-2 border-white/30 hover:border-white/50 ${baseStyles}`;
+        : `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
     default:
-      return `bg-transparent text-white/70 hover:text-white border-2 border-white/30 hover:border-white/50 ${baseStyles}`;
+      return `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
   }
 };
 
@@ -44,12 +44,12 @@ export const getSecondaryButtonStyles = (mode) => {
   
   switch (mode) {
     case 'focus':
-      return `bg-transparent text-white/70 hover:text-white border-2 border-white/30 hover:border-white/50 ${baseStyles}`;
+      return `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
     case 'shortBreak':
-      return `bg-transparent text-white/70 hover:text-white border-2 border-white/30 hover:border-white/50 ${baseStyles}`;
+      return `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
     case 'longBreak':
-      return `bg-transparent text-white/70 hover:text-white border-2 border-white/30 hover:border-white/50 ${baseStyles}`;
+      return `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
     default:
-      return `bg-transparent text-white/70 hover:text-white border-2 border-white/30 hover:border-white/50 ${baseStyles}`;
+      return `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
   }
 };
