@@ -13,7 +13,7 @@ import GitHubLink from "./GitHubLink";
 import TaskSelector from "./task-management/TaskSelector";
 import TaskManager from "./task-management/TaskManager";
 import FocusTaskList from "./task-management/FocusTaskList";
-import TaskSidebar from "./task-management/TaskSidebar";
+import TaskListModal from "./task-management/TaskListModal";
 import NotesModal from "./notes/NotesModal";
 import { useTodayStats } from "../hooks/useSessionStats";
 import { useTaskManager } from "../hooks/useTaskManager";
@@ -23,7 +23,7 @@ const Timer = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 	const [isStatsOpen, setIsStatsOpen] = useState(false);
-	const [isTaskSidebarExpanded, setIsTaskSidebarExpanded] = useState(false);
+	const [isTaskListOpen, setIsTaskListOpen] = useState(false);
 	const [isNotesOpen, setIsNotesOpen] = useState(false);
 	const [smoothProgress, setSmoothProgress] = useState(0);
 	
@@ -287,10 +287,10 @@ const Timer = () => {
 						
 						{/* Task List Toggle Button - positioned to the right of progress ring */}
 						<button
-							onClick={() => setIsTaskSidebarExpanded(!isTaskSidebarExpanded)}
+							onClick={() => setIsTaskListOpen(true)}
 							className="absolute top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors"
 							style={{ right: 'calc(50% - 160px)' }}
-							title={isTaskSidebarExpanded ? 'Collapse Tasks' : 'Expand Tasks'}
+							title="Open Tasks"
 						>
 							<svg 
 								className="w-6 h-6" 
@@ -350,10 +350,6 @@ const Timer = () => {
 							<FocusTaskList 
 								onTaskSelect={handleTaskSelect}
 								selectedTaskId={linkedTaskId}
-								onOpenNotes={(taskId) => {
-									setLinkedTask(taskId);
-									setIsNotesOpen(true);
-								}}
 							/>
 						</div>
 					)}
@@ -387,17 +383,12 @@ const Timer = () => {
 				taskId={linkedTaskId}
 			/>
 			
-			{/* Task Sidebar */}
-			<TaskSidebar 
+			{/* Task List Modal */}
+			<TaskListModal 
+				isOpen={isTaskListOpen}
+				onClose={() => setIsTaskListOpen(false)}
 				onTaskSelect={handleTaskSelect}
 				selectedTaskId={linkedTaskId}
-				mode={mode}
-				isExpanded={isTaskSidebarExpanded}
-				onToggle={setIsTaskSidebarExpanded}
-				onOpenNotes={(taskId) => {
-					setLinkedTask(taskId);
-					setIsNotesOpen(true);
-				}}
 			/>
 			
 			{/* Bottom right info panel */}

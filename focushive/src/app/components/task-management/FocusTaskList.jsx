@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTaskManager } from '../../hooks/useTaskManager';
 import TaskTemplates from './TaskTemplates';
+import { notesDatabase } from '../../utils/notesDatabase';
 
-const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false, onOpenNotes }) => {
+const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) => {
   const {
     tasks,
     addTask,
@@ -18,6 +19,12 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false, onOp
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskSessions, setNewTaskSessions] = useState(1);
+  const [expandedNotes, setExpandedNotes] = useState({});
+  const [taskNotes, setTaskNotes] = useState({});
+  const [notesContent, setNotesContent] = useState({});
+  const [originalNotesContent, setOriginalNotesContent] = useState({});
+  const [notesChanged, setNotesChanged] = useState({});
+  const [notesEditMode, setNotesEditMode] = useState({});
 
   const handleTemplateSelect = async (template) => {
     try {
@@ -100,10 +107,173 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false, onOp
     }
   };
 
+  // Load notes for tasks
+  useEffect(() => {
+    const loadTaskNotes = async () => {
+      const notesMap = {};
+      for (const task of tasks) {
+        try {
+          const notes = await notesDatabase.getNotesByTask(task.id);
+          notesMap[task.id] = notes;
+        } catch (error) {
+          console.error('Failed to load notes for task:', task.id, error);
+          notesMap[task.id] = [];
+        }
+      }
+      setTaskNotes(notesMap);
+    };
+
+    if (tasks.length > 0) {
+      loadTaskNotes();
+    }
+  }, [tasks]);
+
+  const toggleNotes = (taskId) => {
+    setExpandedNotes(prev => ({
+      ...prev,
+      [taskId]: !prev[taskId]
+    }));
+    
+    // Initialize notes content if not already loaded
+    if (!notesContent[taskId] && taskNotes[taskId] && taskNotes[taskId].length > 0) {
+      const content = taskNotes[taskId][0]?.content || '';
+      setNotesContent(prev => ({
+        ...prev,
+        [taskId]: content
+      }));
+      setOriginalNotesContent(prev => ({
+        ...prev,
+        [taskId]: content
+      }));
+    }
+    
+    // If opening notes for the first time and no existing notes, enter edit mode
+    if (!taskNotes[taskId] || taskNotes[taskId].length === 0) {
+      enterEditMode(taskId);
+    }
+  };
+
+  const handleNotesChange = (taskId, content) => {
+    setNotesContent(prev => ({
+      ...prev,
+      [taskId]: content
+    }));
+    
+    // Check if content has changed
+    const hasChanged = content !== (originalNotesContent[taskId] || '');
+    setNotesChanged(prev => ({
+      ...prev,
+      [taskId]: hasChanged
+    }));
+  };
+
+  const enterEditMode = (taskId) => {
+    setNotesEditMode(prev => ({
+      ...prev,
+      [taskId]: true
+    }));
+  };
+
+  const exitEditMode = (taskId) => {
+    setNotesEditMode(prev => ({
+      ...prev,
+      [taskId]: false
+    }));
+  };
+
+  const cancelEdit = (taskId) => {
+    // Restore original content
+    setNotesContent(prev => ({
+      ...prev,
+      [taskId]: originalNotesContent[taskId] || ''
+    }));
+    setNotesChanged(prev => ({
+      ...prev,
+      [taskId]: false
+    }));
+    exitEditMode(taskId);
+  };
+
+  const deleteNotes = async (taskId) => {
+    if (!confirm('Delete notes for this task?')) return;
+    
+    try {
+      const existingNotes = taskNotes[taskId] || [];
+      if (existingNotes.length > 0) {
+        await notesDatabase.deleteNote(existingNotes[0].id);
+        
+        // Clear local state
+        setTaskNotes(prev => ({
+          ...prev,
+          [taskId]: []
+        }));
+        setNotesContent(prev => ({
+          ...prev,
+          [taskId]: ''
+        }));
+        setOriginalNotesContent(prev => ({
+          ...prev,
+          [taskId]: ''
+        }));
+        setNotesChanged(prev => ({
+          ...prev,
+          [taskId]: false
+        }));
+      }
+    } catch (error) {
+      console.error('Failed to delete notes:', error);
+    }
+  };
+
+  const saveNotes = async (taskId) => {
+    const content = notesContent[taskId] || '';
+    
+    try {
+      const existingNotes = taskNotes[taskId] || [];
+      
+      if (existingNotes.length > 0) {
+        // Update existing note
+        await notesDatabase.updateNote(existingNotes[0].id, {
+          content,
+          title: `Notes for ${tasks.find(t => t.id === taskId)?.title || 'Task'}`,
+          tags: []
+        });
+      } else {
+        // Create new note
+        await notesDatabase.addNote({
+          content,
+          title: `Notes for ${tasks.find(t => t.id === taskId)?.title || 'Task'}`,
+          tags: [],
+          taskId
+        });
+      }
+      
+      // Reload notes
+      const updatedNotes = await notesDatabase.getNotesByTask(taskId);
+      setTaskNotes(prev => ({
+        ...prev,
+        [taskId]: updatedNotes
+      }));
+      
+      // Update original content and reset changed state
+      setOriginalNotesContent(prev => ({
+        ...prev,
+        [taskId]: content
+      }));
+      setNotesChanged(prev => ({
+        ...prev,
+        [taskId]: false
+      }));
+      exitEditMode(taskId);
+    } catch (error) {
+      console.error('Failed to save notes:', error);
+    }
+  };
+
   const TaskItem = ({ task, isSelected }) => (
     <div 
       id={`focus-task-${task.id}`}
-      className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors ${
+      className={`rounded-lg border transition-colors ${
         isInSidebar
           ? (isSelected 
               ? 'border-blue-500 bg-blue-50 text-gray-800' 
@@ -112,8 +282,11 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false, onOp
               ? 'border-white bg-white/10 text-white' 
               : 'border-white/20 hover:border-white/40 text-white/80 hover:text-white')
       }`}
-      onClick={() => onTaskSelect?.(task)}
     >
+      <div 
+        className="flex items-center justify-between p-3 cursor-pointer"
+        onClick={() => onTaskSelect?.(task)}
+      >
       <div className="flex items-center gap-3 flex-1">
         <button
           onClick={(e) => {
@@ -180,22 +353,6 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false, onOp
           +
         </button>
 
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onOpenNotes?.(task.id);
-          }}
-          className={`w-6 h-6 rounded flex items-center justify-center ${
-            isInSidebar 
-              ? 'hover:bg-gray-100 text-gray-400 hover:text-blue-500' 
-              : 'hover:bg-white/10 text-white/40 hover:text-blue-400'
-          }`}
-          title="Task Notes"
-        >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-        </button>
 
         <button
           onClick={(e) => {
@@ -212,6 +369,7 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false, onOp
             <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
           </svg>
         </button>
+      </div>
       </div>
     </div>
   );
