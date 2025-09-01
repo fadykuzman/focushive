@@ -12,8 +12,9 @@ import StatsDashboard from "./reports/StatsDashboard";
 import GitHubLink from "./GitHubLink";
 import TaskSelector from "./task-management/TaskSelector";
 import TaskManager from "./task-management/TaskManager";
-import PomofocusTaskList from "./task-management/PomofocusTaskList";
+import FocusTaskList from "./task-management/FocusTaskList";
 import { useTodayStats } from "../hooks/useSessionStats";
+import { useTaskManager } from "../hooks/useTaskManager";
 import packageJson from '../../../package.json';
 
 const Timer = () => {
@@ -51,6 +52,10 @@ const Timer = () => {
 	} = useTimerStore();
 
 	const { focusTime, sessions, completionRate } = useTodayStats();
+	const { tasks } = useTaskManager();
+
+	// Get current linked task
+	const currentTask = linkedTaskId ? tasks.find(task => task.id === linkedTaskId) : null;
 
 	// Restore timer on component mount and mark as hydrated
 	useEffect(() => {
@@ -311,10 +316,22 @@ const Timer = () => {
 						/>
 					</div>
 
-					{/* Pomofocus-style Task List - Only show for focus mode when not active */}
+					{/* Active Task Display - Show when focus session is active and task is assigned */}
+					{mode === 'focus' && isActive && currentTask && (
+						<div className="mb-6 px-4">
+							<div id="active-task-display" className="flex items-center justify-center gap-3 p-3 rounded-lg bg-white/5 border border-white/20">
+								<span className="px-2 py-1 bg-blue-500 text-white text-xs rounded-full font-medium">
+									Active
+								</span>
+								<span className="text-white font-medium">{currentTask.title}</span>
+							</div>
+						</div>
+					)}
+
+					{/* Focus Task List - Only show for focus mode when not active */}
 					{mode === 'focus' && !isActive && (
 						<div className="mb-4 px-4">
-							<PomofocusTaskList 
+							<FocusTaskList 
 								onTaskSelect={handleTaskSelect}
 								selectedTaskId={linkedTaskId}
 							/>

@@ -68,7 +68,7 @@ class TaskDatabase {
         status: taskData.status || 'pending',
         priority: taskData.priority || 'medium',
         estimatedDuration: taskData.estimatedDuration || null,
-        estimatedPomodoros: taskData.estimatedPomodoros || 1,
+        estimatedSessions: taskData.estimatedSessions || 1,
         tags: taskData.tags || [],
         createdAt: new Date(),
         updatedAt: new Date(),

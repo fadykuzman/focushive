@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTaskManager } from '../../hooks/useTaskManager';
 import TaskTemplates from './TaskTemplates';
 
-const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
+const FocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
   const {
     tasks,
     addTask,
@@ -17,14 +17,14 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
-  const [newTaskPomodoros, setNewTaskPomodoros] = useState(1);
+  const [newTaskSessions, setNewTaskSessions] = useState(1);
 
   const handleTemplateSelect = async (template) => {
     try {
       const taskData = {
         title: template.title,
-        estimatedPomodoros: template.estimatedPomodoros,
-        estimatedDuration: template.estimatedPomodoros * 25 * 60,
+        estimatedSessions: template.estimatedSessions,
+        estimatedDuration: template.estimatedSessions * 25 * 60,
         status: 'pending'
       };
       
@@ -45,14 +45,14 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
     try {
       const taskData = {
         title: newTaskTitle,
-        estimatedPomodoros: newTaskPomodoros,
-        estimatedDuration: newTaskPomodoros * 25 * 60,
+        estimatedSessions: newTaskSessions,
+        estimatedDuration: newTaskSessions * 25 * 60,
         status: 'pending'
       };
       
       await addTask(taskData);
       setNewTaskTitle('');
-      setNewTaskPomodoros(1);
+      setNewTaskSessions(1);
       setShowAddForm(false);
     } catch (err) {
       console.error('Failed to add task:', err);
@@ -78,31 +78,31 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
     }
   };
 
-  const incrementPomodoros = async (taskId) => {
+  const incrementSessions = async (taskId) => {
     const task = tasks.find(t => t.id === taskId);
     if (task) {
-      const newPomodoros = (task.estimatedPomodoros || 1) + 1;
+      const newSessions = (task.estimatedSessions || 1) + 1;
       await updateTask(taskId, {
-        estimatedPomodoros: newPomodoros,
-        estimatedDuration: newPomodoros * 25 * 60
+        estimatedSessions: newSessions,
+        estimatedDuration: newSessions * 25 * 60
       });
     }
   };
 
-  const decrementPomodoros = async (taskId) => {
+  const decrementSessions = async (taskId) => {
     const task = tasks.find(t => t.id === taskId);
-    if (task && (task.estimatedPomodoros || 1) > 1) {
-      const newPomodoros = (task.estimatedPomodoros || 1) - 1;
+    if (task && (task.estimatedSessions || 1) > 1) {
+      const newSessions = (task.estimatedSessions || 1) - 1;
       await updateTask(taskId, {
-        estimatedPomodoros: newPomodoros,
-        estimatedDuration: newPomodoros * 25 * 60
+        estimatedSessions: newSessions,
+        estimatedDuration: newSessions * 25 * 60
       });
     }
   };
 
   const TaskItem = ({ task, isSelected }) => (
     <div 
-      id={`pomofocus-task-${task.id}`}
+      id={`focus-task-${task.id}`}
       className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors ${
         isSelected 
           ? 'border-white bg-white/10 text-white' 
@@ -130,7 +130,7 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
             {task.title}
           </div>
           <div className="text-sm opacity-60">
-            {Math.floor((task.totalTimeSpent || 0) / 1500)} / {task.estimatedPomodoros || 1} pomodoros
+            {Math.floor((task.totalTimeSpent || 0) / 1500)} / {task.estimatedSessions || 1} sessions
           </div>
         </div>
       </div>
@@ -139,7 +139,7 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            decrementPomodoros(task.id);
+            decrementSessions(task.id);
           }}
           className="w-6 h-6 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white"
         >
@@ -147,13 +147,13 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
         </button>
         
         <span className="text-sm font-medium min-w-[20px] text-center">
-          {task.estimatedPomodoros || 1}
+          {task.estimatedSessions || 1}
         </span>
         
         <button
           onClick={(e) => {
             e.stopPropagation();
-            incrementPomodoros(task.id);
+            incrementSessions(task.id);
           }}
           className="w-6 h-6 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white"
         >
@@ -176,7 +176,7 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
   );
 
   return (
-    <div id="pomofocus-task-list" className="space-y-3">
+    <div id="focus-task-list" className="space-y-3">
       <div className="flex items-center justify-between">
         <h3 className="text-white font-medium">Tasks</h3>
         <button
@@ -200,21 +200,21 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
             />
             
             <div className="flex items-center gap-3">
-              <span className="text-white/60 text-sm">Est Pomodoros:</span>
+              <span className="text-white/60 text-sm">Est Sessions:</span>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => setNewTaskPomodoros(Math.max(1, newTaskPomodoros - 1))}
+                  onClick={() => setNewTaskSessions(Math.max(1, newTaskSessions - 1))}
                   className="w-6 h-6 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white"
                 >
                   −
                 </button>
                 <span className="text-white font-medium min-w-[20px] text-center">
-                  {newTaskPomodoros}
+                  {newTaskSessions}
                 </span>
                 <button
                   type="button"
-                  onClick={() => setNewTaskPomodoros(newTaskPomodoros + 1)}
+                  onClick={() => setNewTaskSessions(newTaskSessions + 1)}
                   className="w-6 h-6 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white"
                 >
                   +
@@ -234,7 +234,7 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
                 onClick={() => {
                   setShowAddForm(false);
                   setNewTaskTitle('');
-                  setNewTaskPomodoros(1);
+                  setNewTaskSessions(1);
                 }}
                 className="px-4 py-2 text-white/60 hover:text-white text-sm"
               >
@@ -278,7 +278,7 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
                 </svg>
                 <span className="line-through">{task.title}</span>
                 <span className="text-xs">
-                  {Math.floor((task.totalTimeSpent || 0) / 1500)} pomodoros
+                  {Math.floor((task.totalTimeSpent || 0) / 1500)} sessions
                 </span>
               </div>
             ))}
@@ -294,4 +294,4 @@ const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {
   );
 };
 
-export default PomofocusTaskList;
+export default FocusTaskList;

@@ -7,7 +7,7 @@ const TaskTemplates = ({ onTemplateSelect }) => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTemplate, setNewTemplate] = useState({
     title: '',
-    estimatedPomodoros: 1
+    estimatedSessions: 1
   });
 
   useEffect(() => {
@@ -16,10 +16,10 @@ const TaskTemplates = ({ onTemplateSelect }) => {
       setTemplates(JSON.parse(savedTemplates));
     } else {
       const defaultTemplates = [
-        { id: '1', title: 'Deep Work Session', estimatedPomodoros: 4 },
-        { id: '2', title: 'Code Review', estimatedPomodoros: 2 },
-        { id: '3', title: 'Email Processing', estimatedPomodoros: 1 },
-        { id: '4', title: 'Learning/Research', estimatedPomodoros: 3 }
+        { id: '1', title: 'Deep Work Session', estimatedSessions: 4 },
+        { id: '2', title: 'Code Review', estimatedSessions: 2 },
+        { id: '3', title: 'Email Processing', estimatedSessions: 1 },
+        { id: '4', title: 'Learning/Research', estimatedSessions: 3 }
       ];
       setTemplates(defaultTemplates);
       localStorage.setItem('focushive-task-templates', JSON.stringify(defaultTemplates));
@@ -38,11 +38,11 @@ const TaskTemplates = ({ onTemplateSelect }) => {
     const template = {
       id: Date.now().toString(),
       title: newTemplate.title,
-      estimatedPomodoros: newTemplate.estimatedPomodoros
+      estimatedSessions: newTemplate.estimatedSessions
     };
 
     saveTemplates([...templates, template]);
-    setNewTemplate({ title: '', estimatedPomodoros: 1 });
+    setNewTemplate({ title: '', estimatedSessions: 1 });
     setShowAddForm(false);
   };
 
@@ -72,20 +72,20 @@ const TaskTemplates = ({ onTemplateSelect }) => {
             className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-white/50 focus:outline-none focus:border-white/50 text-sm"
           />
           <div className="flex items-center gap-2">
-            <span className="text-white/60 text-xs">Pomodoros:</span>
+            <span className="text-white/60 text-xs">Sessions:</span>
             <button
               type="button"
-              onClick={() => setNewTemplate(prev => ({ ...prev, estimatedPomodoros: Math.max(1, prev.estimatedPomodoros - 1) }))}
+              onClick={() => setNewTemplate(prev => ({ ...prev, estimatedSessions: Math.max(1, prev.estimatedSessions - 1) }))}
               className="w-5 h-5 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white text-xs"
             >
               −
             </button>
             <span className="text-white text-xs font-medium min-w-[15px] text-center">
-              {newTemplate.estimatedPomodoros}
+              {newTemplate.estimatedSessions}
             </span>
             <button
               type="button"
-              onClick={() => setNewTemplate(prev => ({ ...prev, estimatedPomodoros: prev.estimatedPomodoros + 1 }))}
+              onClick={() => setNewTemplate(prev => ({ ...prev, estimatedSessions: prev.estimatedSessions + 1 }))}
               className="w-5 h-5 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white text-xs"
             >
               +
@@ -109,7 +109,7 @@ const TaskTemplates = ({ onTemplateSelect }) => {
           >
             <span className="text-white/70 text-sm">{template.title}</span>
             <div className="flex items-center gap-2">
-              <span className="text-white/50 text-xs">{template.estimatedPomodoros} pom</span>
+              <span className="text-white/50 text-xs">{template.estimatedSessions} ses</span>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
