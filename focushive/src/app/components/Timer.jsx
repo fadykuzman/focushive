@@ -213,7 +213,7 @@ const Timer = () => {
 		>
 			<div className="text-center">
 				<div
-					className={`${styles.container} rounded-lg p-8 shadow-2xl max-w-md mx-auto relative`}
+					className={`${styles.container} rounded-lg p-8 shadow-2xl max-w-lg mx-auto relative`}
 				>
 
 					{/* Top Controls */}
