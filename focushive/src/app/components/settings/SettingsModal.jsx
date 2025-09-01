@@ -1,10 +1,10 @@
 'use client';
 
-import { useSettingsForm } from '../hooks/useSettingsForm';
-import { useClickOutside, useEscapeKey } from '../utils/modalUtils';
+import { useSettingsForm } from '../../hooks/useSettingsForm';
+import { useClickOutside, useEscapeKey } from '../../utils/modalUtils';
 import DurationInputGroup from './DurationInputGroup';
 import AutomationSection from './AutomationSection';
-import ModalButtons from './ModalButtons';
+import ModalButtons from '../ModalButtons';
 
 export default function SettingsModal({ isOpen, onClose, durations, onDurationChange }) {
   const {
@@ -58,6 +58,7 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
       <div 
         ref={modalRef}
         id="settings-modal-content" 
+        data-testid="settings-modal"
         className="bg-white rounded-lg p-6 w-[480px] max-w-90vw shadow-xl"
       >
         <div className="flex justify-between items-center mb-6">

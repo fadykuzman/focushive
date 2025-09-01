@@ -87,7 +87,7 @@ vi.mock('../TimerDisplay', () => ({
   )
 }));
 
-vi.mock('../SettingsModal', () => ({
+vi.mock('../settings/SettingsModal', () => ({
   default: ({ isOpen, onClose, onDurationChange }) => (
     isOpen ? (
       <div data-testid="settings-modal">
@@ -98,7 +98,7 @@ vi.mock('../SettingsModal', () => ({
   )
 }));
 
-vi.mock('../StatsDashboard', () => ({
+vi.mock('../reports/StatsDashboard', () => ({
   default: ({ isOpen, onClose }) => (
     isOpen ? (
       <div data-testid="stats-dashboard">

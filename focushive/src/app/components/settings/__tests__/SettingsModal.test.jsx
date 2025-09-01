@@ -8,7 +8,7 @@ const mockTimerStore = {
   toggleAutoTimerStart: vi.fn()
 };
 
-vi.mock('../../stores/timerStore', () => ({
+vi.mock('../../../stores/timerStore', () => ({
   default: () => mockTimerStore
 }));
 

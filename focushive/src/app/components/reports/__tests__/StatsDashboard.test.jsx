@@ -72,12 +72,12 @@ const createMockStats = () => {
 
 const mockStats = createMockStats();
 
-vi.mock('../../hooks/useSessionStats', () => ({
+vi.mock('../../../hooks/useSessionStats', () => ({
   useSessionStats: vi.fn(() => mockStats)
 }));
 
 import StatsDashboard from '../StatsDashboard';
-import { useSessionStats } from '../../hooks/useSessionStats';
+import { useSessionStats } from '../../../hooks/useSessionStats';
 
 describe('StatsDashboard', () => {
   const mockOnClose = vi.fn();

@@ -9,7 +9,7 @@ const mockTaskManager = {
   clearActiveTask: vi.fn()
 };
 
-vi.mock('../../hooks/useTaskManager', () => ({
+vi.mock('../../../hooks/useTaskManager', () => ({
   useTaskManager: () => mockTaskManager
 }));
 

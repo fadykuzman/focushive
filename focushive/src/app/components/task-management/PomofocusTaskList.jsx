@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useTaskManager } from '../hooks/useTaskManager';
+import { useTaskManager } from '../../hooks/useTaskManager';
 import TaskTemplates from './TaskTemplates';
 
 const PomofocusTaskList = ({ onTaskSelect, selectedTaskId }) => {

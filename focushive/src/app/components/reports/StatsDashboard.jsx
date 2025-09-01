@@ -1,6 +1,6 @@
 'use client';
 
-import { useSessionStats } from '../hooks/useSessionStats';
+import { useSessionStats } from '../../hooks/useSessionStats';
 
 export default function StatsDashboard({ isOpen, onClose }) {
   const { daily, weekly, streaks, overall, trends, loading, error, formatDuration, refreshStats } = useSessionStats();

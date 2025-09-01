@@ -1,6 +1,6 @@
 'use client';
 
-import { useTaskManager } from '../hooks/useTaskManager';
+import { useTaskManager } from '../../hooks/useTaskManager';
 
 const TaskSelector = ({ onTaskSelect, selectedTaskId }) => {
   const { tasks, getActiveTask, setActiveTask, clearActiveTask } = useTaskManager();

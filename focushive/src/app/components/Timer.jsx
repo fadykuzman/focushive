@@ -7,12 +7,12 @@ import PauseButton from "./PauseButton";
 import ResetRoundsButton from "./ResetRoundsButton";
 import ModeSwitch from "./ModeSwitch";
 import TimerDisplay from "./TimerDisplay";
-import SettingsModal from "./SettingsModal";
-import StatsDashboard from "./StatsDashboard";
+import SettingsModal from "./settings/SettingsModal";
+import StatsDashboard from "./reports/StatsDashboard";
 import GitHubLink from "./GitHubLink";
-import TaskSelector from "./TaskSelector";
-import TaskManager from "./TaskManager";
-import PomofocusTaskList from "./PomofocusTaskList";
+import TaskSelector from "./task-management/TaskSelector";
+import TaskManager from "./task-management/TaskManager";
+import PomofocusTaskList from "./task-management/PomofocusTaskList";
 import { useTodayStats } from "../hooks/useSessionStats";
 import packageJson from '../../../package.json';
 
