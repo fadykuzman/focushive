@@ -402,7 +402,7 @@ const Timer = () => {
 			/>
 			
 			{/* Bottom right info panel */}
-			<div className="absolute bottom-4 right-4 flex flex-col gap-2 items-end">
+			<div className="fixed bottom-4 right-4 flex flex-col gap-2 items-end z-10">
 				<GitHubLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
 				<div className="text-white/50 text-sm font-mono">
 					v{packageJson.version}
