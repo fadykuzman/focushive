@@ -11,6 +11,7 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
   const updateTask = useTaskStore(state => state.updateTask);
   const deleteTask = useTaskStore(state => state.deleteTask);
   const completeTask = useTaskStore(state => state.completeTask);
+  const uncompleteTask = useTaskStore(state => state.uncompleteTask);
   const getPendingTasks = useTaskStore(state => state.getPendingTasks);
   const getInProgressTasks = useTaskStore(state => state.getInProgressTasks);
 
@@ -66,9 +67,14 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
 
   const handleTaskComplete = async (taskId) => {
     try {
-      await completeTask(taskId);
+      const task = tasks.find(t => t.id === taskId);
+      if (task?.status === 'completed') {
+        await uncompleteTask(taskId);
+      } else {
+        await completeTask(taskId);
+      }
     } catch (err) {
-      console.error('Failed to complete task:', err);
+      console.error('Failed to toggle task completion:', err);
     }
   };
 
@@ -377,89 +383,7 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
         <h3 className={`font-medium ${
           isInSidebar ? 'text-gray-800' : 'text-white'
         }`}>Tasks</h3>
-        <button
-          onClick={() => setShowAddForm(true)}
-          className={`text-sm ${
-            isInSidebar ? 'text-gray-600 hover:text-gray-800' : 'text-white/60 hover:text-white'
-          }`}
-        >
-          + Add Task
-        </button>
       </div>
-
-      {showAddForm && (
-        <div className="p-4 rounded-lg border border-white/20 bg-white/5">
-          <form onSubmit={handleAddTask} className="space-y-3">
-            <input
-              type="text"
-              placeholder="What are you working on?"
-              value={newTaskTitle}
-              onChange={(e) => setNewTaskTitle(e.target.value)}
-              className={`w-full px-3 py-2 rounded focus:outline-none ${
-                isInSidebar 
-                  ? 'bg-gray-50 border border-gray-300 text-gray-700 placeholder-gray-400 focus:border-blue-500' 
-                  : 'bg-white/10 border border-white/20 text-white placeholder-white/50 focus:border-white/50'
-              }`}
-              autoFocus
-            />
-            
-            <div className="flex items-center gap-3">
-              <span className={`text-sm ${
-                isInSidebar ? 'text-gray-600' : 'text-white/60'
-              }`}>Est Sessions:</span>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setNewTaskSessions(Math.max(1, newTaskSessions - 1))}
-                  className="w-6 h-6 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white"
-                >
-                  −
-                </button>
-                <span className={`font-medium min-w-[20px] text-center ${
-                  isInSidebar ? 'text-gray-700' : 'text-white'
-                }`}>
-                  {newTaskSessions}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setNewTaskSessions(newTaskSessions + 1)}
-                  className="w-6 h-6 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-            
-            <div className="flex gap-2">
-              <button
-                type="submit"
-                className={`px-4 py-2 rounded text-sm ${
-                  isInSidebar 
-                    ? 'bg-blue-500 text-white hover:bg-blue-600' 
-                    : 'bg-white/20 text-white hover:bg-white/30'
-                }`}
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowAddForm(false);
-                  setNewTaskTitle('');
-                  setNewTaskSessions(1);
-                }}
-                className={`px-4 py-2 text-sm ${
-                  isInSidebar 
-                    ? 'text-gray-600 hover:text-gray-800' 
-                    : 'text-white/60 hover:text-white'
-                }`}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
 
       <div className="space-y-2">
         {todayTasks.map(task => (
@@ -479,7 +403,105 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
         </div>
       )}
 
-      <TaskTemplates onTemplateSelect={handleTemplateSelect} isInSidebar={isInSidebar} />
+      {/* Add Task Section */}
+      <div className="w-full">
+        {!showAddForm ? (
+          <button
+            onClick={() => setShowAddForm(true)}
+            className={`w-full p-3 rounded-lg border-2 border-dashed transition-colors ${
+              isInSidebar 
+                ? 'border-gray-300 hover:border-gray-400 text-gray-600 hover:text-gray-800 hover:bg-gray-50' 
+                : 'border-white/30 hover:border-white/50 text-white/60 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            + Add Task
+          </button>
+        ) : (
+          <div className={`p-4 rounded-lg border ${
+            isInSidebar 
+              ? 'border-gray-200 bg-gray-50' 
+              : 'border-white/20 bg-white/5'
+          }`}>
+            <form onSubmit={handleAddTask} className="space-y-3">
+              <input
+                type="text"
+                placeholder="What are you working on?"
+                value={newTaskTitle}
+                onChange={(e) => setNewTaskTitle(e.target.value)}
+                className={`w-full px-3 py-2 rounded focus:outline-none ${
+                  isInSidebar 
+                    ? 'bg-white border border-gray-300 text-gray-700 placeholder-gray-400 focus:border-blue-500' 
+                    : 'bg-white/10 border border-white/20 text-white placeholder-white/50 focus:border-white/50'
+                }`}
+                autoFocus
+              />
+              
+              <div className="flex items-center gap-3">
+                <span className={`text-sm ${
+                  isInSidebar ? 'text-gray-600' : 'text-white/60'
+                }`}>Est Sessions:</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setNewTaskSessions(Math.max(1, newTaskSessions - 1))}
+                    className={`w-6 h-6 rounded flex items-center justify-center ${
+                      isInSidebar 
+                        ? 'hover:bg-gray-100 text-gray-500 hover:text-gray-700' 
+                        : 'hover:bg-white/10 text-white/60 hover:text-white'
+                    }`}
+                  >
+                    −
+                  </button>
+                  <span className={`font-medium min-w-[20px] text-center ${
+                    isInSidebar ? 'text-gray-700' : 'text-white'
+                  }`}>
+                    {newTaskSessions}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setNewTaskSessions(newTaskSessions + 1)}
+                    className={`w-6 h-6 rounded flex items-center justify-center ${
+                      isInSidebar 
+                        ? 'hover:bg-gray-100 text-gray-500 hover:text-gray-700' 
+                        : 'hover:bg-white/10 text-white/60 hover:text-white'
+                    }`}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <button
+                  type="submit"
+                  className={`px-4 py-2 rounded text-sm ${
+                    isInSidebar 
+                      ? 'bg-blue-500 text-white hover:bg-blue-600' 
+                      : 'bg-white/20 text-white hover:bg-white/30'
+                  }`}
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowAddForm(false);
+                    setNewTaskTitle('');
+                    setNewTaskSessions(1);
+                  }}
+                  className={`px-4 py-2 text-sm ${
+                    isInSidebar 
+                      ? 'text-gray-600 hover:text-gray-800' 
+                      : 'text-white/60 hover:text-white'
+                  }`}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+      </div>
 
       {completedTasks.length > 0 && (
         <div className="mt-6 pt-4 border-t border-white/20">
@@ -512,6 +534,8 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
           </div>
         </div>
       )}
+
+      <TaskTemplates onTemplateSelect={handleTemplateSelect} isInSidebar={isInSidebar} />
     </div>
   );
 };

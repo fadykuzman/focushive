@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 const TaskTemplates = ({ onTemplateSelect, isInSidebar = false }) => {
   const [templates, setTemplates] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [newTemplate, setNewTemplate] = useState({
     title: '',
     estimatedSessions: 1
@@ -53,20 +54,30 @@ const TaskTemplates = ({ onTemplateSelect, isInSidebar = false }) => {
   return (
     <div id="task-templates" className="space-y-3">
       <div className="flex items-center justify-between">
-        <h4 className={`text-sm font-medium ${
-          isInSidebar ? 'text-gray-600' : 'text-white/60'
-        }`}>Templates</h4>
         <button
-          onClick={() => setShowAddForm(!showAddForm)}
-          className={`text-xs ${
+          onClick={() => setIsExpanded(!isExpanded)}
+          className={`text-sm font-medium flex items-center gap-2 ${
             isInSidebar ? 'text-gray-600 hover:text-gray-800' : 'text-white/60 hover:text-white'
           }`}
         >
-          {showAddForm ? 'Cancel' : '+ Add Template'}
+          <span>Templates</span>
+          <span className="text-lg leading-none">
+            {isExpanded ? '−' : '+'}
+          </span>
         </button>
+        {isExpanded && (
+          <button
+            onClick={() => setShowAddForm(!showAddForm)}
+            className={`text-xs ${
+              isInSidebar ? 'text-gray-600 hover:text-gray-800' : 'text-white/60 hover:text-white'
+            }`}
+          >
+            {showAddForm ? 'Cancel' : '+ Add Template'}
+          </button>
+        )}
       </div>
 
-      {showAddForm && (
+      {isExpanded && showAddForm && (
         <form onSubmit={handleAddTemplate} className="space-y-2">
           <input
             type="text"
@@ -124,8 +135,9 @@ const TaskTemplates = ({ onTemplateSelect, isInSidebar = false }) => {
         </form>
       )}
 
-      <div className="space-y-1">
-        {templates.map(template => (
+      {isExpanded && (
+        <div className="space-y-1">
+          {templates.map(template => (
           <div 
             key={template.id}
             className={`flex items-center justify-between p-2 rounded border cursor-pointer ${
@@ -156,9 +168,10 @@ const TaskTemplates = ({ onTemplateSelect, isInSidebar = false }) => {
                 ×
               </button>
             </div>
-          </div>
-        ))}
-      </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

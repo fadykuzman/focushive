@@ -70,6 +70,20 @@ const useTaskStore = create(
         }
       },
 
+      uncompleteTask: async (taskId) => {
+        try {
+          const { updateTask, loadTasks } = get();
+          const updatedTask = await updateTask(taskId, { 
+            status: 'pending',
+            completedAt: null
+          });
+          await loadTasks();
+          return updatedTask;
+        } catch (err) {
+          throw err;
+        }
+      },
+
       loadTasks: async () => {
         try {
           set({ loading: true, error: null });
