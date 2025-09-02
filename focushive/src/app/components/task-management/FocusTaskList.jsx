@@ -286,7 +286,7 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
       <div 
         className="flex items-center justify-between p-3 cursor-pointer"
         onClick={() => onTaskSelect?.(task)}
-        title={isSelected ? "Active task" : "Click to set as active task"}
+        title={isSelected ? "Click to deactivate task" : "Click to set as active task"}
       >
       <div className="flex items-center gap-3 flex-1">
         <button
