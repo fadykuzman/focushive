@@ -27,3 +27,4 @@
 - [ ] Pro: Integrate with task management apps to link focus sessions with specific tasks.
 - [ ] Pro: Sync devices (e.g., start a session on your phone and have it reflected on your computer).
 - [ ] Pro: Wearables to track heart rate and adjust focus session lengths based on stress levels.
+- [ ] Pro: Mobile & Browser. Block messages, calls and notifications. provide allow list. one for allow during focus (emergency). two for allow on short breaks ( med prio). three for allow on long breaks (low prio) can also be ser to anyone
