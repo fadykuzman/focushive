@@ -13,9 +13,15 @@ export default function StartButton({ startTimer, resumeTimer, isPaused, mode })
   return (
     <button
       onClick={handleClick}
-      className={`px-8 py-4 rounded-lg font-bold text-xl ${getActionButtonStyles(mode)}`}
+      className="w-12 h-12 group transition-colors"
+      aria-label={isPaused ? "Resume" : "Start"}
     >
-      {isPaused ? "Resume" : "Start"}
+      <img 
+        src="/icons/play.svg" 
+        alt="" 
+        className="w-12 h-12 opacity-70 group-hover:opacity-100 transition-opacity"
+        style={{ filter: 'brightness(0) saturate(100%) invert(100%)' }}
+      />
     </button>
   );
 }
