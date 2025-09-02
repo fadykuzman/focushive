@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { TIMER_MODES, DEFAULT_DURATIONS, DEFAULT_SETTINGS } from '../constants.js';
+import { TIMER_MODES, DEFAULT_DURATIONS, DEFAULT_SETTINGS } from '@/app/utils/timer/constants.js';
 
 describe('Timer Constants', () => {
   describe('TIMER_MODES', () => {

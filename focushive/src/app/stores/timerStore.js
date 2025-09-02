@@ -8,10 +8,10 @@ import {
   validateDuration,
   DEFAULT_DURATIONS, 
   DEFAULT_SETTINGS 
-} from '../utils/timer';
-import { soundAlert } from '../utils/soundAlerts';
-import { browserNotifications } from '../utils/notifications';
-import { sessionRecorder } from '../services/sessionRecorder';
+} from '@/app/utils/timer';
+import { soundAlert } from '@/app/utils/soundAlerts';
+import { browserNotifications } from '@/app/utils/notifications';
+import { sessionRecorder } from '@/app/services/sessionRecorder';
 
 const useTimerStore = create(
   persist(

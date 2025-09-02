@@ -77,7 +77,7 @@ vi.mock('../../../hooks/useSessionStats', () => ({
 }));
 
 import StatsDashboard from '../StatsDashboard';
-import { useSessionStats } from '../../../hooks/useSessionStats';
+import { useSessionStats } from '@/app/hooks/useSessionStats';
 
 describe('StatsDashboard', () => {
   const mockOnClose = vi.fn();

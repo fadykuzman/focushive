@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import FocusTaskList from './FocusTaskList';
+import FocusTaskList from '@/app/components/task-management/FocusTaskList';
 
 export default function TaskSidebar({ onTaskSelect, selectedTaskId, mode, isExpanded, onToggle, onOpenNotes }) {
   return (

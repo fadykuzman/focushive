@@ -1,6 +1,6 @@
-import { getNextMode, calculateNextRound } from "./modeTransition.js";
-import { getDurationForMode } from "./durationUtils.js";
-import { TimerRestoration } from "../timerRestoration.js";
+import { getNextMode, calculateNextRound } from "@/app/utils/timer/modeTransition.js";
+import { getDurationForMode } from "@/app/utils/timer/durationUtils.js";
+import { TimerRestoration } from "@/app/utils/timerRestoration.js";
 
 export function completeTimerTransition(currentState) {
   const { mode, round, totalRounds, focusDuration, shortBreakDuration, longBreakDuration, autoTimerStart } = currentState;

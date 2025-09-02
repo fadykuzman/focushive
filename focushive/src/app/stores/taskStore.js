@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { taskDatabase } from '../utils/taskDatabase';
+import { taskDatabase } from '@/app/utils/taskDatabase';
 
 const useTaskStore = create(
   persist(

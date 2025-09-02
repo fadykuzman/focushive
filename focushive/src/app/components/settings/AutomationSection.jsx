@@ -1,4 +1,4 @@
-import ToggleSwitch from './ToggleSwitch';
+import ToggleSwitch from '@/app/components/settings/ToggleSwitch';
 
 export default function AutomationSection({ autoTimerStart, onToggle }) {
   return (

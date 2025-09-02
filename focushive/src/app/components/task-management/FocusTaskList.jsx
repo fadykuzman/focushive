@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import useTaskStore from '../../stores/taskStore';
-import TaskTemplates from './TaskTemplates';
-import { notesDatabase } from '../../utils/notesDatabase';
+import useTaskStore from '@/app/stores/taskStore';
+import TaskTemplates from '@/app/components/task-management/TaskTemplates';
+import { notesDatabase } from '@/app/utils/notesDatabase';
 
 const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) => {
   const tasks = useTaskStore(state => state.tasks);

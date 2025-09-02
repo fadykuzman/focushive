@@ -1,6 +1,6 @@
 'use client';
 
-import useTaskStore from '../../stores/taskStore';
+import useTaskStore from '@/app/stores/taskStore';
 
 const TaskSelector = ({ onTaskSelect, selectedTaskId }) => {
   const tasks = useTaskStore(state => state.tasks);

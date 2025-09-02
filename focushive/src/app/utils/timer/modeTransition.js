@@ -1,4 +1,4 @@
-import { TIMER_MODES } from "./constants.js";
+import { TIMER_MODES } from "@/app/utils/timer/constants.js";
 
 export function getNextMode(currentMode, round, totalRounds) {
   if (currentMode === TIMER_MODES.FOCUS) {

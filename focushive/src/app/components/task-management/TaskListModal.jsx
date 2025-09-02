@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import FocusTaskList from './FocusTaskList';
+import FocusTaskList from '@/app/components/task-management/FocusTaskList';
 
 export default function TaskListModal({ isOpen, onClose, onTaskSelect, selectedTaskId }) {
   const [currentSelection, setCurrentSelection] = useState(selectedTaskId);

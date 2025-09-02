@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { sessionDatabase } from '../utils/sessionDatabase.js';
-import { StatisticsCalculator } from '../utils/statisticsCalculator.js';
+import { sessionDatabase } from '@/app/utils/sessionDatabase.js';
+import { StatisticsCalculator } from '@/app/utils/statisticsCalculator.js';
 
 export function useSessionStats() {
   const [stats, setStats] = useState({

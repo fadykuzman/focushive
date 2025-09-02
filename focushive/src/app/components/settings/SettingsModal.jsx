@@ -1,10 +1,10 @@
 'use client';
 
-import { useSettingsForm } from '../../hooks/useSettingsForm';
-import { useClickOutside, useEscapeKey } from '../../utils/modalUtils';
-import DurationInputGroup from './DurationInputGroup';
-import AutomationSection from './AutomationSection';
-import ModalButtons from '../ModalButtons';
+import { useSettingsForm } from '@/app/hooks/useSettingsForm';
+import { useClickOutside, useEscapeKey } from '@/app/utils/modalUtils';
+import DurationInputGroup from '@/app/components/settings/DurationInputGroup';
+import AutomationSection from '@/app/components/settings/AutomationSection';
+import ModalButtons from '@/app/components/ModalButtons';
 
 export default function SettingsModal({ isOpen, onClose, durations, onDurationChange }) {
   const {

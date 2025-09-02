@@ -1,6 +1,6 @@
-import ProgressRing from './ProgressRing';
-import TimeDisplay from './TimeDisplay';
-import ResetTimerButton from './ResetTimerButton';
+import ProgressRing from '@/app/components/ProgressRing';
+import TimeDisplay from '@/app/components/TimeDisplay';
+import ResetTimerButton from '@/app/components/ResetTimerButton';
 
 export default function TimerDisplay({ timeLeft, progress, resetTimer, isRunning, mode }) {
 	return (

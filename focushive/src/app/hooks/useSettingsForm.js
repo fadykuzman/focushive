@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { validateDurationInput, convertSecondsToMinutes, convertMinutesToSeconds } from '../utils/settingsValidation';
-import useTimerStore from '../stores/timerStore';
+import { validateDurationInput, convertSecondsToMinutes, convertMinutesToSeconds } from '@/app/utils/settingsValidation';
+import useTimerStore from '@/app/stores/timerStore';
 
 export function useSettingsForm(durations, onDurationChange) {
   const { autoTimerStart, toggleAutoTimerStart } = useTimerStore();

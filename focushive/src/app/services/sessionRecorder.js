@@ -1,5 +1,5 @@
-import { sessionDatabase } from '../utils/sessionDatabase.js';
-import { taskDatabase } from '../utils/taskDatabase.js';
+import { sessionDatabase } from '@/app/utils/sessionDatabase.js';
+import { taskDatabase } from '@/app/utils/taskDatabase.js';
 
 class SessionRecorder {
   constructor() {

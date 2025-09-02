@@ -1,4 +1,4 @@
-import useTaskStore from '../stores/taskStore';
+import useTaskStore from '@/app/stores/taskStore';
 
 export function useTaskIntegration(linkedTaskId, setLinkedTask, clearLinkedTask, startTimer) {
   const tasks = useTaskStore(state => state.tasks);

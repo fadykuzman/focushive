@@ -1,4 +1,4 @@
-import { getSecondaryButtonStyles } from '../utils/buttonStyles';
+import { getSecondaryButtonStyles } from '@/app/utils/buttonStyles';
 
 export default function PauseButton({ pauseTimer, mode }) {
 

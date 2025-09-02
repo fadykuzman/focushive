@@ -8,7 +8,7 @@ vi.mock('../../utils/sessionDatabase', () => ({
 }));
 
 import { sessionRecorder } from '../sessionRecorder';
-import { sessionDatabase } from '../../utils/sessionDatabase';
+import { sessionDatabase } from '@/app/utils/sessionDatabase';
 
 describe('SessionRecorder', () => {
   beforeEach(() => {

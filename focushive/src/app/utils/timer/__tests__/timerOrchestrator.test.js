@@ -10,7 +10,7 @@ vi.mock('../../timerRestoration.js', () => ({
   }
 }));
 
-import { TimerRestoration } from '../../timerRestoration.js';
+import { TimerRestoration } from '@/app/timerRestoration.js';
 
 describe('Timer Orchestrator', () => {
   describe('completeTimerTransition', () => {

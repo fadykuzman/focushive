@@ -23,8 +23,8 @@ vi.mock('../../utils/statisticsCalculator', () => ({
 }));
 
 import { useSessionStats, useTodayStats } from '../useSessionStats';
-import { sessionDatabase } from '../../utils/sessionDatabase';
-import { StatisticsCalculator } from '../../utils/statisticsCalculator';
+import { sessionDatabase } from '@/app/utils/sessionDatabase';
+import { StatisticsCalculator } from '@/app/utils/statisticsCalculator';
 
 describe('useSessionStats', () => {
   const mockSessions = [

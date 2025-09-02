@@ -1,4 +1,4 @@
-import { getModeButtonStyles } from '../utils/buttonStyles';
+import { getModeButtonStyles } from '@/app/utils/buttonStyles';
 
 export default function ModeSwitch({ mode, switchMode }) {
 

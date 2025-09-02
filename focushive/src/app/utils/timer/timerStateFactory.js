@@ -1,5 +1,5 @@
-import { getDurationForMode } from "./durationUtils.js";
-import { DEFAULT_SETTINGS, TIMER_MODES } from "./constants.js";
+import { getDurationForMode } from "@/app/utils/timer/durationUtils.js";
+import { DEFAULT_SETTINGS, TIMER_MODES } from "@/app/utils/timer/constants.js";
 
 export function createTimerState(mode, durations) {
   return {

@@ -14,7 +14,7 @@ vi.mock('../../utils/taskDatabase', () => ({
   }
 }));
 
-import { taskDatabase } from '../../utils/taskDatabase';
+import { taskDatabase } from '@/app/utils/taskDatabase';
 
 describe('useTaskManager', () => {
   beforeEach(() => {

@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useClickOutside, useEscapeKey } from '../../utils/modalUtils';
-import NotesEditor from './NotesEditor';
-import NotesList from './NotesList';
-import NotesSearch from './NotesSearch';
-import { notesDatabase } from '../../utils/notesDatabase';
+import { useClickOutside, useEscapeKey } from '@/app/utils/modalUtils';
+import NotesEditor from '@/app/components/notes/NotesEditor';
+import NotesList from '@/app/components/notes/NotesList';
+import NotesSearch from '@/app/components/notes/NotesSearch';
+import { notesDatabase } from '@/app/utils/notesDatabase';
 
 export default function NotesModal({ 
   isOpen, 

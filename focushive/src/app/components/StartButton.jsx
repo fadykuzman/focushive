@@ -1,4 +1,4 @@
-import { getActionButtonStyles } from '../utils/buttonStyles';
+import { getActionButtonStyles } from '@/app/utils/buttonStyles';
 
 export default function StartButton({ startTimer, resumeTimer, isPaused, mode }) {
 

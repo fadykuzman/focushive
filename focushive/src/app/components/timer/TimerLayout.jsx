@@ -1,12 +1,12 @@
 'use client';
 
-import TimerDisplay from '../TimerDisplay';
-import StartButton from '../StartButton';
-import PauseButton from '../PauseButton';
-import ResetRoundsButton from '../ResetRoundsButton';
-import ModeSwitch from '../ModeSwitch';
-import FocusTaskList from '../task-management/FocusTaskList';
-import TimerControls from './TimerControls';
+import TimerDisplay from '@/app/components/TimerDisplay';
+import StartButton from '@/app/components/StartButton';
+import PauseButton from '@/app/components/PauseButton';
+import ResetRoundsButton from '@/app/components/ResetRoundsButton';
+import ModeSwitch from '@/app/components/ModeSwitch';
+import FocusTaskList from '@/app/components/task-management/FocusTaskList';
+import TimerControls from '@/app/components/timer/TimerControls';
 
 export default function TimerLayout({
   mode,

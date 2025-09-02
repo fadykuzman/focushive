@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { vi, beforeEach, afterEach } from 'vitest';
-import Timer from '../Timer';
+import Timer from '@/app/components/Timer';
 
 // Mock the timer store
 const mockTimerStore = {

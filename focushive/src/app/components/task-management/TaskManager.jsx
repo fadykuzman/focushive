@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import useTaskStore from '../../stores/taskStore';
+import useTaskStore from '@/app/stores/taskStore';
 
 const TaskManager = () => {
   const tasks = useTaskStore(state => state.tasks);

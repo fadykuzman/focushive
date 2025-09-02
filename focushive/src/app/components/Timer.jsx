@@ -1,17 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import useTimerStore from "../stores/timerStore";
-import SettingsModal from "./settings/SettingsModal";
-import StatsDashboard from "./reports/StatsDashboard";
-import GitHubLink from "./GitHubLink";
-import TaskListModal from "./task-management/TaskListModal";
-import NotesModal from "./notes/NotesModal";
-import TimerLayout from "./timer/TimerLayout";
-import { useTodayStats } from "../hooks/useSessionStats";
-import { useModalManager } from "../hooks/useModalManager";
-import { useTimerEffects } from "../hooks/useTimerEffects";
-import { useTaskIntegration } from "../hooks/useTaskIntegration";
+import useTimerStore from "@/app/stores/timerStore";
+import SettingsModal from "@/app/components/settings/SettingsModal";
+import StatsDashboard from "@/app/components/reports/StatsDashboard";
+import GitHubLink from "@/app/components/GitHubLink";
+import TaskListModal from "@/app/components/task-management/TaskListModal";
+import NotesModal from "@/app/components/notes/NotesModal";
+import TimerLayout from "@/app/components/timer/TimerLayout";
+import { useTodayStats } from "@/app/hooks/useSessionStats";
+import { useModalManager } from "@/app/hooks/useModalManager";
+import { useTimerEffects } from "@/app/hooks/useTimerEffects";
+import { useTaskIntegration } from "@/app/hooks/useTaskIntegration";
 import packageJson from '../../../package.json';
 
 const Timer = () => {
