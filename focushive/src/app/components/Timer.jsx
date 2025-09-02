@@ -182,13 +182,15 @@ const Timer = () => {
 				selectedTaskId={linkedTaskId}
 			/>
 			
-			{/* Bottom right info panel */}
-			<div className="fixed bottom-4 right-4 flex flex-col gap-2 items-end z-10">
-				<GitHubLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
-				<div className="text-white/50 text-sm font-mono">
-					v{packageJson.version}
+			{/* Bottom right info panel - Hide in active focus mode */}
+			{!(mode === 'focus' && isActive && !isPaused) && (
+				<div className="fixed bottom-4 right-4 flex flex-col gap-2 items-end z-10">
+					<GitHubLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
+					<div className="text-white/50 text-sm font-mono">
+						v{packageJson.version}
+					</div>
 				</div>
-			</div>
+			)}
 		</>
 	);
 };

@@ -33,6 +33,8 @@ export default function TimerLayout({
   onOpenStats,
   onOpenSettings
 }) {
+  const isFocusMode = mode === 'focus' && isActive && !isPaused;
+  
   // Get mode display name
   const getModeDisplayName = (mode) => {
     switch (mode) {
@@ -54,47 +56,61 @@ export default function TimerLayout({
       <div className="text-center">
         <div
           className={`${styles.container} rounded-lg p-8 shadow-2xl max-w-lg mx-auto relative`}
+          style={{ minHeight: '600px' }}
         >
-          {/* Top Controls */}
-          <TimerControls
-            onOpenTasks={onOpenTasks}
-            onOpenStats={onOpenStats}
-            onOpenSettings={onOpenSettings}
-          />
+          {/* Top Controls - Hide in focus mode */}
+          <div style={{ minHeight: isFocusMode ? '0' : 'auto' }}>
+            {!isFocusMode && (
+              <TimerControls
+                onOpenTasks={onOpenTasks}
+                onOpenStats={onOpenStats}
+                onOpenSettings={onOpenSettings}
+              />
+            )}
+          </div>
 
-          <h1 id="timer-mode-title" className="text-white text-2xl font-bold mb-2 mt-12 sm:mt-8">
-            {getModeDisplayName(mode)}
-          </h1>
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <p id="timer-round-display" className="text-white/80">
-              Round {round} of {totalRounds}
-            </p>
-            <ResetRoundsButton
-              resetRounds={resetRounds}
+          {/* Title and Round Info - Reserve space in focus mode */}
+          <div className="mb-4 mt-12 sm:mt-8" style={{ minHeight: isFocusMode ? '0' : 'auto' }}>
+            {!isFocusMode && (
+              <>
+                <h1 id="timer-mode-title" className="text-white text-2xl font-bold mb-2">
+                  {getModeDisplayName(mode)}
+                </h1>
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <p id="timer-round-display" className="text-white/80">
+                    Round {round} of {totalRounds}
+                  </p>
+                  <ResetRoundsButton
+                    resetRounds={resetRounds}
+                    mode={mode}
+                  />
+                </div>
+
+                {/* Today's Stats Preview */}
+                {focusTime > 0 && (
+                  <div id="timer-stats-preview" className="text-center mb-4">
+                    <div id="timer-stats-preview-text" className="text-white/60 text-sm">
+                      Today: {Math.floor(focusTime / 60)}m focus • {sessions} sessions • {completionRate}% rate
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+
+          {/* Timer Display - Fixed positioning */}
+          <div className="flex justify-center mb-6">
+            <TimerDisplay 
+              timeLeft={timeLeft} 
+              progress={smoothProgress} 
+              resetTimer={resetTimer}
+              isRunning={isActive && !isPaused}
               mode={mode}
             />
           </div>
 
-          {/* Today's Stats Preview */}
-          {focusTime > 0 && (
-            <div id="timer-stats-preview" className="text-center mb-4">
-              <div id="timer-stats-preview-text" className="text-white/60 text-sm">
-                Today: {Math.floor(focusTime / 60)}m focus • {sessions} sessions • {completionRate}% rate
-              </div>
-            </div>
-          )}
-
-          {/* Timer Display */}
-          <TimerDisplay 
-            timeLeft={timeLeft} 
-            progress={smoothProgress} 
-            resetTimer={resetTimer}
-            isRunning={isActive && !isPaused}
-            mode={mode}
-          />
-
-          {/* Timer Controls */}
-          <div id="timer-controls" className="flex gap-2 mb-6 justify-center">
+          {/* Timer Controls - Fixed height */}
+          <div id="timer-controls" className="flex gap-2 mb-6 justify-center" style={{ minHeight: '48px' }}>
             {isActive && !isPaused ? (
               <PauseButton
                 pauseTimer={pauseTimer}
@@ -110,28 +126,30 @@ export default function TimerLayout({
             )}
           </div>
 
-          {/* Mode Switch */}
-          <div id="mode-switch-container" className="mb-6">
-            <ModeSwitch
-              mode={mode}
-              switchMode={switchMode}
-            />
+          {/* Mode Switch - Reserve space in focus mode */}
+          <div id="mode-switch-container" className="mb-6" style={{ minHeight: isFocusMode ? '0' : '64px' }}>
+            {!isFocusMode && (
+              <ModeSwitch
+                mode={mode}
+                switchMode={switchMode}
+              />
+            )}
           </div>
 
-          {/* Active Task Display - Show when focus session is active and task is assigned */}
-          {mode === 'focus' && isActive && currentTask && (
-            <div className="mb-6 px-4">
+          {/* Active Task Display - Fixed space */}
+          <div className="mb-6 px-4" style={{ minHeight: mode === 'focus' && currentTask ? '60px' : '0' }}>
+            {mode === 'focus' && isActive && currentTask && (
               <div id="active-task-display" className="flex items-center justify-center gap-3 p-3 rounded-lg bg-white/5 border border-white/20">
                 <span className="px-2 py-1 bg-blue-500 text-white text-xs rounded-full font-medium">
                   Active
                 </span>
                 <span className="text-white font-medium">{currentTask.title}</span>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
-          {/* Mobile Focus Task List - Only show on mobile for focus mode when not active */}
-          {mode === 'focus' && !isActive && (
+          {/* Mobile Focus Task List - Hide in focus mode */}
+          {!isFocusMode && mode === 'focus' && !isActive && (
             <div className="mb-4 px-4 sm:hidden">
               <FocusTaskList 
                 onTaskSelect={onTaskSelect}
