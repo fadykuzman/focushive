@@ -286,6 +286,7 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
       <div 
         className="flex items-center justify-between p-3 cursor-pointer"
         onClick={() => onTaskSelect?.(task)}
+        title={isSelected ? "Active task" : "Click to set as active task"}
       >
       <div className="flex items-center gap-3 flex-1">
         <button
@@ -303,6 +304,17 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
             <img src="/icons/check.svg" alt="Complete" className="w-4 h-4" />
           )}
         </button>
+        
+        {/* Active task indicator */}
+        {isSelected && (
+          <span className={`px-2 py-1 text-xs rounded-full font-medium ${
+            isInSidebar 
+              ? 'bg-blue-500 text-white' 
+              : 'bg-white/20 text-white'
+          }`}>
+            Active
+          </span>
+        )}
         
         <div className="flex-1">
           <div className={`font-medium ${task.status === 'completed' ? 'line-through opacity-60' : ''}`}>

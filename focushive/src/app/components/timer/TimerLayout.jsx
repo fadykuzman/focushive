@@ -136,10 +136,10 @@ export default function TimerLayout({
             )}
           </div>
 
-          {/* Active Task Display - Fixed space */}
-          <div className="mb-6 px-4" style={{ minHeight: mode === 'focus' && currentTask ? '60px' : '0' }}>
-            {mode === 'focus' && isActive && currentTask && (
-              <div id="active-task-display" className="flex items-center justify-center gap-3 p-3 rounded-lg bg-white/5 border border-white/20">
+          {/* Active Task Display - Always under mode switch */}
+          <div className="mb-6 px-4" style={{ minHeight: currentTask ? '60px' : '0' }}>
+            {currentTask && (
+              <div id="active-task-display" className="flex items-center justify-center gap-3 p-3 rounded-lg">
                 <span className="px-2 py-1 bg-blue-500 text-white text-xs rounded-full font-medium">
                   Active
                 </span>
