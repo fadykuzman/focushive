@@ -109,30 +109,20 @@ export default function TimerLayout({
             />
           </div>
 
-          {/* Timer Controls with Active Task - Fixed height */}
-          <div className="flex items-center justify-center gap-6 mb-6" style={{ minHeight: '48px' }}>
-            {/* Play/Pause Button */}
-            <div>
-              {isActive && !isPaused ? (
-                <PauseButton
-                  pauseTimer={pauseTimer}
-                  mode={mode}
-                />
-              ) : (
-                <StartButton
-                  startTimer={onStartTimer}
-                  resumeTimer={resumeTimer}
-                  isPaused={isPaused}
-                  mode={mode}
-                />
-              )}
-            </div>
-            
-            {/* Active Task Display */}
-            {currentTask && (
-              <div id="active-task-display" className="flex items-center gap-3 p-3 rounded-lg text-white" style={{ backgroundColor: '#3F88C5' }}>
-                <span className="text-white font-medium">{currentTask.title}</span>
-              </div>
+          {/* Timer Controls - Fixed height */}
+          <div id="timer-controls" className="flex gap-2 mb-6 justify-center" style={{ minHeight: '48px' }}>
+            {isActive && !isPaused ? (
+              <PauseButton
+                pauseTimer={pauseTimer}
+                mode={mode}
+              />
+            ) : (
+              <StartButton
+                startTimer={onStartTimer}
+                resumeTimer={resumeTimer}
+                isPaused={isPaused}
+                mode={mode}
+              />
             )}
           </div>
 
@@ -143,6 +133,15 @@ export default function TimerLayout({
                 mode={mode}
                 switchMode={switchMode}
               />
+            )}
+          </div>
+
+          {/* Active Task Display - Under mode switch */}
+          <div className="mb-6 px-4" style={{ minHeight: currentTask ? '60px' : '0' }}>
+            {currentTask && (
+              <div id="active-task-display" className="flex items-center justify-center gap-3 p-3 rounded-lg text-white" style={{ backgroundColor: '#3F88C5' }}>
+                <span className="text-white font-medium">{currentTask.title}</span>
+              </div>
             )}
           </div>
 
