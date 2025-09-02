@@ -1,20 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useTaskManager } from '../../hooks/useTaskManager';
+import useTaskStore from '../../stores/taskStore';
 import TaskTemplates from './TaskTemplates';
 import { notesDatabase } from '../../utils/notesDatabase';
 
 const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) => {
-  const {
-    tasks,
-    addTask,
-    updateTask,
-    deleteTask,
-    completeTask,
-    getPendingTasks,
-    getInProgressTasks
-  } = useTaskManager();
+  const tasks = useTaskStore(state => state.tasks);
+  const addTask = useTaskStore(state => state.addTask);
+  const updateTask = useTaskStore(state => state.updateTask);
+  const deleteTask = useTaskStore(state => state.deleteTask);
+  const completeTask = useTaskStore(state => state.completeTask);
+  const getPendingTasks = useTaskStore(state => state.getPendingTasks);
+  const getInProgressTasks = useTaskStore(state => state.getInProgressTasks);
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -279,9 +277,10 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
               ? 'border-blue-500 bg-blue-50 text-gray-800' 
               : 'border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-800')
           : (isSelected 
-              ? 'border-white bg-white/10 text-white' 
+              ? 'border-white text-white' 
               : 'border-white/20 hover:border-white/40 text-white/80 hover:text-white')
       }`}
+      style={isSelected && !isInSidebar ? { backgroundColor: '#3F88C5' } : {}}
     >
       <div 
         className="flex items-center justify-between p-3 cursor-pointer"
@@ -305,17 +304,6 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
           )}
         </button>
         
-        {/* Active task indicator */}
-        {isSelected && (
-          <span className={`px-2 py-1 text-xs rounded-full font-medium ${
-            isInSidebar 
-              ? 'bg-blue-500 text-white' 
-              : 'bg-white/20 text-white'
-          }`}>
-            Active
-          </span>
-        )}
-        
         <div className="flex-1">
           <div className={`font-medium ${task.status === 'completed' ? 'line-through opacity-60' : ''}`}>
             {task.title}
@@ -326,6 +314,7 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
             {Math.floor((task.totalTimeSpent || 0) / 1500)} / {task.estimatedSessions || 1} sessions
           </div>
         </div>
+
       </div>
 
       <div className="flex items-center gap-2">

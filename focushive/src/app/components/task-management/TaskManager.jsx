@@ -1,24 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { useTaskManager } from '../../hooks/useTaskManager';
+import useTaskStore from '../../stores/taskStore';
 
 const TaskManager = () => {
-  const {
-    tasks,
-    loading,
-    error,
-    activeTaskId,
-    addTask,
-    updateTask,
-    deleteTask,
-    completeTask,
-    setActiveTask,
-    clearActiveTask,
-    getPendingTasks,
-    getInProgressTasks,
-    getCompletedTasks
-  } = useTaskManager();
+  const tasks = useTaskStore(state => state.tasks);
+  const loading = useTaskStore(state => state.loading);
+  const error = useTaskStore(state => state.error);
+  const activeTaskId = useTaskStore(state => state.activeTaskId);
+  const addTask = useTaskStore(state => state.addTask);
+  const updateTask = useTaskStore(state => state.updateTask);
+  const deleteTask = useTaskStore(state => state.deleteTask);
+  const completeTask = useTaskStore(state => state.completeTask);
+  const setActiveTask = useTaskStore(state => state.setActiveTask);
+  const clearActiveTask = useTaskStore(state => state.clearActiveTask);
+  const getPendingTasks = useTaskStore(state => state.getPendingTasks);
+  const getInProgressTasks = useTaskStore(state => state.getInProgressTasks);
+  const getCompletedTasks = useTaskStore(state => state.getCompletedTasks);
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTask, setNewTask] = useState({

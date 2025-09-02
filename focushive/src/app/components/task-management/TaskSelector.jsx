@@ -1,9 +1,12 @@
 'use client';
 
-import { useTaskManager } from '../../hooks/useTaskManager';
+import useTaskStore from '../../stores/taskStore';
 
 const TaskSelector = ({ onTaskSelect, selectedTaskId }) => {
-  const { tasks, getActiveTask, setActiveTask, clearActiveTask } = useTaskManager();
+  const tasks = useTaskStore(state => state.tasks);
+  const getActiveTask = useTaskStore(state => state.getActiveTask);
+  const setActiveTask = useTaskStore(state => state.setActiveTask);
+  const clearActiveTask = useTaskStore(state => state.clearActiveTask);
   
   const availableTasks = tasks.filter(task => 
     task.status === 'pending' || task.status === 'in_progress'

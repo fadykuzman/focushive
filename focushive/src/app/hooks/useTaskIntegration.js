@@ -1,7 +1,7 @@
-import { useTaskManager } from './useTaskManager';
+import useTaskStore from '../stores/taskStore';
 
 export function useTaskIntegration(linkedTaskId, setLinkedTask, clearLinkedTask, startTimer) {
-  const { tasks } = useTaskManager();
+  const tasks = useTaskStore(state => state.tasks);
 
   // Get current linked task
   const currentTask = linkedTaskId ? tasks.find(task => task.id === linkedTaskId) : null;

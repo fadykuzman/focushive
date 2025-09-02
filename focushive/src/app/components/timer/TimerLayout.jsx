@@ -130,10 +130,7 @@ export default function TimerLayout({
             
             {/* Active Task Display */}
             {currentTask && (
-              <div id="active-task-display" className="flex items-center gap-3 p-3 rounded-lg">
-                <span className="px-2 py-1 bg-blue-500 text-white text-xs rounded-full font-medium">
-                  Active
-                </span>
+              <div id="active-task-display" className="flex items-center gap-3 p-3 rounded-lg text-white" style={{ backgroundColor: '#3F88C5' }}>
                 <span className="text-white font-medium">{currentTask.title}</span>
               </div>
             )}
