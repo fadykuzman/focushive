@@ -13,6 +13,7 @@ export default function DonationLink({ className = "" }) {
         src="/icons/coffee.svg" 
         alt="Buy Me a Coffee" 
         className="w-6 h-6"
+        style={{ filter: 'brightness(0) saturate(100%) invert(100%)' }}
       />
     </a>
   );

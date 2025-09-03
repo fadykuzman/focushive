@@ -14,7 +14,7 @@ export default function ModalButtons({ onSave, onCancel, isDirty = false }) {
           onClick={onSave}
           className={`flex-1 py-2 px-4 rounded-lg transition-colors font-medium ${
             isDirty 
-              ? 'bg-blue-600 text-white hover:bg-blue-700' 
+              ? 'bg-primary-600 text-white hover:bg-primary-700' 
               : 'bg-gray-400 text-gray-200 cursor-not-allowed'
           }`}
           disabled={!isDirty}

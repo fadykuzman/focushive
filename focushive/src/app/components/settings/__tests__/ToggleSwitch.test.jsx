@@ -39,7 +39,7 @@ describe('ToggleSwitch Component', () => {
       render(<ToggleSwitch enabled={true} />);
       
       const toggle = screen.getByRole('switch');
-      expect(toggle).toHaveClass('bg-blue-600');
+      expect(toggle).toHaveClass('bg-primary-600');
     });
 
     it('should apply disabled styling when disabled', () => {

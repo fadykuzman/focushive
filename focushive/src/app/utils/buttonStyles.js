@@ -9,15 +9,15 @@ export const getModeButtonStyles = (buttonMode, currentMode, isActive = false) =
   switch (buttonMode) {
     case 'focus':
       return activeState 
-        ? `bg-white text-black font-bold border-2 border-white ${baseStyles}`
+        ? `bg-white text-focus-600 font-bold border-2 border-white ${baseStyles}`
         : `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
     case 'shortBreak':
       return activeState 
-        ? `bg-white text-green-600 font-bold border-2 border-white ${baseStyles}`
+        ? `bg-white text-break-600 font-bold border-2 border-white ${baseStyles}`
         : `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
     case 'longBreak':
       return activeState 
-        ? `bg-white text-blue-600 font-bold border-2 border-white ${baseStyles}`
+        ? `bg-white text-longbreak-600 font-bold border-2 border-white ${baseStyles}`
         : `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
     default:
       return `bg-transparent text-white/70 hover:text-white ${baseStyles}`;
@@ -29,13 +29,13 @@ export const getActionButtonStyles = (mode) => {
   
   switch (mode) {
     case 'focus':
-      return `bg-white text-black hover:bg-gray-100 ${baseStyles}`;
+      return `bg-white text-focus-700 hover:bg-focus-50 ${baseStyles}`;
     case 'shortBreak':
-      return `bg-white text-green-600 hover:bg-green-50 ${baseStyles}`;
+      return `bg-white text-break-600 hover:bg-break-50 ${baseStyles}`;
     case 'longBreak':
-      return `bg-white text-blue-600 hover:bg-blue-50 ${baseStyles}`;
+      return `bg-white text-longbreak-600 hover:bg-longbreak-50 ${baseStyles}`;
     default:
-      return `bg-white text-red-500 hover:bg-red-50 ${baseStyles}`;
+      return `bg-white text-danger-500 hover:bg-danger-50 ${baseStyles}`;
   }
 };
 

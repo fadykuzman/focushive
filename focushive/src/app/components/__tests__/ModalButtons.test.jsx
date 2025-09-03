@@ -31,7 +31,7 @@ describe('ModalButtons Component', () => {
       
       const saveButton = document.getElementById('settings-save-button');
       expect(saveButton).not.toBeDisabled();
-      expect(saveButton).toHaveClass('bg-blue-600');
+      expect(saveButton).toHaveClass('bg-primary-600');
     });
   });
 

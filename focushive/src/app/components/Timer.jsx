@@ -102,23 +102,23 @@ const Timer = ({
 		switch (currentMode) {
 			case "focus":
 				return {
-					background: "bg-black-500",
-					container: "bg-black-600"
+					background: "bg-focus-500",
+					container: "bg-focus-600"
 				};
 			case "shortBreak":
 				return {
-					background: "bg-green-500", 
-					container: "bg-green-600"
+					background: "bg-break-500", 
+					container: "bg-break-600"
 				};
 			case "longBreak":
 				return {
-					background: "bg-blue-500",
-					container: "bg-blue-600" 
+					background: "bg-longbreak-500",
+					container: "bg-longbreak-600" 
 				};
 			default:
 				return {
-					background: "bg-red-500",
-					container: "bg-red-600"
+					background: "bg-danger-500",
+					container: "bg-danger-600"
 				};
 		}
 	};

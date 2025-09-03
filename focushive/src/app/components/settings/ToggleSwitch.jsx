@@ -14,7 +14,7 @@ export default function ToggleSwitch({ enabled = false, disabled = false, label,
         ${disabled 
           ? 'bg-gray-200 cursor-not-allowed' 
           : enabled 
-            ? 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500' 
+            ? 'bg-primary-600 hover:bg-primary-700 focus:ring-primary-500' 
             : 'bg-gray-300 hover:bg-gray-400 focus:ring-gray-500'
         }
       `}

@@ -10,6 +10,99 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Semantic Color Tokens - Warmer, more inviting palette */
+  
+  /* Focus Mode - Deep indigo/purple (calming alternative to harsh black) */
+  --color-focus-50: #eef2ff;
+  --color-focus-100: #e0e7ff;
+  --color-focus-200: #c7d2fe;
+  --color-focus-300: #a5b4fc;
+  --color-focus-400: #818cf8;
+  --color-focus-500: #6366f1;
+  --color-focus-600: #4f46e5;
+  --color-focus-700: #4338ca;
+  --color-focus-800: #3730a3;
+  --color-focus-900: #312e81;
+  --color-focus-950: #1e1b4b;
+
+  /* Break Mode - Warm emerald green (nature-inspired) */
+  --color-break-50: #ecfdf5;
+  --color-break-100: #d1fae5;
+  --color-break-200: #a7f3d0;
+  --color-break-300: #6ee7b7;
+  --color-break-400: #34d399;
+  --color-break-500: #10b981;
+  --color-break-600: #059669;
+  --color-break-700: #047857;
+  --color-break-800: #065f46;
+  --color-break-900: #064e3b;
+  --color-break-950: #022c22;
+
+  /* Long Break - Soft sky blue (peaceful) */
+  --color-longbreak-50: #eff6ff;
+  --color-longbreak-100: #dbeafe;
+  --color-longbreak-200: #bfdbfe;
+  --color-longbreak-300: #93c5fd;
+  --color-longbreak-400: #60a5fa;
+  --color-longbreak-500: #3b82f6;
+  --color-longbreak-600: #2563eb;
+  --color-longbreak-700: #1d4ed8;
+  --color-longbreak-800: #1e40af;
+  --color-longbreak-900: #1e3a8a;
+  --color-longbreak-950: #172554;
+
+  /* Primary Brand - Warm coral/orange accent */
+  --color-primary-50: #fff7ed;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #f97316;
+  --color-primary-600: #ea580c;
+  --color-primary-700: #c2410c;
+  --color-primary-800: #9a3412;
+  --color-primary-900: #7c2d12;
+  --color-primary-950: #431407;
+
+  /* Success - Natural green */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+  --color-success-950: #052e16;
+
+  /* Warning - Warm amber */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+  --color-warning-950: #451a03;
+
+  /* Danger - Warm red */
+  --color-danger-50: #fef2f2;
+  --color-danger-100: #fee2e2;
+  --color-danger-200: #fecaca;
+  --color-danger-300: #fca5a5;
+  --color-danger-400: #f87171;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+  --color-danger-700: #b91c1c;
+  --color-danger-800: #991b1b;
+  --color-danger-900: #7f1d1d;
+  --color-danger-950: #450a0a;
 }
 
 @media (prefers-color-scheme: dark) {
