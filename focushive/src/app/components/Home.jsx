@@ -7,6 +7,7 @@ import StatsDashboard from "@/app/components/reports/StatsDashboard";
 import GitHubLink from "@/app/components/GitHubLink";
 import PrivacyLink from "@/app/components/PrivacyLink";
 import TermsLink from "@/app/components/TermsLink";
+import DonationLink from "@/app/components/DonationLink";
 import TaskListModal from "@/app/components/task-management/TaskListModal";
 import NotesModal from "@/app/components/notes/NotesModal";
 import ModeSwitchConfirmModal from "@/app/components/ModeSwitchConfirmModal";
@@ -137,6 +138,8 @@ const Home = () => {
 			{/* Bottom right info panel - Hide in active focus mode */}
 			{!(mode === 'focus' && isActive && !isPaused) && (
 				<div className="fixed bottom-4 right-4 flex flex-col gap-2 items-end z-10">
+					<DonationLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
+					<div className="w-full h-px bg-white/20 my-1"></div>
 					<GitHubLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
 					<PrivacyLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
 					<TermsLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
