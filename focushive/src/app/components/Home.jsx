@@ -10,32 +10,20 @@ import TermsLink from "@/app/components/TermsLink";
 import DonationLink from "@/app/components/DonationLink";
 import TaskListModal from "@/app/components/task-management/TaskListModal";
 import NotesModal from "@/app/components/notes/NotesModal";
-import ModeSwitchConfirmModal from "@/app/components/ModeSwitchConfirmModal";
 import Timer from "@/app/components/Timer";
 import { useModalManager } from "@/app/hooks/useModalManager";
-import { getDurationForMode } from "@/app/utils/timer";
+import { ModeSwitchConfirmationProvider, useModeSwitchConfirmationContext } from "@/app/components/mode-switch/ModeSwitchConfirmationProvider";
 import packageJson from '../../../package.json';
 
 const Home = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
-	const [modeSwitchConfirm, setModeSwitchConfirm] = useState({ 
-		isOpen: false, 
-		targetMode: null,
-		wasAutoPaused: false
-	});
 	
 	const {
 		timeLeft,
 		isActive,
 		isPaused,
 		mode,
-		focusDuration,
-		shortBreakDuration,
-		longBreakDuration,
-		linkedTaskId,
-		switchMode,
-		pauseTimer,
-		resumeTimer
+		linkedTaskId
 	} = useTimerStore();
 
 	const { modals, handlers } = useModalManager();
@@ -45,42 +33,24 @@ const Home = () => {
 		setIsHydrated(true);
 	}, []);
 
+	return (
+		<ModeSwitchConfirmationProvider>
+			<HomeContent 
+				isHydrated={isHydrated}
+				timeLeft={timeLeft}
+				isActive={isActive}
+				isPaused={isPaused}
+				mode={mode}
+				linkedTaskId={linkedTaskId}
+				modals={modals}
+				handlers={handlers}
+			/>
+		</ModeSwitchConfirmationProvider>
+	);
+};
 
-
-	// Handle mode switch request from Timer component
-	const handleModeSwitchRequest = (targetMode) => {
-		// Check if timer is currently running (not paused) and auto-pause it
-		const shouldAutoPause = isActive && !isPaused;
-		
-		if (shouldAutoPause) {
-			pauseTimer();
-		}
-		
-		setModeSwitchConfirm({
-			isOpen: true,
-			targetMode: targetMode,
-			wasAutoPaused: shouldAutoPause
-		});
-	};
-
-	// Handle mode switch confirmation
-	const handleModeSwitchConfirm = () => {
-		if (modeSwitchConfirm.targetMode) {
-			switchMode(modeSwitchConfirm.targetMode);
-		}
-		// Don't resume timer - user is switching modes anyway
-		setModeSwitchConfirm({ isOpen: false, targetMode: null, wasAutoPaused: false });
-	};
-
-	// Handle mode switch cancellation
-	const handleModeSwitchCancel = () => {
-		// Resume timer only if we auto-paused it
-		if (modeSwitchConfirm.wasAutoPaused) {
-			resumeTimer();
-		}
-		
-		setModeSwitchConfirm({ isOpen: false, targetMode: null, wasAutoPaused: false });
-	};
+const HomeContent = ({ isHydrated, timeLeft, isActive, isPaused, mode, linkedTaskId, modals, handlers }) => {
+	const { requestModeSwitch } = useModeSwitchConfirmationContext();
 
 	// Show loading state until hydrated
 	if (!isHydrated) {
@@ -104,7 +74,7 @@ const Home = () => {
 		<>
 			{/* Timer Component */}
 			<Timer
-				onRequestModeSwitch={handleModeSwitchRequest}
+				onRequestModeSwitch={requestModeSwitch}
 				onOpenTasks={handlers.openTaskList}
 				onOpenStats={handlers.openStats}
 				onOpenSettings={handlers.openSettings}
@@ -136,18 +106,6 @@ const Home = () => {
 			<TaskListModal 
 				isOpen={modals.isTaskListOpen}
 				onClose={handlers.closeTaskList}
-			/>
-
-			{/* Mode Switch Confirmation Modal */}
-			<ModeSwitchConfirmModal
-				isOpen={modeSwitchConfirm.isOpen}
-				onConfirm={handleModeSwitchConfirm}
-				onCancel={handleModeSwitchCancel}
-				targetMode={modeSwitchConfirm.targetMode}
-				currentMode={mode}
-				timeLeft={timeLeft}
-				isActive={isActive}
-				isPaused={isPaused}
 			/>
 			
 			{/* Global UI Elements */}
