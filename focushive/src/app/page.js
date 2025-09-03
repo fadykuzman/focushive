@@ -1,5 +1,5 @@
-import Timer from '@/app/components/Timer';
+import Home from '@/app/components/Home';
 
-export default function Home() {
-	return <Timer />;
+export default function Page() {
+	return <Home />;
 }

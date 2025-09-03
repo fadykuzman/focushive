@@ -28,9 +28,9 @@ export default function TaskListModal({ isOpen, onClose, onTaskSelect, selectedT
     onClose();
   };
 
-  const handleTaskSelect = (task) => {
+  const handleTaskSelectLocal = (task) => {
     setCurrentSelection(task?.id || null);
-    onTaskSelect?.(task);
+    handleTaskSelect(task);
   };
 
   if (!isOpen) return null;
@@ -56,7 +56,7 @@ export default function TaskListModal({ isOpen, onClose, onTaskSelect, selectedT
             </button>
           </div>
           <FocusTaskList 
-            onTaskSelect={handleTaskSelect}
+            onTaskSelect={handleTaskSelectLocal}
             selectedTaskId={currentSelection}
             isInSidebar={true}
           />

@@ -6,7 +6,7 @@ import DurationInputGroup from '@/app/components/settings/DurationInputGroup';
 import AutomationSection from '@/app/components/settings/AutomationSection';
 import ModalButtons from '@/app/components/ModalButtons';
 
-export default function SettingsModal({ isOpen, onClose, durations, onDurationChange }) {
+export default function SettingsModal({ isOpen, onClose }) {
   const {
     localDurations,
     localAutoTimerStart,
@@ -15,7 +15,7 @@ export default function SettingsModal({ isOpen, onClose, durations, onDurationCh
     handleSave,
     handleCancel,
     isDirty
-  } = useSettingsForm(durations, onDurationChange);
+  } = useSettingsForm();
 
   const modalRef = useClickOutside(() => {
     if (isOpen) {

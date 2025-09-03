@@ -2,13 +2,20 @@ import { useState, useEffect } from 'react';
 import { validateDurationInput, convertSecondsToMinutes, convertMinutesToSeconds } from '@/app/utils/settingsValidation';
 import useTimerStore from '@/app/stores/timerStore';
 
-export function useSettingsForm(durations, onDurationChange) {
-  const { autoTimerStart, toggleAutoTimerStart } = useTimerStore();
+export function useSettingsForm() {
+  const { 
+    focusDuration,
+    shortBreakDuration,
+    longBreakDuration,
+    autoTimerStart, 
+    toggleAutoTimerStart,
+    updateDuration
+  } = useTimerStore();
   
   const [localDurations, setLocalDurations] = useState({
-    focus: convertSecondsToMinutes(durations.focus),
-    shortBreak: convertSecondsToMinutes(durations.shortBreak),
-    longBreak: convertSecondsToMinutes(durations.longBreak),
+    focus: convertSecondsToMinutes(focusDuration),
+    shortBreak: convertSecondsToMinutes(shortBreakDuration),
+    longBreak: convertSecondsToMinutes(longBreakDuration),
   });
   
   const [localAutoTimerStart, setLocalAutoTimerStart] = useState(autoTimerStart);
@@ -16,11 +23,11 @@ export function useSettingsForm(durations, onDurationChange) {
   // Only reset local state when the component first mounts or external values change significantly
   useEffect(() => {
     setLocalDurations({
-      focus: convertSecondsToMinutes(durations.focus),
-      shortBreak: convertSecondsToMinutes(durations.shortBreak),
-      longBreak: convertSecondsToMinutes(durations.longBreak),
+      focus: convertSecondsToMinutes(focusDuration),
+      shortBreak: convertSecondsToMinutes(shortBreakDuration),
+      longBreak: convertSecondsToMinutes(longBreakDuration),
     });
-  }, [durations.focus, durations.shortBreak, durations.longBreak]);
+  }, [focusDuration, shortBreakDuration, longBreakDuration]);
 
   useEffect(() => {
     setLocalAutoTimerStart(autoTimerStart);
@@ -41,7 +48,7 @@ export function useSettingsForm(durations, onDurationChange) {
   const handleSave = () => {
     // Apply all duration changes
     Object.entries(localDurations).forEach(([type, value]) => {
-      onDurationChange(type, convertMinutesToSeconds(value));
+      updateDuration(type, convertMinutesToSeconds(value));
     });
     
     // Apply auto timer start change
@@ -53,18 +60,18 @@ export function useSettingsForm(durations, onDurationChange) {
   const handleCancel = () => {
     // Reset to original values
     setLocalDurations({
-      focus: convertSecondsToMinutes(durations.focus),
-      shortBreak: convertSecondsToMinutes(durations.shortBreak),
-      longBreak: convertSecondsToMinutes(durations.longBreak),
+      focus: convertSecondsToMinutes(focusDuration),
+      shortBreak: convertSecondsToMinutes(shortBreakDuration),
+      longBreak: convertSecondsToMinutes(longBreakDuration),
     });
     setLocalAutoTimerStart(autoTimerStart);
   };
 
   const isDirty = () => {
     const originalDurations = {
-      focus: convertSecondsToMinutes(durations.focus),
-      shortBreak: convertSecondsToMinutes(durations.shortBreak),
-      longBreak: convertSecondsToMinutes(durations.longBreak),
+      focus: convertSecondsToMinutes(focusDuration),
+      shortBreak: convertSecondsToMinutes(shortBreakDuration),
+      longBreak: convertSecondsToMinutes(longBreakDuration),
     };
     
     return JSON.stringify(localDurations) !== JSON.stringify(originalDurations) ||
