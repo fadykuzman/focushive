@@ -84,16 +84,14 @@ const Timer = () => {
 	const needsConfirmation = (targetMode) => {
 		if (targetMode === mode) return false; // No need to confirm same mode
 		
-		// Need confirmation if:
+		// Need confirmation only if:
 		// 1. Timer is currently running
 		// 2. Timer is paused but has time left
-		// 3. Timer hasn't started but has time left (reset but not switched)
-		const hasTimeRemaining = timeLeft > 0;
+		// Note: If timer hasn't started yet (not active, not paused), allow free switching
 		const isRunning = isActive && !isPaused;
-		const isPausedWithTime = isPaused && hasTimeRemaining;
-		const isUnstartedWithTime = !isActive && !isPaused && hasTimeRemaining;
+		const isPausedWithTime = isPaused && timeLeft > 0;
 		
-		return isRunning || isPausedWithTime || isUnstartedWithTime;
+		return isRunning || isPausedWithTime;
 	};
 
 	// Handle mode switch request
