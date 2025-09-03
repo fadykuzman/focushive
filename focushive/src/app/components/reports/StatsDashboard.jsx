@@ -15,7 +15,7 @@ export default function StatsDashboard({ isOpen, onClose }) {
 
   if (loading) {
     return (
-      <div id="stats-dashboard-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4" onClick={handleOverlayClick}>
+      <div id="stats-dashboard-overlay" className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4" onClick={handleOverlayClick}>
         <div id="stats-dashboard-modal" className="bg-white rounded-lg w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] flex flex-col shadow-xl">
           <div className="flex justify-center items-center p-4 sm:p-6 flex-1">
             <div id="stats-loading-message" className="text-base sm:text-lg text-gray-600">Loading statistics...</div>
@@ -27,7 +27,7 @@ export default function StatsDashboard({ isOpen, onClose }) {
 
   if (error) {
     return (
-      <div id="stats-dashboard-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4" onClick={handleOverlayClick}>
+      <div id="stats-dashboard-overlay" className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4" onClick={handleOverlayClick}>
         <div id="stats-dashboard-modal" className="bg-white rounded-lg w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] flex flex-col shadow-xl">
           <div className="flex justify-between items-center p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
             <h2 id="stats-dashboard-title" className="text-xl sm:text-2xl font-bold text-gray-800">Statistics</h2>
@@ -51,7 +51,7 @@ export default function StatsDashboard({ isOpen, onClose }) {
   const hasData = daily && daily.totalSessions > 0;
 
   return (
-    <div id="stats-dashboard-overlay" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4" onClick={handleOverlayClick}>
+    <div id="stats-dashboard-overlay" className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4" onClick={handleOverlayClick}>
       <div id="stats-dashboard-modal" className="bg-white rounded-lg w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] flex flex-col shadow-xl">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-4 sm:p-6 border-b border-gray-200 flex-shrink-0 gap-3 sm:gap-2">
           <h2 id="stats-dashboard-title" className="text-xl sm:text-2xl font-bold text-gray-800">Productivity Statistics</h2>

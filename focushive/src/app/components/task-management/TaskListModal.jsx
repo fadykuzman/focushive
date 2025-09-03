@@ -30,14 +30,14 @@ export default function TaskListModal({ isOpen, onClose, onTaskSelect, selectedT
 
   const handleTaskSelectLocal = (task) => {
     setCurrentSelection(task?.id || null);
-    handleTaskSelect(task);
+    onTaskSelect?.(task);
   };
 
   if (!isOpen) return null;
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4"
+      className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           handleAbort();

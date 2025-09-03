@@ -52,7 +52,7 @@ export default function SettingsModal({ isOpen, onClose }) {
   return (
     <div 
       id="settings-modal-overlay" 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
+      className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50" 
       onClick={handleOverlayClick}
     >
       <div 
