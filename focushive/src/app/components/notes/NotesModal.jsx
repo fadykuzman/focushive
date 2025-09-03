@@ -197,7 +197,7 @@ export default function NotesModal({
             <div className="p-4 sm:p-6 border-b">
               {/* Title and Close Button Row */}
               <div className="flex items-center justify-between mb-4 sm:mb-0">
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-800">{getModalTitle()}</h2>
+                <h2 className="text-heading-h2 text-gray-800">{getModalTitle()}</h2>
                 <button
                   id="notes-modal-close-button"
                   onClick={onClose}
@@ -272,7 +272,7 @@ export default function NotesModal({
           <>
             {/* Editor Header */}
             <div className="flex items-center justify-between p-4 sm:p-6 border-b">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+              <h2 className="text-heading-h2 text-gray-800">
                 {mode === 'create' ? 'Create Note' : 'Edit Note'}
               </h2>
               <button

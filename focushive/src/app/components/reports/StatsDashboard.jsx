@@ -30,7 +30,7 @@ export default function StatsDashboard({ isOpen, onClose }) {
       <div id="stats-dashboard-overlay" className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4" onClick={handleOverlayClick}>
         <div id="stats-dashboard-modal" className="bg-white rounded-lg w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] flex flex-col shadow-xl">
           <div className="flex justify-between items-center p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
-            <h2 id="stats-dashboard-title" className="text-xl sm:text-2xl font-bold text-gray-800">Statistics</h2>
+            <h2 id="stats-dashboard-title" className="text-heading-h2 text-gray-800">Statistics</h2>
             <button id="stats-dashboard-close-btn" onClick={onClose} className="text-gray-500 hover:text-gray-700 text-xl sm:text-2xl font-bold">×</button>
           </div>
           <div className="flex-1 flex flex-col justify-center items-center p-4 sm:p-6">
@@ -54,7 +54,7 @@ export default function StatsDashboard({ isOpen, onClose }) {
     <div id="stats-dashboard-overlay" className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4" onClick={handleOverlayClick}>
       <div id="stats-dashboard-modal" className="bg-white rounded-lg w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] flex flex-col shadow-xl">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-4 sm:p-6 border-b border-gray-200 flex-shrink-0 gap-3 sm:gap-2">
-          <h2 id="stats-dashboard-title" className="text-xl sm:text-2xl font-bold text-gray-800">Productivity Statistics</h2>
+          <h2 id="stats-dashboard-title" className="text-heading-h2 text-gray-800">Productivity Statistics</h2>
           <div className="flex gap-2 self-end sm:self-auto">
             <button 
               id="stats-dashboard-refresh-btn"
@@ -97,7 +97,7 @@ export default function StatsDashboard({ isOpen, onClose }) {
 
             {/* Streaks Section */}
             <div id="stats-streaks-section" className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-              <h3 id="stats-streaks-title" className="text-base sm:text-lg font-semibold text-gray-800 mb-3">Streaks</h3>
+              <h3 id="stats-streaks-title" className="text-heading-h4 text-gray-800 mb-3">Streaks</h3>
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 <div id="stats-current-streak-details">
                   <div className="text-xs sm:text-sm text-gray-600">Current Streak</div>
@@ -112,7 +112,7 @@ export default function StatsDashboard({ isOpen, onClose }) {
 
             {/* Weekly Overview */}
             <div id="stats-weekly-section" className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-              <h3 id="stats-weekly-title" className="text-base sm:text-lg font-semibold text-gray-800 mb-3">This Week</h3>
+              <h3 id="stats-weekly-title" className="text-heading-h4 text-gray-800 mb-3">This Week</h3>
               <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
                 <div id="stats-weekly-focus-time">
                   <div className="text-xs sm:text-sm text-gray-600">Total Focus Time</div>
@@ -135,7 +135,7 @@ export default function StatsDashboard({ isOpen, onClose }) {
 
             {/* Daily Breakdown */}
             <div id="stats-weekly-breakdown" className="bg-gray-50 p-4 rounded-lg">
-              <h3 id="stats-weekly-breakdown-title" className="text-lg font-semibold text-gray-800 mb-3">Weekly Breakdown</h3>
+              <h3 id="stats-weekly-breakdown-title" className="text-heading-h4 text-gray-800 mb-3">Weekly Breakdown</h3>
               <div id="stats-daily-list" className="space-y-2">
                 {weekly.dailyStats.map((day, index) => {
                   const dayName = new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' });
@@ -173,7 +173,7 @@ export default function StatsDashboard({ isOpen, onClose }) {
 
             {/* All-Time Stats */}
             <div id="stats-alltime-section" className="bg-gray-50 p-4 rounded-lg">
-              <h3 id="stats-alltime-title" className="text-lg font-semibold text-gray-800 mb-3">All-Time Statistics</h3>
+              <h3 id="stats-alltime-title" className="text-heading-h4 text-gray-800 mb-3">All-Time Statistics</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div id="stats-alltime-focus-time">
                   <div className="text-sm text-gray-600">Total Focus Time</div>
@@ -207,7 +207,7 @@ export default function StatsDashboard({ isOpen, onClose }) {
             {/* Recent Trend */}
             {trends && trends.length > 0 && (
               <div id="stats-trends-section" className="bg-gray-50 p-4 rounded-lg">
-                <h3 id="stats-trends-title" className="text-lg font-semibold text-gray-800 mb-3">30-Day Trend</h3>
+                <h3 id="stats-trends-title" className="text-heading-h4 text-gray-800 mb-3">30-Day Trend</h3>
                 <div id="stats-trends-subtitle" className="text-sm text-gray-600 mb-2">Daily focus time over the last 30 days</div>
                 <div id="stats-trends-chart" className="flex items-end gap-1 h-20">
                   {trends.slice(-30).map((day, index) => {

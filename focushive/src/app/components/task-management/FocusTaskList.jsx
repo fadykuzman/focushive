@@ -380,7 +380,7 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
   return (
     <div id="focus-task-list" className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className={`font-medium ${
+        <h3 className={`text-heading-h5 ${
           isInSidebar ? 'text-gray-800' : 'text-white'
         }`}>Tasks</h3>
       </div>
@@ -399,7 +399,7 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
         <div className={`text-center py-4 ${
           isInSidebar ? 'text-gray-500' : 'text-white/40'
         }`}>
-          <p className="text-sm">Add tasks to work on today</p>
+          <p className="text-body-sm">Add tasks to work on today</p>
         </div>
       )}
 
@@ -506,7 +506,7 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
       {completedTasks.length > 0 && (
         <div className="mt-6 pt-4 border-t border-white/20">
           <div className="flex items-center justify-between mb-3">
-            <h4 className={`text-sm font-medium ${
+            <h4 className={`text-ui-sm font-medium ${
               isInSidebar ? 'text-gray-600' : 'text-white/60'
             }`}>
               Completed ({completedTasks.length})

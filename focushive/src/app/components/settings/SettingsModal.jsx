@@ -62,7 +62,7 @@ export default function SettingsModal({ isOpen, onClose }) {
         className="bg-white rounded-lg p-6 w-[480px] max-w-90vw shadow-xl"
       >
         <div className="flex justify-between items-center mb-6">
-          <h2 id="settings-modal-title" className="text-2xl font-bold text-gray-800">Settings</h2>
+          <h2 id="settings-modal-title" className="text-heading-h2 text-gray-800">Settings</h2>
           <button
             id="settings-close-button"
             onClick={onCancel}
@@ -75,7 +75,7 @@ export default function SettingsModal({ isOpen, onClose }) {
         <div className="space-y-6">
           {/* Timer Durations Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-700">Timer Durations</h3>
+            <h3 className="text-heading-h4 text-gray-700">Timer Durations</h3>
             
             <DurationInputGroup
               label="Focus"

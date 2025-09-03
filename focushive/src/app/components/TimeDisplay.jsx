@@ -7,7 +7,7 @@ export default function TimeDisplay({ timeLeft }) {
 	};
 	return (
 		<div className="absolute inset-0 flex items-center justify-center">
-			<span className="text-white text-6xl font-mono font-bold">
+			<span className="text-white text-timer">
 				{formatTime(timeLeft)}
 			</span>
 		</div>

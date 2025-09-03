@@ -16,21 +16,21 @@ export default function ModeSwitch({ mode, switchMode, onRequestModeSwitch }) {
       <button 
         id="focus-mode-button"
         onClick={() => handleModeClick('focus')}
-        className={`px-4 py-2 rounded-lg font-semibold text-sm w-full sm:w-32 ${getModeButtonStyles('focus', mode)}`}
+        className={`px-4 py-2 rounded-lg text-ui-sm w-full sm:w-32 ${getModeButtonStyles('focus', mode)}`}
       >
         Focus
       </button>
       <button 
         id="short-break-mode-button"
         onClick={() => handleModeClick('shortBreak')}
-        className={`px-4 py-2 rounded-lg font-semibold text-sm w-full sm:w-36 ${getModeButtonStyles('shortBreak', mode)}`}
+        className={`px-4 py-2 rounded-lg text-ui-sm w-full sm:w-36 ${getModeButtonStyles('shortBreak', mode)}`}
       >
         Short Break
       </button>
       <button 
         id="long-break-mode-button"
         onClick={() => handleModeClick('longBreak')}
-        className={`px-4 py-2 rounded-lg font-semibold text-sm w-full sm:w-36 ${getModeButtonStyles('longBreak', mode)}`}
+        className={`px-4 py-2 rounded-lg text-ui-sm w-full sm:w-36 ${getModeButtonStyles('longBreak', mode)}`}
       >
         Long Break
       </button>

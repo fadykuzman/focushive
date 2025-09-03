@@ -47,7 +47,7 @@ export default function TaskListModal({ isOpen, onClose, onTaskSelect, selectedT
       <div className="bg-white rounded-lg max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-auto w-full">
         <div className="p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Task Management</h2>
+            <h2 className="text-heading-h2 text-gray-800">Task Management</h2>
             <button
               onClick={handleAbort}
               className="text-gray-500 hover:text-gray-700 text-xl sm:text-2xl font-bold"

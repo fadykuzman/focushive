@@ -74,11 +74,11 @@ export default function TimerLayout({
           <div className="mb-4 mt-12 sm:mt-8" style={{ minHeight: '120px' }}>
             {!isFocusMode && (
               <>
-                <h1 id="timer-mode-title" className="text-white text-2xl font-bold mb-2">
+                <h1 id="timer-mode-title" className="text-white text-heading-h1 mb-2">
                   {getModeDisplayName(mode)}
                 </h1>
                 <div className="flex items-center justify-center gap-3 mb-4">
-                  <p id="timer-round-display" className="text-white/80">
+                  <p id="timer-round-display" className="text-white/80 text-body-lg font-medium">
                     Round {round} of {totalRounds}
                   </p>
                   <ResetRoundsButton
@@ -90,7 +90,7 @@ export default function TimerLayout({
                 {/* Today's Stats Preview */}
                 {focusTime > 0 && (
                   <div id="timer-stats-preview" className="text-center mb-4">
-                    <div id="timer-stats-preview-text" className="text-white/60 text-sm">
+                    <div id="timer-stats-preview-text" className="text-white/60 text-body-sm">
                       Today: {Math.floor(focusTime / 60)}m focus • {sessions} sessions • {completionRate}% rate
                     </div>
                   </div>
