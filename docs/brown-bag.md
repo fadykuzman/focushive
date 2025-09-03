@@ -8,13 +8,13 @@
 - [x] Add option to customize the timer duration (e.g., 15, 30, 45 minutes).
 - [x] Add sound alert when the timer reaches zero.
 - [x] Add notification when the timer reaches zero.
-- [ ] Count how many unique visitors
 - [x] Reset rounds manually
 - [x] Bug: when timer is not running, and the duration is changed, the timer doesn't reflect the new duration. The corresponding mode button has to be clicked to reflect the new duration.
 - [x] Use IndexedDB to store the start time of the timer.
 - [x] Add a task to a focus session.
 - [x] Fluid transitions between modes
 - [x] when a timer hasn't started yet, paused but hasn't reached zero or is running, if tried to switch mode, ask confirmation
+- [ ] Count how many unique visitors
 - [ ] Add toggle at the bottom for local/connected(cloud)
 - [ ] use React native for mobile app
 - [ ] check the pipeline config for testing

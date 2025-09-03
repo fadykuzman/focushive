@@ -2,8 +2,8 @@
 
 
 ## Stage 1:
-- [ ] Privacy Policy Page
-- [ ] Terms of Service Page
+- [x] Privacy Policy Page
+- [x] Terms of Service Page
 - [ ] fix `TimeDisplay` typo
 
 ## Stage 2:
