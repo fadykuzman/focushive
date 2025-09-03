@@ -6,6 +6,7 @@ import SettingsModal from "@/app/components/settings/SettingsModal";
 import StatsDashboard from "@/app/components/reports/StatsDashboard";
 import GitHubLink from "@/app/components/GitHubLink";
 import PrivacyLink from "@/app/components/PrivacyLink";
+import TermsLink from "@/app/components/TermsLink";
 import TaskListModal from "@/app/components/task-management/TaskListModal";
 import NotesModal from "@/app/components/notes/NotesModal";
 import ModeSwitchConfirmModal from "@/app/components/ModeSwitchConfirmModal";
@@ -138,6 +139,7 @@ const Home = () => {
 				<div className="fixed bottom-4 right-4 flex flex-col gap-2 items-end z-10">
 					<GitHubLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
 					<PrivacyLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
+					<TermsLink className="w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" />
 					<div className="text-white/50 text-sm font-mono">
 						v{packageJson.version}
 					</div>
