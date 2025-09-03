@@ -23,7 +23,8 @@ const Home = () => {
 		isActive,
 		isPaused,
 		mode,
-		linkedTaskId
+		linkedTaskId,
+		setLinkedTask
 	} = useTimerStore();
 
 	const { modals, handlers } = useModalManager();
@@ -32,6 +33,15 @@ const Home = () => {
 	useEffect(() => {
 		setIsHydrated(true);
 	}, []);
+
+	// Handle task selection from TaskListModal
+	const handleTaskSelect = (task) => {
+		if (task) {
+			setLinkedTask(task.id);
+		} else {
+			setLinkedTask(null);
+		}
+	};
 
 	return (
 		<ModeSwitchConfirmationProvider>
@@ -44,12 +54,13 @@ const Home = () => {
 				linkedTaskId={linkedTaskId}
 				modals={modals}
 				handlers={handlers}
+				onTaskSelect={handleTaskSelect}
 			/>
 		</ModeSwitchConfirmationProvider>
 	);
 };
 
-const HomeContent = ({ isHydrated, timeLeft, isActive, isPaused, mode, linkedTaskId, modals, handlers }) => {
+const HomeContent = ({ isHydrated, timeLeft, isActive, isPaused, mode, linkedTaskId, modals, handlers, onTaskSelect }) => {
 	const { requestModeSwitch } = useModeSwitchConfirmationContext();
 
 	// Show loading state until hydrated
@@ -106,6 +117,8 @@ const HomeContent = ({ isHydrated, timeLeft, isActive, isPaused, mode, linkedTas
 			<TaskListModal 
 				isOpen={modals.isTaskListOpen}
 				onClose={handlers.closeTaskList}
+				onTaskSelect={onTaskSelect}
+				selectedTaskId={linkedTaskId}
 			/>
 			
 			{/* Global UI Elements */}
