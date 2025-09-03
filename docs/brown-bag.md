@@ -14,12 +14,11 @@
 - [x] Use IndexedDB to store the start time of the timer.
 - [x] Add a task to a focus session.
 - [x] Fluid transitions between modes
-- [ ] when a timer is runnin,if tried to switch mode, ask confirmation
+- [x] when a timer hasn't started yet, paused but hasn't reached zero or is running, if tried to switch mode, ask confirmation
 - [ ] Add toggle at the bottom for local/connected(cloud)
 - [ ] use React native for mobile app
 - [ ] check the pipeline config for testing
-- [ ] Daily manual reflections
-- [ ] Weekly manual reflections 
+- [ ] notify user when a new version is available in a toaster? and give a button to reload the page
 - [ ] Pro: Change the peep sound
 - [ ] Pro: Dark mode
 - [ ] Pro: Different themes (Clown, dog, cat, plant, fish, custom?)
@@ -29,4 +28,3 @@
 - [ ] Pro: Integrate with task management apps to link focus sessions with specific tasks.
 - [ ] Pro: Sync devices (e.g., start a session on your phone and have it reflected on your computer).
 - [ ] Pro: Wearables to track heart rate and adjust focus session lengths based on stress levels.
-- [ ] Pro: Mobile & Browser. Block messages, calls and notifications. provide allow list. one for allow during focus (emergency). two for allow on short breaks ( med prio). three for allow on long breaks (low prio) can also be ser to anyone
