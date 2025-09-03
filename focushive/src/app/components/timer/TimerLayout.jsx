@@ -27,6 +27,7 @@ export default function TimerLayout({
   pauseTimer,
   resumeTimer,
   switchMode,
+  onRequestModeSwitch,
   onTaskSelect,
   linkedTaskId,
   onOpenTasks,
@@ -132,6 +133,7 @@ export default function TimerLayout({
               <ModeSwitch
                 mode={mode}
                 switchMode={switchMode}
+                onRequestModeSwitch={onRequestModeSwitch}
               />
             )}
           </div>

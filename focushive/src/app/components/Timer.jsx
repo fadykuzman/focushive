@@ -8,6 +8,7 @@ import GitHubLink from "@/app/components/GitHubLink";
 import TaskListModal from "@/app/components/task-management/TaskListModal";
 import NotesModal from "@/app/components/notes/NotesModal";
 import TimerLayout from "@/app/components/timer/TimerLayout";
+import ModeSwitchConfirmModal from "@/app/components/ModeSwitchConfirmModal";
 import { useTodayStats } from "@/app/hooks/useSessionStats";
 import { useModalManager } from "@/app/hooks/useModalManager";
 import { useTimerEffects } from "@/app/hooks/useTimerEffects";
@@ -16,6 +17,10 @@ import packageJson from '../../../package.json';
 
 const Timer = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
+	const [modeSwitchConfirm, setModeSwitchConfirm] = useState({ 
+		isOpen: false, 
+		targetMode: null 
+	});
 	
 	const {
 		timeLeft,
@@ -73,6 +78,47 @@ const Timer = () => {
 	// Handle duration changes from settings modal
 	const handleDurationChange = (durationType, newDurationInSeconds) => {
 		updateDuration(durationType, newDurationInSeconds);
+	};
+
+	// Check if mode switch needs confirmation
+	const needsConfirmation = (targetMode) => {
+		if (targetMode === mode) return false; // No need to confirm same mode
+		
+		// Need confirmation if:
+		// 1. Timer is currently running
+		// 2. Timer is paused but has time left
+		// 3. Timer hasn't started but has time left (reset but not switched)
+		const hasTimeRemaining = timeLeft > 0;
+		const isRunning = isActive && !isPaused;
+		const isPausedWithTime = isPaused && hasTimeRemaining;
+		const isUnstartedWithTime = !isActive && !isPaused && hasTimeRemaining;
+		
+		return isRunning || isPausedWithTime || isUnstartedWithTime;
+	};
+
+	// Handle mode switch request
+	const handleModeSwitchRequest = (targetMode) => {
+		if (needsConfirmation(targetMode)) {
+			setModeSwitchConfirm({
+				isOpen: true,
+				targetMode: targetMode
+			});
+		} else {
+			switchMode(targetMode);
+		}
+	};
+
+	// Handle mode switch confirmation
+	const handleModeSwitchConfirm = () => {
+		if (modeSwitchConfirm.targetMode) {
+			switchMode(modeSwitchConfirm.targetMode);
+		}
+		setModeSwitchConfirm({ isOpen: false, targetMode: null });
+	};
+
+	// Handle mode switch cancellation
+	const handleModeSwitchCancel = () => {
+		setModeSwitchConfirm({ isOpen: false, targetMode: null });
 	};
 
 	// Get style classes based on mode
@@ -142,6 +188,7 @@ const Timer = () => {
 				pauseTimer={pauseTimer}
 				resumeTimer={resumeTimer}
 				switchMode={switchMode}
+				onRequestModeSwitch={handleModeSwitchRequest}
 				onTaskSelect={handleTaskSelect}
 				linkedTaskId={linkedTaskId}
 				onOpenTasks={handlers.openTaskList}
@@ -180,6 +227,18 @@ const Timer = () => {
 				onClose={handlers.closeTaskList}
 				onTaskSelect={handleTaskSelect}
 				selectedTaskId={linkedTaskId}
+			/>
+			
+			{/* Mode Switch Confirmation Modal */}
+			<ModeSwitchConfirmModal
+				isOpen={modeSwitchConfirm.isOpen}
+				onConfirm={handleModeSwitchConfirm}
+				onCancel={handleModeSwitchCancel}
+				targetMode={modeSwitchConfirm.targetMode}
+				currentMode={mode}
+				timeLeft={timeLeft}
+				isActive={isActive}
+				isPaused={isPaused}
 			/>
 			
 			{/* Bottom right info panel - Hide in active focus mode */}
