@@ -20,7 +20,8 @@ const Home = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
 	const [modeSwitchConfirm, setModeSwitchConfirm] = useState({ 
 		isOpen: false, 
-		targetMode: null 
+		targetMode: null,
+		wasAutoPaused: false
 	});
 	
 	const {
@@ -32,7 +33,9 @@ const Home = () => {
 		shortBreakDuration,
 		longBreakDuration,
 		linkedTaskId,
-		switchMode
+		switchMode,
+		pauseTimer,
+		resumeTimer
 	} = useTimerStore();
 
 	const { modals, handlers } = useModalManager();
@@ -46,9 +49,17 @@ const Home = () => {
 
 	// Handle mode switch request from Timer component
 	const handleModeSwitchRequest = (targetMode) => {
+		// Check if timer is currently running (not paused) and auto-pause it
+		const shouldAutoPause = isActive && !isPaused;
+		
+		if (shouldAutoPause) {
+			pauseTimer();
+		}
+		
 		setModeSwitchConfirm({
 			isOpen: true,
-			targetMode: targetMode
+			targetMode: targetMode,
+			wasAutoPaused: shouldAutoPause
 		});
 	};
 
@@ -57,12 +68,18 @@ const Home = () => {
 		if (modeSwitchConfirm.targetMode) {
 			switchMode(modeSwitchConfirm.targetMode);
 		}
-		setModeSwitchConfirm({ isOpen: false, targetMode: null });
+		// Don't resume timer - user is switching modes anyway
+		setModeSwitchConfirm({ isOpen: false, targetMode: null, wasAutoPaused: false });
 	};
 
 	// Handle mode switch cancellation
 	const handleModeSwitchCancel = () => {
-		setModeSwitchConfirm({ isOpen: false, targetMode: null });
+		// Resume timer only if we auto-paused it
+		if (modeSwitchConfirm.wasAutoPaused) {
+			resumeTimer();
+		}
+		
+		setModeSwitchConfirm({ isOpen: false, targetMode: null, wasAutoPaused: false });
 	};
 
 	// Show loading state until hydrated
