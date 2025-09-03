@@ -56,11 +56,11 @@ export default function TimerLayout({
     >
       <div className="text-center">
         <div
-          className={`${styles.container} rounded-lg p-8 shadow-2xl max-w-lg mx-auto relative`}
-          style={{ minHeight: '600px' }}
+          className={`${styles.container} rounded-lg p-8 shadow-2xl w-full max-w-lg mx-auto relative`}
+          style={{ minHeight: '600px', width: '32rem' }}
         >
           {/* Top Controls - Hide in focus mode */}
-          <div style={{ minHeight: isFocusMode ? '0' : 'auto' }}>
+          <div style={{ minHeight: '48px' }}>
             {!isFocusMode && (
               <TimerControls
                 onOpenTasks={onOpenTasks}
@@ -71,7 +71,7 @@ export default function TimerLayout({
           </div>
 
           {/* Title and Round Info - Reserve space in focus mode */}
-          <div className="mb-4 mt-12 sm:mt-8" style={{ minHeight: isFocusMode ? '0' : 'auto' }}>
+          <div className="mb-4 mt-12 sm:mt-8" style={{ minHeight: '120px' }}>
             {!isFocusMode && (
               <>
                 <h1 id="timer-mode-title" className="text-white text-2xl font-bold mb-2">
@@ -128,7 +128,7 @@ export default function TimerLayout({
           </div>
 
           {/* Mode Switch - Reserve space in focus mode */}
-          <div id="mode-switch-container" className="mb-6" style={{ minHeight: isFocusMode ? '0' : '64px' }}>
+          <div id="mode-switch-container" className="mb-6" style={{ minHeight: '64px' }}>
             {!isFocusMode && (
               <ModeSwitch
                 mode={mode}
@@ -139,7 +139,7 @@ export default function TimerLayout({
           </div>
 
           {/* Active Task Display - Under mode switch */}
-          <div className="mb-6 px-4" style={{ minHeight: currentTask ? '60px' : '0' }}>
+          <div className="mb-6 px-4" style={{ minHeight: '60px' }}>
             {currentTask && (
               <div id="active-task-display" className="flex items-center justify-center gap-3 p-3 rounded-lg text-white" style={{ backgroundColor: '#3F88C5' }}>
                 <span className="text-white font-medium">{currentTask.title}</span>
@@ -148,14 +148,14 @@ export default function TimerLayout({
           </div>
 
           {/* Mobile Focus Task List - Hide in focus mode */}
-          {!isFocusMode && mode === 'focus' && !isActive && (
-            <div className="mb-4 px-4 sm:hidden">
+          <div className="mb-4 px-4 sm:hidden" style={{ minHeight: mode === 'focus' && !isActive ? 'auto' : '0' }}>
+            {!isFocusMode && mode === 'focus' && !isActive && (
               <FocusTaskList 
                 onTaskSelect={onTaskSelect}
                 selectedTaskId={linkedTaskId}
               />
-            </div>
-          )}
+            )}
+          </div>
 
         </div>
       </div>
