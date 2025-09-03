@@ -13,6 +13,7 @@ import { useTodayStats } from "@/app/hooks/useSessionStats";
 import { useModalManager } from "@/app/hooks/useModalManager";
 import { useTimerEffects } from "@/app/hooks/useTimerEffects";
 import { useTaskIntegration } from "@/app/hooks/useTaskIntegration";
+import { getDurationForMode } from "@/app/utils/timer";
 import packageJson from '../../../package.json';
 
 const Timer = () => {
@@ -84,14 +85,23 @@ const Timer = () => {
 	const needsConfirmation = (targetMode) => {
 		if (targetMode === mode) return false; // No need to confirm same mode
 		
-		// Need confirmation only if:
-		// 1. Timer is currently running
-		// 2. Timer is paused but has time left
-		// Note: If timer hasn't started yet (not active, not paused), allow free switching
-		const isRunning = isActive && !isPaused;
-		const isPausedWithTime = isPaused && timeLeft > 0;
+		// Get the original duration for current mode to check if progress has been made
+		const originalDuration = getDurationForMode(mode, {
+			focusDuration,
+			shortBreakDuration,
+			longBreakDuration
+		});
 		
-		return isRunning || isPausedWithTime;
+		// Check if timer has made actual progress (timeLeft < originalDuration)
+		const hasProgress = timeLeft < originalDuration;
+		
+		// Need confirmation only if:
+		// 1. Timer is currently running, OR
+		// 2. Timer is paused AND has made actual progress
+		const isRunning = isActive && !isPaused;
+		const isPausedWithProgress = isPaused && hasProgress;
+		
+		return isRunning || isPausedWithProgress;
 	};
 
 	// Handle mode switch request
