@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import FormInput from '@/app/components/shared/FormInput';
+import TextArea from '@/app/components/shared/TextArea';
 
 export default function NotesEditor({ 
   initialContent = '', 
@@ -80,24 +82,30 @@ export default function NotesEditor({
     <div className="bg-white rounded-lg shadow-lg max-w-2xl mx-auto">
       <div className="p-6">
         {/* Title Input */}
-        <input
+        <FormInput
           id="note-title-input"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder={titlePlaceholder}
-          className="w-full text-lg font-semibold mb-3 p-2 border-0 border-b-2 border-gray-200 focus:border-blue-500 focus:outline-none text-gray-800"
+          variant="minimal"
+          size="lg"
+          isInSidebar={true}
+          className="mb-3 font-semibold"
           onKeyDown={handleKeyDown}
         />
 
         {/* Content Textarea */}
-        <textarea
+        <TextArea
           id="note-content-textarea"
           ref={contentRef}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={placeholder}
-          className="w-full h-48 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-vertical text-gray-700"
+          variant="default"
+          size="md"
+          isInSidebar={true}
+          resize="vertical"
           onKeyDown={handleKeyDown}
         />
 

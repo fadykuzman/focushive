@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import useTaskStore from '@/app/stores/taskStore';
 import TaskTemplates from '@/app/components/task-management/TaskTemplates';
 import { notesDatabase } from '@/app/utils/notesDatabase';
+import FormInput from '@/app/components/shared/FormInput';
+import NumberControl from '@/app/components/shared/NumberControl';
 
 const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) => {
   const tasks = useTaskStore(state => state.tasks);
@@ -423,16 +425,12 @@ const FocusTaskList = ({ onTaskSelect, selectedTaskId, isInSidebar = false }) =>
               : 'border-white/20 bg-white/5'
           }`}>
             <form onSubmit={handleAddTask} className="space-y-3">
-              <input
+              <FormInput
                 type="text"
                 placeholder="What are you working on?"
                 value={newTaskTitle}
                 onChange={(e) => setNewTaskTitle(e.target.value)}
-                className={`w-full px-3 py-2 rounded focus:outline-none ${
-                  isInSidebar 
-                    ? 'bg-white border border-gray-300 text-gray-700 placeholder-gray-400 focus:border-blue-500' 
-                    : 'bg-white/10 border border-white/20 text-white placeholder-white/50 focus:border-white/50'
-                }`}
+                isInSidebar={isInSidebar}
                 autoFocus
               />
               
