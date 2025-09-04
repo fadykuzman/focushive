@@ -1,6 +1,6 @@
 'use client';
 
-import { useEscapeKey } from '@/app/utils/modalUtils';
+import BaseModal from '@/app/components/shared/BaseModal';
 
 export default function ModeSwitchConfirmModal({ 
   isOpen, 
@@ -12,9 +12,6 @@ export default function ModeSwitchConfirmModal({
   isActive,
   isPaused 
 }) {
-  useEscapeKey(onCancel, isOpen);
-
-  if (!isOpen) return null;
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -47,23 +44,14 @@ export default function ModeSwitchConfirmModal({
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-4">
-      <div 
-        className="bg-white rounded-lg max-w-md w-full p-6 shadow-xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-800">Switch Mode?</h2>
-          <button
-            onClick={onCancel}
-            className="text-gray-500 hover:text-gray-700 text-xl font-bold"
-            id="mode-switch-modal-close"
-          >
-            <img src="/icons/close.svg" alt="Close" className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="mb-6">
+    <BaseModal
+      isOpen={isOpen}
+      onClose={onCancel}
+      title="Switch Mode?"
+      size="auto"
+      id="mode-switch-modal"
+    >
+      <div className="mb-6">
           <p className="text-gray-600 mb-3">
             {getCurrentStateMessage()}
           </p>
@@ -90,8 +78,7 @@ export default function ModeSwitchConfirmModal({
           >
             Switch Mode
           </button>
-        </div>
       </div>
-    </div>
+    </BaseModal>
   );
 }

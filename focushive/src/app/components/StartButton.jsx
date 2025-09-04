@@ -1,4 +1,4 @@
-import { getActionButtonStyles } from '@/app/utils/buttonStyles';
+import IconButton from '@/app/components/shared/IconButton';
 
 export default function StartButton({ startTimer, resumeTimer, isPaused, mode }) {
 
@@ -11,17 +11,12 @@ export default function StartButton({ startTimer, resumeTimer, isPaused, mode })
   };
 
   return (
-    <button
+    <IconButton
+      icon="/icons/play.svg"
+      size="lg"
+      variant="primary"
       onClick={handleClick}
-      className="w-12 h-12 group transition-colors"
-      aria-label={isPaused ? "Resume" : "Start"}
-    >
-      <img 
-        src="/icons/play.svg" 
-        alt="" 
-        className="w-12 h-12 opacity-70 group-hover:opacity-100 transition-opacity"
-        style={{ filter: 'brightness(0) saturate(100%) invert(100%)' }}
-      />
-    </button>
+      ariaLabel={isPaused ? "Resume" : "Start"}
+    />
   );
 }

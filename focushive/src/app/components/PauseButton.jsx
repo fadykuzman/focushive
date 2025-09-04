@@ -1,19 +1,14 @@
-import { getSecondaryButtonStyles } from '@/app/utils/buttonStyles';
+import IconButton from '@/app/components/shared/IconButton';
 
 export default function PauseButton({ pauseTimer, mode }) {
 
   return (
-    <button
+    <IconButton
+      icon="/icons/pause.svg"
+      size="lg"
+      variant="secondary"
       onClick={pauseTimer}
-      className="w-12 h-12 group transition-colors"
-      aria-label="Pause"
-    >
-      <img 
-        src="/icons/pause.svg" 
-        alt="" 
-        className="w-12 h-12 opacity-70 group-hover:opacity-100 transition-opacity"
-        style={{ filter: 'brightness(0) saturate(100%) invert(100%)' }}
-      />
-    </button>
+      ariaLabel="Pause"
+    />
   );
 }

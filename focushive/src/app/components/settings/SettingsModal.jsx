@@ -1,7 +1,7 @@
 'use client';
 
 import { useSettingsForm } from '@/app/hooks/useSettingsForm';
-import { useClickOutside, useEscapeKey } from '@/app/utils/modalUtils';
+import BaseModal from '@/app/components/shared/BaseModal';
 import DurationInputGroup from '@/app/components/settings/DurationInputGroup';
 import AutomationSection from '@/app/components/settings/AutomationSection';
 import ModalButtons from '@/app/components/ModalButtons';
@@ -17,20 +17,6 @@ export default function SettingsModal({ isOpen, onClose }) {
     isDirty
   } = useSettingsForm();
 
-  const modalRef = useClickOutside(() => {
-    if (isOpen) {
-      handleCancel();
-      onClose();
-    }
-  });
-
-  useEscapeKey(() => {
-    if (isOpen) {
-      handleCancel();
-      onClose();
-    }
-  });
-
   const onSave = () => {
     handleSave();
     onClose();
@@ -41,38 +27,15 @@ export default function SettingsModal({ isOpen, onClose }) {
     onClose();
   };
 
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onCancel();
-    }
-  };
-
-  if (!isOpen) return null;
-
   return (
-    <div 
-      id="settings-modal-overlay" 
-      className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50" 
-      onClick={handleOverlayClick}
+    <BaseModal
+      isOpen={isOpen}
+      onClose={onCancel}
+      title="Settings"
+      size="md"
+      id="settings-modal"
     >
-      <div 
-        ref={modalRef}
-        id="settings-modal-content" 
-        data-testid="settings-modal"
-        className="bg-white rounded-lg p-6 w-[480px] max-w-90vw shadow-xl"
-      >
-        <div className="flex justify-between items-center mb-6">
-          <h2 id="settings-modal-title" className="text-heading-h2 text-gray-800">Settings</h2>
-          <button
-            id="settings-close-button"
-            onClick={onCancel}
-            className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100"
-          >
-            ×
-          </button>
-        </div>
-
-        <div className="space-y-6">
+      <div className="space-y-6">
           {/* Timer Durations Section */}
           <div className="space-y-4">
             <h3 className="text-heading-h4 text-gray-700">Timer Durations</h3>
@@ -109,13 +72,12 @@ export default function SettingsModal({ isOpen, onClose }) {
           />
 
           {/* Save/Cancel Buttons */}
-          <ModalButtons 
-            onSave={onSave}
-            onCancel={onCancel}
-            isDirty={isDirty}
-          />
-        </div>
+        <ModalButtons 
+          onSave={onSave}
+          onCancel={onCancel}
+          isDirty={isDirty}
+        />
       </div>
-    </div>
+    </BaseModal>
   );
 }

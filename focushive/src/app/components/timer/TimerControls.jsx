@@ -1,5 +1,7 @@
 'use client';
 
+import IconButton from '@/app/components/shared/IconButton';
+
 export default function TimerControls({ 
   onOpenTasks, 
   onOpenStats, 
@@ -8,49 +10,34 @@ export default function TimerControls({
   return (
     <div className="absolute top-4 right-4 flex gap-2">
       {/* Tasks Button */}
-      <button
+      <IconButton
         id="tasks-button"
+        icon="/icons/task-list.svg"
+        alt="Tasks"
+        size="md"
         onClick={onOpenTasks}
-        className="w-8 h-8 group transition-colors"
         title="Tasks"
-      >
-        <img 
-          src="/icons/task-list.svg" 
-          alt="Tasks" 
-          className="w-6 h-6 opacity-70 group-hover:opacity-100 transition-opacity"
-          style={{ filter: 'brightness(0) saturate(100%) invert(100%)' }}
-        />
-      </button>
+      />
 
       {/* Statistics Button */}
-      <button
+      <IconButton
         id="stats-button"
+        icon="/icons/statistics.svg"
+        alt="Statistics"
+        size="md"
         onClick={onOpenStats}
-        className="w-8 h-8 group transition-colors"
         title="Statistics"
-      >
-        <img 
-          src="/icons/statistics.svg" 
-          alt="Statistics" 
-          className="w-6 h-6 opacity-70 group-hover:opacity-100 transition-opacity"
-          style={{ filter: 'brightness(0) saturate(100%) invert(100%)' }}
-        />
-      </button>
+      />
       
       {/* Settings Button */}
-      <button
+      <IconButton
         id="settings-button"
+        icon="/icons/settings.svg"
+        alt="Settings"
+        size="md"
         onClick={onOpenSettings}
-        className="w-8 h-8 group transition-colors"
         title="Settings"
-      >
-        <img 
-          src="/icons/settings.svg" 
-          alt="Settings" 
-          className="w-6 h-6 opacity-70 group-hover:opacity-100 transition-opacity"
-          style={{ filter: 'brightness(0) saturate(100%) invert(100%)' }}
-        />
-      </button>
+      />
     </div>
   );
 }
