@@ -1,3 +1,5 @@
+import { generateTaskId, generateTaskSessionId as generateTaskSessionIdUtil } from '@/app/utils/idGenerator';
+
 class TaskDatabase {
   constructor() {
     this.dbName = 'focushive-tasks';
@@ -50,11 +52,11 @@ class TaskDatabase {
   }
 
   generateId() {
-    return `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return generateTaskId();
   }
 
   generateTaskSessionId() {
-    return `tasksession_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return generateTaskSessionIdUtil();
   }
 
   async addTask(taskData) {

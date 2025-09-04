@@ -120,13 +120,6 @@ const useTimerStore = create(
         }
       },
 
-      // restoreTimer: () => {
-      //   const currentState = get();
-      //   const restorationResult = TimerLogic.restoreTimer(currentState);
-      //   if (restorationResult) {
-      //     set(restorationResult);
-      //   }
-      // },
 
       completeTimer: () => {
         const currentState = get();

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getDurationForMode } from '@/app/utils/timer/durationUtils';
 
 export function useTimerEffects({ 
   timeLeft, 
@@ -13,18 +14,13 @@ export function useTimerEffects({
 }) {
   const [smoothProgress, setSmoothProgress] = useState(0);
 
-  // Get duration for current mode
+  // Get duration for current mode using standardized utility
   function getModeDuration(currentMode) {
-    switch (currentMode) {
-      case "focus":
-        return focusDuration;
-      case "shortBreak":
-        return shortBreakDuration;
-      case "longBreak":
-        return longBreakDuration;
-      default:
-        return focusDuration;
-    }
+    return getDurationForMode(currentMode, {
+      focusDuration,
+      shortBreakDuration,
+      longBreakDuration
+    });
   }
 
   // Update document title with time

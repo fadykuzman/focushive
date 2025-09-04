@@ -8,10 +8,5 @@ export function validateDurationInput(value) {
   return Math.max(DURATION_CONSTRAINTS.min, Math.min(DURATION_CONSTRAINTS.max, numericValue));
 }
 
-export function convertMinutesToSeconds(minutes) {
-  return minutes * 60;
-}
-
-export function convertSecondsToMinutes(seconds) {
-  return Math.floor(seconds / 60);
-}
+// Re-export time conversion functions from timeUtils for backward compatibility
+export { convertMinutesToSeconds, convertSecondsToMinutes } from '@/app/utils/timeUtils';

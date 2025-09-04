@@ -1,3 +1,5 @@
+import { generateNoteId } from '@/app/utils/idGenerator';
+
 class NotesDatabase {
   constructor() {
     this.dbName = 'focushive-notes';
@@ -43,7 +45,7 @@ class NotesDatabase {
   }
 
   generateId() {
-    return `note_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return generateNoteId();
   }
 
   async addNote(noteData) {

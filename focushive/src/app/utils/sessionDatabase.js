@@ -1,3 +1,5 @@
+import { generateSessionId } from '@/app/utils/idGenerator';
+
 class SessionDatabase {
   constructor() {
     this.dbName = 'focushive-sessions';
@@ -42,7 +44,7 @@ class SessionDatabase {
   }
 
   generateId() {
-    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return generateSessionId();
   }
 
   async addSession(sessionData) {
