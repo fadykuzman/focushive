@@ -78,7 +78,7 @@ export default function AuthCallback() {
         return {
           icon: '✅',
           title: 'Successfully Connected!',
-          message: `Welcome, ${user?.name}! Redirecting you back to FocusHive...`
+          message: `Welcome, ${user?.name}! Redirecting you back to BelugaFocus...`
         };
       case 'error':
         return {
@@ -143,7 +143,7 @@ export default function AuthCallback() {
               onClick={() => window.location.href = window.location.origin}
               className="mt-3 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
             >
-              Return to FocusHive
+              Return to BelugaFocus
             </button>
           </div>
         )}

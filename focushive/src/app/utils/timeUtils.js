@@ -1,5 +1,5 @@
 /**
- * Shared time utilities for the FocusHive application
+ * Shared time utilities for the BelugaFocus application
  * Consolidates time formatting and conversion functions
  */
 

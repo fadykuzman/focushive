@@ -16,7 +16,7 @@ export default function Privacy() {
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              Back to FocusHive
+              Back to BelugaFocus
             </Link>
             <h1 className="text-3xl font-bold text-gray-900">Privacy Notice</h1>
             <p className="text-gray-600 mt-2">Last updated: {new Date().toLocaleDateString()}</p>
@@ -26,7 +26,7 @@ export default function Privacy() {
           <div className="prose prose-gray max-w-none">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Your Privacy Matters</h2>
             <p className="text-gray-700 mb-6">
-              FocusHive is designed with privacy in mind. This notice explains how we handle your data and protect your privacy while using our Pomodoro timer application.
+              BelugaFocus is designed with privacy in mind. This notice explains how we handle your data and protect your privacy while using our focus session timer application.
             </p>
 
             <h3 className="text-xl font-semibold text-gray-900 mb-3">Data Storage</h3>
@@ -45,7 +45,7 @@ export default function Privacy() {
 
             <h3 className="text-xl font-semibold text-gray-900 mb-3">No Data Collection</h3>
             <p className="text-gray-700 mb-6">
-              FocusHive does not collect, store, or transmit any personal information to external servers. We do not use:
+              BelugaFocus does not collect, store, or transmit any personal information to external servers. We do not use:
             </p>
             <ul className="text-gray-700 mb-6 list-disc pl-6 space-y-2">
               <li>Analytics or tracking services</li>
@@ -56,7 +56,7 @@ export default function Privacy() {
 
             <h3 className="text-xl font-semibold text-gray-900 mb-3">Browser Storage</h3>
             <p className="text-gray-700 mb-6">
-              FocusHive uses your browser's local storage capabilities (LocalStorage and IndexedDB) to save your data locally on your device. This means:
+              BelugaFocus uses your browser's local storage capabilities (LocalStorage and IndexedDB) to save your data locally on your device. This means:
             </p>
             <ul className="text-gray-700 mb-6 list-disc pl-6 space-y-2">
               <li>Your data remains on your device at all times</li>
@@ -67,17 +67,17 @@ export default function Privacy() {
 
             <h3 className="text-xl font-semibold text-gray-900 mb-3">Open Source</h3>
             <p className="text-gray-700 mb-6">
-              FocusHive is open source software. You can review our code, verify our privacy claims, and even run your own version of the application. This transparency ensures you can trust how your data is handled.
+              BelugaFocus is open source software. You can review our code, verify our privacy claims, and even run your own version of the application. This transparency ensures you can trust how your data is handled.
             </p>
 
             <h3 className="text-xl font-semibold text-gray-900 mb-3">Contact</h3>
             <p className="text-gray-700 mb-6">
-              If you have any questions about this privacy notice or FocusHive's data handling practices, please contact us through our GitHub repository or project documentation.
+              If you have any questions about this privacy notice or BelugaFocus's data handling practices, please contact us through our GitHub repository or project documentation.
             </p>
 
             <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
               <p className="text-blue-800">
-                <strong>Summary:</strong> FocusHive respects your privacy by keeping all data local to your browser. No external servers, no tracking, no data collection - just a simple, private productivity tool.
+                <strong>Summary:</strong> BelugaFocus respects your privacy by keeping all data local to your browser. No external servers, no tracking, no data collection - just a simple, private productivity tool.
               </p>
             </div>
           </div>

@@ -1,7 +1,7 @@
 /**
  * Google Calendar API Service
  * 
- * Handles all interactions with Google Calendar API for FocusHive.
+ * Handles all interactions with Google Calendar API for BelugaFocus.
  * Provides event fetching, conflict detection, and notification scheduling.
  */
 
@@ -127,7 +127,7 @@ class GoogleCalendarService {
     }
   }
 
-  // Format event data for FocusHive
+  // Format event data for BelugaFocus
   formatEvent(event) {
     const startTime = new Date(event.start.dateTime);
     const endTime = new Date(event.end.dateTime);

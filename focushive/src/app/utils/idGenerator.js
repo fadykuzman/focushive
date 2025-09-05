@@ -1,5 +1,5 @@
 /**
- * Shared ID generation utilities for the FocusHive application
+ * Shared ID generation utilities for the BelugaFocus application
  * Consolidates ID generation patterns across all database classes
  */
 

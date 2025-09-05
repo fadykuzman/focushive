@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function GitHubLink({ className = "absolute top-4 left-4 w-8 h-8 opacity-70 hover:opacity-100 transition-opacity" }) {
   return (
     <a
-      href="https://github.com/fadykuzman/focushive"
+      href="https://github.com/fadykuzman/belugafocus"
       target="_blank"
       rel="noopener noreferrer"
       className={className}

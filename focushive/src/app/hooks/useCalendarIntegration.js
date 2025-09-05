@@ -1,7 +1,7 @@
 /**
  * Calendar Integration Hook
  * 
- * Manages Google Calendar integration, notifications, and conflict detection for FocusHive.
+ * Manages Google Calendar integration, notifications, and conflict detection for BelugaFocus.
  */
 
 import { useState, useEffect, useCallback } from 'react';
@@ -236,7 +236,7 @@ export function useCalendarIntegration() {
       const hasPermission = await requestNotificationPermission();
       
       if (hasPermission) {
-        new Notification('🎯 FocusHive Calendar Test', {
+        new Notification('🐋 BelugaFocus Calendar Test', {
           body: `You'll get notifications ${notificationTiming} minutes before calendar events.`,
           icon: '/icons/calendar-notification.svg'
         });

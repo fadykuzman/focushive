@@ -14,7 +14,7 @@ export default function TermsPage() {
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Back to FocusHive
+            Back to BelugaFocus
           </Link>
           
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Terms of Service</h1>
@@ -25,14 +25,14 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">1. Acceptance of Terms</h2>
             <p className="text-gray-700 leading-relaxed">
-              By accessing and using FocusHive, you accept and agree to be bound by the terms and provision of this agreement.
+              By accessing and using BelugaFocus, you accept and agree to be bound by the terms and provision of this agreement.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">2. Use License</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              FocusHive is provided as-is for personal productivity use. You may:
+              BelugaFocus is provided as-is for personal productivity use. You may:
             </p>
             <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
               <li>Use the application for personal time management and productivity tracking</li>
@@ -44,7 +44,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">3. Data and Privacy</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              FocusHive operates with a privacy-first approach:
+              BelugaFocus operates with a privacy-first approach:
             </p>
             <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
               <li>All data is stored locally in your browser</li>
@@ -57,7 +57,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">4. Open Source</h2>
             <p className="text-gray-700 leading-relaxed">
-              FocusHive is open source software. You can view, modify, and distribute the source code according to the project's license terms available in the project repository.
+              BelugaFocus is open source software. You can view, modify, and distribute the source code according to the project's license terms available in the project repository.
             </p>
           </section>
 
@@ -71,7 +71,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">6. Limitation of Liability</h2>
             <p className="text-gray-700 leading-relaxed">
-              In no event shall FocusHive or its developers be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use the application.
+              In no event shall BelugaFocus or its developers be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use the application.
             </p>
           </section>
 
@@ -92,7 +92,7 @@ export default function TermsPage() {
 
         <div className="mt-12 pt-8 border-t border-gray-200">
           <p className="text-center text-gray-500 text-sm">
-            By using FocusHive, you acknowledge that you have read and understood these Terms of Service.
+            By using BelugaFocus, you acknowledge that you have read and understood these Terms of Service.
           </p>
         </div>
       </div>
