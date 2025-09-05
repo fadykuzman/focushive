@@ -1,6 +1,10 @@
 {
-  "name": "focushive",
+  "name": "belugafocus",
   "version": "0.1.0",
+  "description": "Navigate your productivity with intelligent focus sessions and deep work management",
+  "keywords": ["productivity", "focus", "time-management", "deep-work", "task-management", "workflow"],
+  "author": "BelugaFocus Team",
+  "homepage": "https://belugafocus.com",
   "private": true,
   "engines": {
     "node": ">=22.0.0"
