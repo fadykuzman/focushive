@@ -14,8 +14,8 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata = {
-  title: 'Focus Hive',
-  description: 'An Ecosystem of inverconneted productivity tools',
+  title: 'BelugaFocus',
+  description: 'Navigate your productivity with intelligent focus sessions and deep work management',
 }
 
 export default function RootLayout({ children }) {
