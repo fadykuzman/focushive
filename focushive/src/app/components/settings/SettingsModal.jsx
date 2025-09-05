@@ -4,6 +4,7 @@ import { useSettingsForm } from '@/app/hooks/useSettingsForm';
 import BaseModal from '@/app/components/shared/BaseModal';
 import DurationInputGroup from '@/app/components/settings/DurationInputGroup';
 import AutomationSection from '@/app/components/settings/AutomationSection';
+import CalendarIntegrationSection from '@/app/components/settings/CalendarIntegrationSection';
 import ModalButtons from '@/app/components/ModalButtons';
 
 export default function SettingsModal({ isOpen, onClose }) {
@@ -36,7 +37,10 @@ export default function SettingsModal({ isOpen, onClose }) {
       id="settings-modal"
     >
       <div className="space-y-6">
-          {/* Timer Durations Section */}
+        {/* Calendar Integration Section */}
+        <CalendarIntegrationSection />
+
+        {/* Timer Durations Section */}
           <div className="space-y-4">
             <h3 className="text-heading-h4 text-gray-700">Timer Durations</h3>
             
@@ -71,7 +75,7 @@ export default function SettingsModal({ isOpen, onClose }) {
             onToggle={handleAutoTimerStartChange}
           />
 
-          {/* Save/Cancel Buttons */}
+        {/* Save/Cancel Buttons */}
         <ModalButtons 
           onSave={onSave}
           onCancel={onCancel}

@@ -1,0 +1,37 @@
+# Terraform/OpenTofu files
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+tfplan
+*.tfplan
+
+# Generated OAuth files (contain sensitive data)
+oauth_client_id.txt
+update_oauth_client.sh
+
+# Service account keys (if generated)
+*.json
+*-key.json
+
+# Local environment files
+.env
+.env.local
+
+# Log files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Backup files
+*.backup
+*.bak
