@@ -1,6 +1,6 @@
-# FocusHive
+# BelugaFocus
 
-A modern productivity timer application built with Next.js, featuring customizable work/break intervals and a clean, intuitive interface.
+Navigate your productivity with intelligent focus sessions and deep work management. A modern productivity timer application built with Next.js, featuring customizable work/break intervals and a clean, intuitive interface.
 
 ## Features
 
@@ -23,7 +23,7 @@ A modern productivity timer application built with Next.js, featuring customizab
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd focushive
+cd belugafocus
 ```
 
 2. Navigate to the project directory and install dependencies:
