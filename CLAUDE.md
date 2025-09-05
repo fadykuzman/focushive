@@ -29,6 +29,8 @@ All pnpm-related commands (testing, building, package management) must be run fr
 cd /home/fady/workspace/codefuchs/projects/focushive/focushive
 ```
 
+**Note**: The parent directory remains "focushive" for now, but the project has been rebranded to "BelugaFocus".
+
 This includes:
 - `pnpm install`, `pnpm add`, `pnpm remove`
 - `pnpm test`, `pnpm test:run`, `pnpm test:report`

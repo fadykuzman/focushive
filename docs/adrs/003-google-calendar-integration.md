@@ -5,7 +5,7 @@
 
 ## Context
 
-FocusHive users frequently experience conflicts between their focus sessions and scheduled meetings. User research indicated that 73% of users wanted calendar integration to avoid interrupting focus sessions with unexpected meetings, and 68% wanted notifications before upcoming events during focus sessions.
+BelugaFocus users frequently experience conflicts between their focus sessions and scheduled meetings. User research indicated that 73% of users wanted calendar integration to avoid interrupting focus sessions with unexpected meetings, and 68% wanted notifications before upcoming events during focus sessions.
 
 Key requirements identified:
 - Secure, privacy-first calendar access
@@ -247,7 +247,7 @@ const checkSessionConflicts = (sessionStart, sessionDuration) => {
 
 ## Conclusion
 
-Google Calendar integration with OAuth 2.0 PKCE provides a secure, privacy-respecting solution to a major user pain point. The implementation follows security best practices, maintains user privacy, and integrates seamlessly with the existing FocusHive experience.
+Google Calendar integration with OAuth 2.0 PKCE provides a secure, privacy-respecting solution to a major user pain point. The implementation follows security best practices, maintains user privacy, and integrates seamlessly with the existing BelugaFocus experience.
 
 The progressive disclosure approach ensures users are never forced into calendar integration, while the privacy-first design builds trust and encourages adoption among users who do want this functionality.
 

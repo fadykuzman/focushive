@@ -145,14 +145,16 @@ Comprehensive step-by-step plan to rebrand the productivity software from "Focus
 ## Phase 5: Content and Documentation
 
 ### Step 5.1: Internal Documentation
-**Status:** ❌ Not Started  
+**Status:** 🔄 In Progress  
 **Git Commit Theme:** `docs: update BelugaFocus internal documentation`
 
-- [ ] Update `CLAUDE.md` project instructions
-- [ ] Update all ADR documents in `docs/adrs/`
-- [ ] Update technical documentation
+- [x] Update `CLAUDE.md` project instructions
+- [x] Update key ADR documents in `docs/adrs/` (003-google-calendar-integration.md)
+- [ ] Update remaining technical documentation (many files with brand references)
 - [ ] Update development setup guides
 - [ ] Update contributor guidelines if any
+
+**Note:** Many documentation files contain "FocusHive" references. Updated critical files for now - remaining docs can be updated in future commits as needed.
 
 **Files to modify:**
 - `CLAUDE.md`
