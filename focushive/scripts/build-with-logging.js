@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-console.log('🚀 Starting FocusHive build process...\n');
+console.log('🚀 Starting BelugaFocus build process...\n');
 
 // Enhanced logging function
 function logSection(title, fn) {
@@ -150,7 +150,7 @@ logSection('Building Next.js Application', () => {
 
 // Final summary
 console.log('\n' + '='.repeat(60));
-console.log('🎉 FocusHive build process completed successfully!');
+console.log('🎉 BelugaFocus build process completed successfully!');
 console.log('='.repeat(60));
 console.log('📊 Reports available at: /reports');
 console.log('🌐 Application ready for deployment');
