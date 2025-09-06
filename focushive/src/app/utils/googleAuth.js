@@ -10,7 +10,7 @@ import { secureStorage } from './secureStorage';
 class GoogleAuthManager {
   constructor() {
     this.clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-    this.redirectUri = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI || `${window.location.origin}/auth/callback`;
+    this.redirectUri = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
     this.scopes = [
       'https://www.googleapis.com/auth/calendar.events.readonly'
     ];
@@ -57,6 +57,20 @@ class GoogleAuthManager {
     return this.generateRandomString(32);
   }
 
+  // Get redirect URI with fallback to window.location.origin
+  getRedirectUri() {
+    if (this.redirectUri) {
+      return this.redirectUri;
+    }
+    
+    // Only access window on client-side
+    if (typeof window !== 'undefined') {
+      return `${window.location.origin}/auth/callback`;
+    }
+    
+    throw new Error('Redirect URI not configured and window not available');
+  }
+
   // Build authorization URL
   async buildAuthUrl() {
     const codeVerifier = this.generateCodeVerifier();
@@ -72,7 +86,7 @@ class GoogleAuthManager {
 
     const params = new URLSearchParams({
       client_id: this.clientId,
-      redirect_uri: this.redirectUri,
+      redirect_uri: this.getRedirectUri(),
       response_type: 'code',
       scope: this.scopes.join(' '),
       state: state,
@@ -178,7 +192,7 @@ class GoogleAuthManager {
         code: code,
         code_verifier: codeVerifier,
         grant_type: 'authorization_code',
-        redirect_uri: this.redirectUri
+        redirect_uri: this.getRedirectUri()
       })
     });
 

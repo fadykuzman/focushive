@@ -40,10 +40,12 @@
                 pkgs.nodePackages.vercel
                 pkgs.husky
                 pkgs.semantic-release
-                  pkgs.commitlint
+                pkgs.commitlint
               ];
 
               languages = {
+                opentofu.enable = true;
+                # terraform.enable = true;
                 javascript = {
                   enable = true;
                   pnpm = {

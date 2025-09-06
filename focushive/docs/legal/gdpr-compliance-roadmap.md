@@ -1,13 +1,13 @@
-# GDPR Compliance Roadmap for FocusHive
+# GDPR Compliance Roadmap for BelugaFocus
 
 ## Executive Summary
 
-This document outlines the General Data Protection Regulation (GDPR) requirements for FocusHive at different stages of product development, from the current local-only timer application to a full-featured platform with user accounts and centralized data storage.
+This document outlines the General Data Protection Regulation (GDPR) requirements for BelugaFocus at different stages of product development, from the current local-only timer application to a full-featured platform with user accounts and centralized data storage.
 
 ## Current Product Analysis (Stage 1: Local-Only Timer)
 
 ### Data Processing Assessment
-**Current State**: FocusHive is a client-side Pomodoro timer application with minimal data processing.
+**Current State**: BelugaFocus is a client-side Pomodoro timer application with minimal data processing.
 
 **Data Collected**:
 - Timer settings (focus duration, break durations, total rounds)

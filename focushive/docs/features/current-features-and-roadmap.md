@@ -1,4 +1,4 @@
-# FocusHive Feature Analysis & Local Storage Roadmap
+# BelugaFocus Feature Analysis & Local Storage Roadmap
 
 ## Current Implemented Features
 

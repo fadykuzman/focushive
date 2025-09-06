@@ -1,7 +1,7 @@
 # Button Styling Guide
 
 ## Overview
-This document defines the uniform styling system for all buttons in the FocusHive timer application, ensuring visual consistency and clear interaction patterns across the interface.
+This document defines the uniform styling system for all buttons in the BelugaFocus timer application, ensuring visual consistency and clear interaction patterns across the interface.
 
 ## Design Principles
 - **Visual Hierarchy**: Clear distinction between primary, secondary, and mode selection buttons
