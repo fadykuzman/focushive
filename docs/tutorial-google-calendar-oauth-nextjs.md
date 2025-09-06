@@ -38,8 +38,8 @@ Let's dive into the implementation!
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/focushive.git
-cd focushive
+git clone https://github.com/yourusername/belugafocus.git
+cd belugafocus
 
 # Run complete automated setup
 ./infrastructure/setup.sh
@@ -63,7 +63,7 @@ First, we need to configure Google Cloud for OAuth authentication.
 #### Create Google Cloud Project
 
 1. Visit [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project (e.g., "focushive-calendar")
+2. Create a new project (e.g., "belugafocus-calendar")
 3. Enable the Google Calendar API in "APIs & Services" → "Library"
 
 ### Configure OAuth Consent Screen
@@ -72,7 +72,7 @@ Navigate to "APIs & Services" → "OAuth consent screen":
 
 ```yaml
 App Information:
-  App name: "FocusHive"
+  App name: "BelugaFocus"
   User support email: your-email@example.com
   
 Scopes:
@@ -88,7 +88,7 @@ In "APIs & Services" → "Credentials":
 
 ```yaml
 Application type: Web application
-Name: FocusHive Calendar Client
+Name: BelugaFocus Calendar Client
 
 Authorized JavaScript origins:
   - http://localhost:3001 (development)
@@ -127,7 +127,7 @@ Modern browser security requires encrypted storage. Here's our implementation us
 // src/utils/secureStorage.js
 class SecureTokenStorage {
   constructor() {
-    this.dbName = 'focushive_secure_tokens';
+    this.dbName = 'belugafocus_secure_tokens';
     this.dbVersion = 1;
     this.storeName = 'auth_tokens';
     this.db = null;
@@ -673,7 +673,7 @@ export default function AuthCallback() {
           <>
             <div className="text-6xl mb-4">✅</div>
             <h1 className="text-2xl font-bold mb-2">Successfully Connected!</h1>
-            <p className="text-gray-600">Redirecting you back to FocusHive...</p>
+            <p className="text-gray-600">Redirecting you back to BelugaFocus...</p>
           </>
         )}
         
@@ -686,7 +686,7 @@ export default function AuthCallback() {
               onClick={() => window.location.href = window.location.origin}
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             >
-              Return to FocusHive
+              Return to BelugaFocus
             </button>
           </>
         )}
@@ -1038,7 +1038,7 @@ Consider these enhancements for your calendar integration:
 
 ---
 
-*Want to see this implementation in action? Check out [FocusHive](https://github.com/yourusername/focushive) on GitHub, and follow me for more productivity app tutorials!*
+*Want to see this implementation in action? Check out [BelugaFocus](https://github.com/yourusername/belugafocus) on GitHub, and follow me for more productivity app tutorials!*
 
 **Tags:** #OAuth #WebSecurity #GoogleCalendar #NextJS #ProductivityApps #WebDevelopment
 

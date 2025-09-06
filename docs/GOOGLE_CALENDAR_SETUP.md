@@ -1,6 +1,6 @@
 # Google Calendar Integration Setup Guide
 
-This guide walks you through setting up Google Cloud credentials for calendar integration in FocusHive.
+This guide walks you through setting up Google Cloud credentials for calendar integration in BelugaFocus.
 
 ## 🚀 Quick Start (Automated Setup)
 
@@ -26,7 +26,7 @@ This script will:
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Click "Select a project" → "New Project"
-3. Project name: `focushive-calendar` (or your preferred name)
+3. Project name: `belugafocus-calendar` (or your preferred name)
 4. Click "Create"
 
 ## Step 2: Enable Google Calendar API
@@ -40,7 +40,7 @@ This script will:
 1. Go to "APIs & Services" → "OAuth consent screen"
 2. Choose "External" (for public use) → "Create"
 3. Fill out required fields:
-   - **App name**: FocusHive
+   - **App name**: BelugaFocus
    - **User support email**: Your email
    - **Developer contact information**: Your email
 4. **Scopes**: Add `calendar.events.readonly`
@@ -56,7 +56,7 @@ This script will:
 1. Go to "APIs & Services" → "Credentials"
 2. Click "Create Credentials" → "OAuth 2.0 Client IDs"
 3. Application type: "Web application"
-4. Name: "FocusHive Calendar Client"
+4. Name: "BelugaFocus Calendar Client"
 5. **Authorized JavaScript origins**:
    - Development: `http://localhost:3000` and `http://localhost:3001`
    - Production: `https://yourdomain.com`

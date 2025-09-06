@@ -1,5 +1,5 @@
 # Google Calendar Integration UI Design System
-## FocusHive Pomodoro Timer App
+## BelugaFocus Pomodoro Timer App
 
 ### Table of Contents
 1. [Design System Foundation](#design-system-foundation)
@@ -773,7 +773,7 @@
   </div>
   <div className="flex items-center gap-2">
     <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-    <span>No data stored on FocusHive servers</span>
+    <span>No data stored on BelugaFocus servers</span>
   </div>
   <div className="flex items-center gap-2">
     <span className="w-2 h-2 bg-green-500 rounded-full"></span>
@@ -1335,4 +1335,4 @@ Based on this design system, the following files should be created or modified:
 - `/home/fady/workspace/codefuchs/projects/focushive/focushive/public/icons/check-circle.svg`
 - `/home/fady/workspace/codefuchs/projects/focushive/focushive/public/icons/google.svg`
 
-This comprehensive design system provides everything needed to implement a privacy-first, accessible, and beautiful Google Calendar integration that maintains FocusHive's clean aesthetic while building user trust and providing valuable functionality.
+This comprehensive design system provides everything needed to implement a privacy-first, accessible, and beautiful Google Calendar integration that maintains BelugaFocus's clean aesthetic while building user trust and providing valuable functionality.
