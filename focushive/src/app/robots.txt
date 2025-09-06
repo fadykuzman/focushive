@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Disallow authentication and callback routes
+Disallow: /auth/
+
+# Allow important pages
+Allow: /privacy
+Allow: /terms
+
+# Sitemap location
+Sitemap: https://belugafocus.space/sitemap.xml
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
